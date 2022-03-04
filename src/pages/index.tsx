@@ -1,7 +1,15 @@
+import { UserContext } from "context/UserContext";
 import type { NextPage } from "next";
+import Router from "next/router";
+import { useContext, useEffect } from "react";
 
-const Home: NextPage = () => {
-  return <div className="bg-red-600">Hello</div>;
+const Home = () => {
+  const { state: user, dispatch: dispatchUser } = useContext(UserContext);
+  useEffect(() => {
+    if (user.cookie) Router.push("/noten");
+    else Router.push("/login");
+  }, []);
+  return <></>;
 };
 
 export default Home;

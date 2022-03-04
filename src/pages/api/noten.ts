@@ -1,21 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
+import { Note } from "types/noten.types";
 
 const fetch = fetchCookie(nodeFetch);
 
-interface Noten {
-  note: string;
-  art: string;
-  lv: string;
-  ects: string;
-  date: string;
-  semester: string;
-}
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const data = await fetch(
-    "https://intranet.fhwn.ac.at/services/noten/noten.aspx?matnummer=2010830009",
+    "https://intranet.fhwn.ac.at/services/noten/noten.aspx?matnummer=" + req.body.matnummer,
     {
       method: "GET",
       headers: {
@@ -37,21 +29,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const arr = Array.from(body.matchAll(/(?<=>)(.*?)(?=<)/g), (m) => m[0]).filter(String);
 
-  const noten: Array<Noten> = [];
+  const noten: Array<Note> = [];
   let count = 0;
-  let note: Noten = {
+  let note: Note = {
     note: "",
     art: "",
     lv: "",
     ects: "",
     date: "",
     semester: "",
+    exlude: false,
   };
+  const valid_noten = ["1", "2", "3", "4"];
 
   arr.forEach((item) => {
     switch (count) {
       case 0:
         note.note = item;
+        note.exlude = !valid_noten.includes(note.note);
         break;
       case 1:
         note.art = item;
@@ -75,6 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           ects: "",
           date: "",
           semester: "",
+          exlude: false,
         };
         break;
     }

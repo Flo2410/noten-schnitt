@@ -51,23 +51,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen">
-      <form className="flex flex-col w-1/4 gap-2 p-4 bg-gray-500 h-1/4" onSubmit={submit}>
-        <span>Login</span>
-        {error && <span className="text-red-700">Username or password wrong!</span>}
+    <div className="flex items-center justify-center w-screen h-screen bg-gray-200">
+      <form
+        className="flex flex-col w-full gap-4 p-4 mx-2 bg-blue-500 rounded-lg shadow-lg md:mx-0 md:w-2/3 lg:w-1/2 xl:w-1/4"
+        onSubmit={submit}
+      >
+        <h3 className="text-2xl font-bold text-center">Login</h3>
+        {error && <span className="text-red-400">Username or password wrong!</span>}
         <input
           type="text"
-          className="w-full"
+          className="w-full px-2 py-1 rounded-md"
           placeholder="username"
           onChange={(e) => inputChange({ username: e.target.value })}
         />
         <input
           type="password"
-          className="w-full"
+          className="w-full px-2 py-1 rounded-md"
           placeholder="password"
           onChange={(e) => inputChange({ password: e.target.value })}
         />
-        <input type="submit" className="w-full bg-blue-400 cursor-pointer" value="Login" />
+        <input
+          type="submit"
+          className="w-full py-2 bg-green-500 rounded-md cursor-pointer"
+          value="Login"
+        />
       </form>
     </div>
   );
