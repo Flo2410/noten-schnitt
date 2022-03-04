@@ -37,8 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const form = new URLSearchParams();
   form.append("__VIEWSTATE", values[0]);
   form.append("__EVENTVALIDATION", values[1]);
-  form.append("txtUsername", "118309");
-  form.append("txtPassword", "Geometric-Backspin4-Festival");
+  form.append("txtUsername", req.body.username);
+  form.append("txtPassword", req.body.password);
   form.append("btnLogin", "Login");
 
   const data_2 = await fetch(
@@ -55,8 +55,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   );
 
-  const out = await data_2.headers.raw()["set-cookie"][0];
-  // console.log(out);
-
-  res.status(200).send(out);
+  const out = await data_2.headers.raw()["set-cookie"];
+  // console.log(req.body);
+  if (out.length > 0) {
+    const key = out[0].match(/fhwn=.*?;/g);
+    if (key && key.length > 5) return res.status(200).send({ cookie: out[0] });
+  }
+  res.status(403).send("");
 }
