@@ -17,13 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   );
 
-  // console.log(req.body.cookie);
-
   let body = await data.text();
-  // body = body.replace(/\r?\n|\r|\t/g, " ");
   body = body.substring(body.indexOf("<tr>"));
-  // body = body.replace(/<!-.*->/g, "");
-  // body = body.replace(body.substring(body.indexOf("</table><script")), "");
   body = body.replace(body.substring(body.indexOf("<!--")), "");
   body = body.replaceAll("&nbsp;", "").replaceAll("Lade...", "").replaceAll("&#220;", "Ü");
 

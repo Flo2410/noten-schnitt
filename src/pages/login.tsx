@@ -33,8 +33,6 @@ const LoginPage = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        // console.log("body", data);
-
         dispatchUser({
           type: UserPayloadType.INIT,
           payload: { cookie: data.cookie, matnummer: data.matnummer },

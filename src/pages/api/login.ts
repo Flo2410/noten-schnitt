@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   );
 
   const cookies = await data_2.headers.raw()["set-cookie"];
-  // console.log(out);
+
   if (cookies.length > 0) {
     const key = cookies[0].match(/fhwn=.*?;/g);
     if (key && key[0].length > 5) {

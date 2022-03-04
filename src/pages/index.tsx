@@ -1,5 +1,4 @@
 import { UserContext } from "context/UserContext";
-import type { NextPage } from "next";
 import Router from "next/router";
 import { useContext, useEffect } from "react";
 

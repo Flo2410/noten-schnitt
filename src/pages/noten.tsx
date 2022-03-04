@@ -1,6 +1,5 @@
 import NotenSchnitt from "components/ NotenSchnitt";
 import NotenListe from "components/NotenListe";
-import NotenRow from "components/NotenRow";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { useContext, useEffect, useState } from "react";
