@@ -11,6 +11,8 @@ export const UserContext = createContext<{
 
 const reducer = (state: User, action: UserActions) => {
   switch (action.type) {
+    case UserPayloadType.INIT:
+      return action.payload;
     case UserPayloadType.UPDATE:
       return { ...state, ...action.payload };
     case UserPayloadType.RESET:

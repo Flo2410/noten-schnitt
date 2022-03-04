@@ -1,5 +1,6 @@
 import { UserContext } from "context/UserContext";
-import React, { FormEvent, useContext, useState } from "react";
+import Router from "next/router";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { UserPayloadType } from "types/user.types";
 
 interface UserFormData {
@@ -11,6 +12,10 @@ const LoginPage = () => {
   const { state: user, dispatch: dispatchUser } = useContext(UserContext);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (user.cookie) Router.push("/noten");
+  }, []);
 
   const inputChange = (value: Partial<UserFormData>): void =>
     setFormData({ ...form_data, ...value });
@@ -28,14 +33,16 @@ const LoginPage = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log("body", data);
+        // console.log("body", data);
 
         dispatchUser({
-          type: UserPayloadType.UPDATE,
-          payload: { cookie: data },
+          type: UserPayloadType.INIT,
+          payload: { cookie: data.cookie, matnummer: data.matnummer },
         });
 
         setError(false);
+
+        Router.push("/noten");
       })
       .catch((err) => {
         console.error(err);

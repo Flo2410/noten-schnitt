@@ -82,5 +82,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (count >= 6) count = 0;
   });
 
+  noten.splice(0, 1);
   res.status(200).send(noten);
 }

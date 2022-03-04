@@ -5,6 +5,7 @@
 import { ActionMap } from "./context.types";
 
 export enum UserPayloadType {
+  INIT = "INIT_USER",
   UPDATE = "UPDATE_USER",
   RESET = "RESET_USER",
 }
@@ -14,9 +15,11 @@ export enum UserPayloadType {
 //--------------------------------------------------------------------------------------------------------------------------------------------
 export type User = {
   cookie: string;
+  matnummer: string;
 };
 
 export type UserPayload = {
+  [UserPayloadType.INIT]: User;
   [UserPayloadType.UPDATE]: Partial<User>;
   [UserPayloadType.RESET]: User;
 };
@@ -29,4 +32,5 @@ export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
 
 export const DEFAULT_USER: User = {
   cookie: "",
+  matnummer: "",
 };

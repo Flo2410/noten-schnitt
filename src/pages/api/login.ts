@@ -55,11 +55,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   );
 
-  const out = await data_2.headers.raw()["set-cookie"];
+  const cookies = await data_2.headers.raw()["set-cookie"];
   // console.log(out);
-  if (out.length > 0) {
-    const key = out[0].match(/fhwn=.*?;/g);
-    if (key && key[0].length > 5) return res.status(200).send({ cookie: out[0] });
+  if (cookies.length > 0) {
+    const key = cookies[0].match(/fhwn=.*?;/g);
+    if (key && key[0].length > 5) {
+      const body_2 = await data_2.text();
+      const mat = Array.from(body_2.matchAll(/(?<=\()(\d+)(?=\))/g), (m) => m[0])[0];
+
+      return res.status(200).send({ cookie: cookies[0], matnummer: mat });
+    }
   }
   res.status(403).send("");
 }
