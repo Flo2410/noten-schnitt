@@ -56,10 +56,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   );
 
   const out = await data_2.headers.raw()["set-cookie"];
-  // console.log(req.body);
+  // console.log(out);
   if (out.length > 0) {
     const key = out[0].match(/fhwn=.*?;/g);
-    if (key && key.length > 5) return res.status(200).send({ cookie: out[0] });
+    if (key && key[0].length > 5) return res.status(200).send({ cookie: out[0] });
   }
   res.status(403).send("");
 }
