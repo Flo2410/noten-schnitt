@@ -1,4 +1,5 @@
 import NotenSchnitt from "components/ NotenSchnitt";
+import Loading from "components/Loading";
 import NotenListe from "components/NotenListe";
 import UserHeader from "components/UserHeader";
 import { UserContext } from "context/UserContext";
@@ -10,6 +11,7 @@ import { UserPayloadType } from "types/user.types";
 const NotenPage = () => {
   const { state: user, dispatch: dispatchUser } = useContext(UserContext);
   const [noten, setNoten] = useState<Array<Note>>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user.cookie) Router.push("/login");
@@ -26,6 +28,7 @@ const NotenPage = () => {
         // console.log("body", data);
 
         setNoten(data);
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
@@ -45,6 +48,8 @@ const NotenPage = () => {
       <UserHeader user={user} onLogout={() => logout()} />
       <NotenSchnitt noten={noten} />
       <NotenListe noten={noten} />
+
+      {loading && <Loading />}
     </div>
   );
 };

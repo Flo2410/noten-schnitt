@@ -6,17 +6,14 @@ import { User } from "types/user.types";
 const fetch = fetchCookie(nodeFetch);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<User | "">) {
-  getKeys()
+  const user = await getKeys()
     .then(({ event_validation, view_state }) =>
       login(view_state, event_validation, req.body.username, req.body.password)
     )
-    .then((user) => getUserInfo(user))
-    .then((user) => {
-      res.status(200).send(user);
-    })
-    .catch((err) => {
-      res.status(401).send("");
-    });
+    .then((user) => getUserInfo(user));
+
+  if (user) res.status(200).send(user);
+  else res.status(401).send("");
 }
 
 interface Keys {

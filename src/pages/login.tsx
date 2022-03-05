@@ -1,3 +1,4 @@
+import Loading from "components/Loading";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
@@ -11,6 +12,7 @@ interface UserFormData {
 const LoginPage = () => {
   const { state: user, dispatch: dispatchUser } = useContext(UserContext);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -22,6 +24,8 @@ const LoginPage = () => {
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const form = new URLSearchParams();
     form.append("username", form_data.username);
@@ -39,11 +43,13 @@ const LoginPage = () => {
         });
 
         setError(false);
+        setLoading(false);
 
         Router.push("/noten");
       })
       .catch((err) => {
         console.error(err);
+        setLoading(false);
         setError(true);
       });
   };
@@ -74,6 +80,8 @@ const LoginPage = () => {
           value="Login"
         />
       </form>
+
+      {loading && <Loading />}
     </div>
   );
 };
