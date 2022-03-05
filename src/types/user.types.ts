@@ -15,7 +15,10 @@ export enum UserPayloadType {
 //--------------------------------------------------------------------------------------------------------------------------------------------
 export type User = {
   cookie: string;
-  matnummer: string;
+  pers_nummer: string;
+  mat_nummer?: string;
+  name?: string;
+  course?: string;
 };
 
 export type UserPayload = {
@@ -32,5 +35,8 @@ export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
 
 export const DEFAULT_USER: User = {
   cookie: "",
-  matnummer: "",
+  pers_nummer: "",
+  mat_nummer: "",
+  name: "",
+  course: "",
 };

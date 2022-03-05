@@ -1,10 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
+import { User } from "types/user.types";
 
 const fetch = fetchCookie(nodeFetch);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<User | "">) {
+  getKeys()
+    .then(({ event_validation, view_state }) =>
+      login(view_state, event_validation, req.body.username, req.body.password)
+    )
+    .then((user) => getUserInfo(user))
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      res.status(401).send("");
+    });
+}
+
+interface Keys {
+  view_state: string;
+  event_validation: string;
+}
+
+const getKeys = async (): Promise<Keys> => {
   const data = await fetch("https://intranet.fhwn.ac.at/services/logon.aspx", {
     method: "GET",
     headers: {
@@ -33,15 +53,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   values.splice(1, 2);
 
+  return { view_state: values[0], event_validation: values[1] };
+};
+
+const login = async (
+  view_state: string,
+  event_validation: string,
+  username: string,
+  password: string
+): Promise<User> => {
   // const form = new FormData();
   const form = new URLSearchParams();
-  form.append("__VIEWSTATE", values[0]);
-  form.append("__EVENTVALIDATION", values[1]);
-  form.append("txtUsername", req.body.username);
-  form.append("txtPassword", req.body.password);
+  form.append("__VIEWSTATE", view_state);
+  form.append("__EVENTVALIDATION", event_validation);
+  form.append("txtUsername", username);
+  form.append("txtPassword", password);
   form.append("btnLogin", "Login");
 
-  const data_2 = await fetch(
+  const data = await fetch(
     "https://intranet.fhwn.ac.at/services/logon.aspx?ReturnUrl=/services/index.aspx",
     // "http://127.0.0.1:9090/services/logon.aspx?ReturnUrl=/services/index.aspx",
     {
@@ -55,16 +84,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   );
 
-  const cookies = await data_2.headers.raw()["set-cookie"];
+  const cookies = await data.headers.raw()["set-cookie"];
 
   if (cookies.length > 0) {
     const key = cookies[0].match(/fhwn=.*?;/g);
     if (key && key[0].length > 5) {
-      const body_2 = await data_2.text();
-      const mat = Array.from(body_2.matchAll(/(?<=\()(\d+)(?=\))/g), (m) => m[0])[0];
+      const body_2 = await data.text();
+      const pers_nummer = Array.from(body_2.matchAll(/(?<=\()(\d+)(?=\))/g), (m) => m[0])[0];
 
-      return res.status(200).send({ cookie: cookies[0], matnummer: mat });
+      return { cookie: cookies[0], pers_nummer: pers_nummer };
     }
   }
-  res.status(403).send("");
-}
+
+  throw new Error("Unauthorized");
+};
+
+const getUserInfo = async (user: User): Promise<User> => {
+  const data = await fetch("https://intranet.fhwn.ac.at/services/stu_main.aspx", {
+    method: "GET",
+    headers: {
+      "User-Agent": "Mozilla/5.0",
+      Cookie: user.cookie,
+    },
+  });
+
+  const body = await data.text();
+  let name = Array.from(body.matchAll(/(?<=Uberschrift1">).*(?=<)/g), (m) => m[0])[0];
+  name = name.substring(name.indexOf(" ") + 1);
+  const arr = Array.from(body.matchAll(/(?<=6px;">).+?(?=<)/g), (m) => m[0]);
+  const mat_nummer = arr[1];
+  const course = arr[3].match(/(?<=\().+?(?=\))/g)![0];
+
+  return { ...user, ...{ mat_nummer, name, course } };
+};

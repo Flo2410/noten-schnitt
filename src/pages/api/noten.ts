@@ -5,9 +5,9 @@ import { Note } from "types/noten.types";
 
 const fetch = fetchCookie(nodeFetch);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Array<Note>>) {
   const data = await fetch(
-    "https://intranet.fhwn.ac.at/services/noten/noten.aspx?matnummer=" + req.body.matnummer,
+    "https://intranet.fhwn.ac.at/services/noten/noten.aspx?matnummer=" + req.body.pers_nummer,
     {
       method: "GET",
       headers: {

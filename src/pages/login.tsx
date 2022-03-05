@@ -1,7 +1,7 @@
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { UserPayloadType } from "types/user.types";
+import { User, UserPayloadType } from "types/user.types";
 
 interface UserFormData {
   username: string;
@@ -32,10 +32,10 @@ const LoginPage = () => {
       body: form,
     })
       .then((data) => data.json())
-      .then((data) => {
+      .then((data: User) => {
         dispatchUser({
           type: UserPayloadType.INIT,
-          payload: { cookie: data.cookie, matnummer: data.matnummer },
+          payload: data,
         });
 
         setError(false);
