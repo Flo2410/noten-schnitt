@@ -19,8 +19,8 @@ const NotenSchnitt = ({ noten }: { noten: Array<Note> }) => {
 
   return (
     <div className="flex justify-center w-full">
-      <div className="flex w-full px-4 py-2 mx-4 mt-4 text-5xl bg-green-400 rounded-lg shadow-lg md:w-1/2 md:mx-0">
-        <span>Notenschnitt: </span>
+      <div className="flex flex-col w-full px-4 py-2 mx-2 mt-2 text-5xl bg-green-400 rounded-lg shadow-lg md:mt-4 sm:flex-row md:w-1/2 md:mx-0">
+        <span className="text-center">Notenschnitt: </span>
         <div className="flex justify-center w-full">
           <span>{schnitt.toFixed(2)}</span>
         </div>
