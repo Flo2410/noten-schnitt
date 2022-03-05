@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "docker build -t ghcr.io/flo2410/noten-schnitt . && docker push  ghcr.io/flo2410/noten-schnitt"
   },
   "dependencies": {
     "fetch-cookie": "^2.0.1",
