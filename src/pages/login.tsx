@@ -49,7 +49,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-gray-200">
+    <div className="flex items-center justify-center w-screen h-screen">
       <form
         className="flex flex-col w-full gap-4 p-4 mx-2 bg-blue-500 rounded-lg shadow-lg md:mx-0 md:w-2/3 lg:w-1/2 xl:w-1/4"
         onSubmit={submit}

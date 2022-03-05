@@ -31,7 +31,7 @@ const NotenPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center bg-gray-200 ">
+    <div className="flex flex-col items-center">
       <NotenSchnitt noten={noten} />
       <NotenListe noten={noten} />
     </div>
