@@ -70,7 +70,7 @@ const LoginPage = () => {
         />
         <input
           type="submit"
-          className="w-full py-2 bg-green-500 rounded-md cursor-pointer"
+          className="w-full py-2 bg-green-400 rounded-md cursor-pointer"
           value="Login"
         />
       </form>

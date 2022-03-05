@@ -1,9 +1,11 @@
 import NotenSchnitt from "components/ NotenSchnitt";
 import NotenListe from "components/NotenListe";
+import UserHeader from "components/UserHeader";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Note } from "types/noten.types";
+import { UserPayloadType } from "types/user.types";
 
 const NotenPage = () => {
   const { state: user, dispatch: dispatchUser } = useContext(UserContext);
@@ -30,8 +32,17 @@ const NotenPage = () => {
       });
   }, []);
 
+  const logout = () => {
+    dispatchUser({
+      type: UserPayloadType.RESET,
+    });
+
+    Router.push("/login");
+  };
+
   return (
     <div className="flex flex-col items-center">
+      <UserHeader user={user} onLogout={() => logout()} />
       <NotenSchnitt noten={noten} />
       <NotenListe noten={noten} />
     </div>

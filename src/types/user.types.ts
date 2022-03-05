@@ -24,7 +24,7 @@ export type User = {
 export type UserPayload = {
   [UserPayloadType.INIT]: User;
   [UserPayloadType.UPDATE]: Partial<User>;
-  [UserPayloadType.RESET]: User;
+  [UserPayloadType.RESET]: any;
 };
 
 export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
