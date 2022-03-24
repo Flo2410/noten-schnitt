@@ -34,6 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     date: "",
     semester: "",
     exlude: false,
+    perm_exlude: false,
   };
   const valid_noten = ["1", "2", "3", "4"];
 
@@ -41,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     switch (count) {
       case 0:
         note.note = item;
-        note.exlude = !valid_noten.includes(note.note);
+        note.perm_exlude = !valid_noten.includes(note.note);
         break;
       case 1:
         note.art = item;
@@ -66,6 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           date: "",
           semester: "",
           exlude: false,
+          perm_exlude: false,
         };
         break;
     }

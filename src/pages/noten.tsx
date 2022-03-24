@@ -1,6 +1,7 @@
 import NotenSchnitt from "components/ NotenSchnitt";
 import Loading from "components/Loading";
 import NotenListe from "components/NotenListe";
+import Options from "components/Options";
 import UserHeader from "components/UserHeader";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
@@ -12,6 +13,7 @@ const NotenPage = () => {
   const { state: user, dispatch: dispatchUser } = useContext(UserContext);
   const [noten, setNoten] = useState<Array<Note>>([]);
   const [loading, setLoading] = useState(true);
+  const [show_excluded, setShowExcluded] = useState(true);
 
   useEffect(() => {
     if (!user.cookie) Router.push("/login");
@@ -47,7 +49,13 @@ const NotenPage = () => {
     <div className="flex flex-col items-center">
       <UserHeader user={user} onLogout={() => logout()} />
       <NotenSchnitt noten={noten} />
-      <NotenListe noten={noten} />
+      <Options
+        noten={noten}
+        setNoten={setNoten}
+        show_excluded={show_excluded}
+        setShowExcluded={setShowExcluded}
+      />
+      <NotenListe noten={noten} show_excluded={show_excluded} />
 
       {loading && <Loading />}
     </div>

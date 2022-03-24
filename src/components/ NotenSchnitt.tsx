@@ -9,7 +9,7 @@ const NotenSchnitt = ({ noten }: { noten: Array<Note> }) => {
     let sum_noten = 0;
     let sum_ects = 0;
     noten.forEach((note) => {
-      if (note.exlude) return;
+      if (note.exlude || note.perm_exlude) return;
 
       sum_noten += +note.note * +note.ects;
       sum_ects += +note.ects;

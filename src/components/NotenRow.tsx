@@ -5,10 +5,10 @@ const NotenRow = ({ note }: { note: Note }) => {
   return (
     <tr
       className={`${
-        note.exlude
+        note.perm_exlude
           ? "bg-red-700 bg-opacity-30"
           : "" /*odd:bg-opacity-10 bg-white even:bg-opacity-20*/
-      }  `}
+      } ${note.exlude && !note.perm_exlude ? "bg-yellow-400 bg-opacity-30" : ""} `}
     >
       <td>{note.note}</td>
       <td>{note.art}</td>
