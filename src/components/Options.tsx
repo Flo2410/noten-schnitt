@@ -65,9 +65,9 @@ const Options = ({
 
   return (
     <div className="flex justify-center w-full mt-4">
-      <div className="grid w-full grid-cols-1 px-4 py-2 mx-2 text-4xl bg-yellow-400 rounded-lg shadow-lg md:grid-cols-2 sm:flex-row md:w-1/2 md:mx-0">
-        <form className="flex justify-between text-lg md:col-span-2">
-          <div className="flex gap-4">
+      <div className="w-full px-4 py-2 mx-2 text-4xl bg-yellow-400 rounded-lg shadow-lg md:w-1/2 md:mx-0">
+        <form className="flex justify-between text-lg">
+          <div className="flex flex-col gap-4 sm:flex-row">
             {semesters.map((semester) => (
               <label key={uuidv4()}>
                 <span className="mr-2">Semester {semester.semester}</span>
@@ -83,7 +83,7 @@ const Options = ({
             ))}
           </div>
 
-          <div className="flex">
+          <div className="flex flex-col justify-center gap-2 sm:flex-row sm:gap-8">
             <label>
               <span className="mr-2">Show excluded</span>
               <input
@@ -94,11 +94,11 @@ const Options = ({
                 }}
               />
             </label>
-          </div>
 
-          <button type="reset" onClick={() => reset()}>
-            Reset
-          </button>
+            <button type="reset" onClick={() => reset()}>
+              Reset
+            </button>
+          </div>
         </form>
       </div>
     </div>
