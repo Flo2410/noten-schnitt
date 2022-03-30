@@ -72,6 +72,7 @@ const Options = ({
               <label key={uuidv4()}>
                 <span className="mr-2">Semester {semester.semester}</span>
                 <input
+                  className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-gray-600 ring-offset-yellow-400 checked:bg-blue-500 ring-1"
                   type="checkbox"
                   value={semester.semester}
                   checked={semester.checked}
@@ -87,6 +88,7 @@ const Options = ({
             <label>
               <span className="mr-2">Show excluded</span>
               <input
+                className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-gray-600 ring-offset-yellow-400 checked:bg-blue-500 ring-1"
                 type="checkbox"
                 checked={show_excluded}
                 onChange={(v) => {
