@@ -1,34 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Notenschnitt
 
-## Getting Started
+This is a basic website and PWA for calculating the average grade for FHWN students.
 
-First, run the development server:
+## How it works
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+After entering your login credentials, they are sent to the backend, which uses them to log in to the FHWN intranet page. This provides the backend with the full HTML of the intranet page filled in with your grades. This HTML is filtered using regex and the grades are formed into a JSON object which gets sent to the frontend.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+After receiving the data, the frontend calculates the weighted avg grade and the total ECTS and renders it. This is done in the frontend because this enables the ability to select the semesters to include in the calculation.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Your session cookie obtained from the FHWN page and your ID number are stored in the `LocalStorage`, so you don't have to log in again after reloading the page.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## License
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+All data shown is obtained from the FHWN intranet page. Therefore, all data is owned by the FHWN.
 
-## Learn More
+## Disclaimer
 
-To learn more about Next.js, take a look at the following resources:
+The FHWN does not know about this!! I'm a student and made this because I was sick of calculating my average grade manually.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If someone from the FHWN reads this: I hope it's okay I'm doing this, if not, please let me know. I have no problem taking this offline (:
