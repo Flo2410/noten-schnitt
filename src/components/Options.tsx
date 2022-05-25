@@ -84,7 +84,7 @@ const Options = ({
             ))}
           </div>
 
-          <div className="flex flex-col justify-center gap-2 sm:flex-row sm:gap-8">
+          <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-8">
             <label>
               <span className="mr-2">Show excluded</span>
               <input
@@ -97,8 +97,12 @@ const Options = ({
               />
             </label>
 
-            <button type="reset" onClick={() => reset()}>
-              Reset
+            <button
+              type="reset"
+              onClick={() => reset()}
+              className="flex items-center h-6 px-2 text-center rounded-sm hover:bg-blue-500 ring-offset-2 ring-gray-600 ring-offset-yellow-400 ring-1"
+            >
+              <span>Reset</span>
             </button>
           </div>
         </form>
