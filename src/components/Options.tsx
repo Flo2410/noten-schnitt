@@ -65,7 +65,7 @@ const Options = ({
 
   return (
     <div className="flex justify-center w-full mt-4">
-      <div className="w-full px-4 py-2 mx-2 text-4xl bg-yellow-400 rounded-lg shadow-lg md:w-1/2 md:mx-0">
+      <div className="w-full px-4 py-2 text-4xl bg-yellow-400 rounded-lg shadow-lg md:w-2/3 xl:w-1/2 pwa:w-full">
         <form className="flex justify-between text-lg">
           <div className="flex flex-col gap-4 sm:flex-row">
             {semesters.map((semester) => (
