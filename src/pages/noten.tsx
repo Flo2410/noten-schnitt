@@ -28,8 +28,6 @@ const NotenPage = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        // console.log("body", data);
-
         setNoten(data);
         setLoading(false);
       })

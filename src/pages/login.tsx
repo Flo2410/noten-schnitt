@@ -18,7 +18,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user.cookie) Router.push("/noten");
-  }, []);
+  }, [user]);
 
   const inputChange = (value: Partial<UserFormData>): void =>
     setFormData({ ...form_data, ...value });

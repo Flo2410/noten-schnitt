@@ -29,6 +29,8 @@ export type UserPayload = {
 
 export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
 
+export type UserCookie = Required<Pick<User, "cookie" | "pers_nummer">>;
+
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Constants
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,3 +42,5 @@ export const DEFAULT_USER: User = {
   name: "",
   course: "",
 };
+
+export const USER_COOKIE_KEY = "user";
