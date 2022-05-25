@@ -1,4 +1,5 @@
 import NotenSchnitt from "components/ NotenSchnitt";
+import Footer from "components/Footer";
 import Loading from "components/Loading";
 import NotenListe from "components/NotenListe";
 import Options from "components/Options";
@@ -56,6 +57,8 @@ const NotenPage = () => {
         setShowExcluded={setShowExcluded}
       />
       <NotenListe noten={noten} show_excluded={show_excluded} />
+
+      <Footer />
 
       {loading && <Loading />}
     </div>

@@ -1,3 +1,4 @@
+import Footer from "components/Footer";
 import Loading from "components/Loading";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
@@ -55,7 +56,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen">
+    <div className="flex flex-col items-center justify-between w-screen h-screen">
+      <div></div>
       <form
         className="flex flex-col w-full gap-4 p-4 mx-2 bg-blue-500 rounded-lg shadow-lg md:mx-0 md:w-2/3 lg:w-1/2 xl:w-1/4"
         onSubmit={submit}
@@ -80,6 +82,8 @@ const LoginPage = () => {
           value="Login"
         />
       </form>
+
+      <Footer className="flex" />
 
       {loading && <Loading />}
     </div>
