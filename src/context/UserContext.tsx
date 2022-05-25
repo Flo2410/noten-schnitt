@@ -1,5 +1,5 @@
 import { DEFAULT_USER, User, UserActions, UserPayloadType } from "types/user.types";
-import React, { createContext, useReducer, Dispatch } from "react";
+import React, { createContext, useReducer, Dispatch, ReactNode } from "react";
 
 export const UserContext = createContext<{
   state: User;
@@ -20,7 +20,7 @@ const reducer = (state: User, action: UserActions) => {
   }
 };
 
-export const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_USER);
 
   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
