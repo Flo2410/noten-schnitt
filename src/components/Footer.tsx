@@ -12,7 +12,7 @@ const Footer = ({ className }: { className?: string }) => {
         </span>
       </Link>
 
-      <Link href={"https://github.com/Flo2410/noten-schnitt/blob/main/README.md"}>
+      <Link href={"https://github.com/Flo2410/noten-schnitt/blob/main/README.md#notenschnitt"}>
         <span className="flex items-center gap-2 cursor-pointer">
           <FaInfoCircle />
           About
