@@ -8,14 +8,17 @@ const fetch = fetchCookie(nodeFetch);
 export default async function handler(req: NextApiRequest, res: NextApiResponse<User | "">) {
   console.log("POST Login");
 
-  const user = await getKeys()
-    .then(({ event_validation, view_state }) =>
-      login(view_state, event_validation, req.body.username, req.body.password)
-    )
-    .then((user) => getUserInfo(user));
+  try {
+    const user = await getKeys()
+      .then(({ event_validation, view_state }) =>
+        login(view_state, event_validation, req.body.username, req.body.password)
+      )
+      .then((user) => getUserInfo(user));
 
-  if (user) res.status(200).send(user);
-  else res.status(401).send("");
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(401).send("");
+  }
 }
 
 interface Keys {
@@ -85,7 +88,7 @@ const login = async (
 
   const cookies = await data.headers.raw()["set-cookie"];
 
-  if (cookies.length > 0) {
+  if (cookies?.length > 0) {
     const key = cookies[0].match(/fhwn=.*?;/g);
     if (key && key[0].length > 5) {
       const body_2 = await data.text();
