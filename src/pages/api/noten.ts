@@ -5,7 +5,12 @@ import { Note } from "types/noten.types";
 
 const fetch = fetchCookie(nodeFetch);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Array<Note>>) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Array<Note> | string>
+) {
+  console.log("POST Noten");
+
   const data = await fetch(
     "https://intranet.fhwn.ac.at/services/noten/noten.aspx?matnummer=" + req.body.pers_nummer,
     {
@@ -18,6 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   );
 
   let body = await data.text();
+
+  // Check if request was redirected to login page
+  if (data.url.includes("https://intranet.fhwn.ac.at/services/logon.aspx")) {
+    return res.status(401).send("Cookie is not valid!");
+  }
+
   body = body.substring(body.indexOf("<tr>"));
   body = body.replace(body.substring(body.indexOf("<!--")), "");
   body = body.replaceAll("&nbsp;", "").replaceAll("Lade...", "").replaceAll("&#220;", "Ü");

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Note } from "types/noten.types";
 
-const NotenSchnitt = ({ noten }: { noten: Array<Note> }) => {
+const NotenSchnitt = ({ noten }: { noten?: Array<Note> }) => {
   const [schnitt, setSchnitt] = useState(0);
   const [ects, setEcts] = useState(0);
 
   useEffect(() => {
     let sum_noten = 0;
     let sum_ects = 0;
-    noten.forEach((note) => {
+    noten?.forEach((note) => {
       if (note.exlude || note.perm_exlude) return;
 
       sum_noten += +note.note * +note.ects;

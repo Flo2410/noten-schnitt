@@ -6,6 +6,8 @@ import { User } from "types/user.types";
 const fetch = fetchCookie(nodeFetch);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<User | "">) {
+  console.log("POST Login");
+
   const user = await getKeys()
     .then(({ event_validation, view_state }) =>
       login(view_state, event_validation, req.body.username, req.body.password)

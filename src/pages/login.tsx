@@ -3,7 +3,6 @@ import Loading from "components/Loading";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { User, UserPayloadType } from "types/user.types";
 
 interface UserFormData {
   username: string;
@@ -11,7 +10,7 @@ interface UserFormData {
 }
 
 const LoginPage = () => {
-  const { state: user, dispatch: dispatchUser } = useContext(UserContext);
+  const { state: user, login } = useContext(UserContext);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -28,28 +27,15 @@ const LoginPage = () => {
 
     setLoading(true);
 
-    const form = new URLSearchParams();
-    form.append("username", form_data.username);
-    form.append("password", form_data.password);
-
-    fetch("/api/login", {
-      method: "POST",
-      body: form,
-    })
-      .then((data) => data.json())
-      .then((data: User) => {
-        dispatchUser({
-          type: UserPayloadType.INIT,
-          payload: data,
-        });
-
+    login(form_data.username, form_data.password)
+      .then(() => {
         setError(false);
         setLoading(false);
-
         Router.push("/noten");
       })
       .catch((err) => {
         console.error(err);
+
         setLoading(false);
         setError(true);
       });

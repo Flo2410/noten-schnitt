@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { UserContext } from "context/UserContext";
+import React, { useContext, useEffect, useState } from "react";
 import { Note, Semester } from "types/noten.types";
+import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
 
 const Options = ({
-  noten,
-  setNoten,
   show_excluded,
   setShowExcluded,
 }: {
-  noten: Array<Note>;
-  setNoten: React.Dispatch<React.SetStateAction<Note[]>>;
   show_excluded: boolean;
   setShowExcluded: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [semesters, setSemesters] = useState<Array<Semester>>([]);
   const [hasInit, setHasInit] = useState(false);
+  const { state: user, dispatch: dispatchUser } = useContext(UserContext);
 
   useEffect(() => {
-    if (!hasInit && noten.length > 0) {
+    if (!hasInit && user.noten && user.noten?.length > 0) {
       const temp: Array<number> = [];
 
-      noten.forEach((note) => {
+      user.noten.forEach((note) => {
         const note_number = Number(note.semester);
         if (!temp.includes(note_number)) temp.push(note_number);
       });
@@ -34,10 +33,12 @@ const Options = ({
       setSemesters(new_semester);
       setHasInit(true);
     }
-  }, [noten]);
+  }, [user.noten]);
 
   useEffect(() => {
-    const temp = [...noten];
+    if (!user.noten) return;
+
+    const temp = [...user.noten];
     temp.forEach((note) => {
       semesters.forEach((sem) => {
         if (Number(note.semester) === sem.semester) {
@@ -45,7 +46,11 @@ const Options = ({
         }
       });
     });
-    setNoten(temp);
+
+    dispatchUser({
+      type: UserPayloadType.UPDATE,
+      payload: { noten: temp },
+    });
   }, [semesters]);
 
   const inputChange = (semester: number, checked: boolean): void => {

@@ -7,13 +7,19 @@ import {
   UserPayloadType,
 } from "types/user.types";
 import React, { createContext, useReducer, Dispatch, ReactNode, useEffect } from "react";
+import Router from "next/router";
+import { getNoten, getUserInfo, postLogin } from "helper/apicalls";
 
 export const UserContext = createContext<{
   state: User;
   dispatch: Dispatch<UserActions>;
+  logout: () => void;
+  login: (username: string, password: string) => Promise<void>;
 }>({
   state: DEFAULT_USER,
   dispatch: () => null,
+  logout: () => null,
+  login: async () => {},
 });
 
 const reducer = (state: User, action: UserActions) => {
@@ -21,7 +27,6 @@ const reducer = (state: User, action: UserActions) => {
     case UserPayloadType.INIT:
       const user_cookie: Partial<User> = {
         cookie: action.payload.cookie,
-        pers_nummer: action.payload.pers_nummer,
       };
 
       localStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user_cookie));
@@ -31,7 +36,6 @@ const reducer = (state: User, action: UserActions) => {
       if (action.payload.cookie || action.payload.pers_nummer) {
         const user_cookie: UserCookie = {
           cookie: action.payload.cookie ? action.payload.cookie : state.cookie,
-          pers_nummer: (action.payload.pers_nummer ? action.payload.mat_nummer : state.mat_nummer)!,
         };
 
         localStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user_cookie));
@@ -48,21 +52,81 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [state, dispatch] = useReducer(reducer, DEFAULT_USER);
 
   useEffect(() => {
+    const getUserInfoWithCookie = async (user_cookie: UserCookie) => {
+      let user;
+
+      try {
+        user = await getUserInfo(user_cookie);
+      } catch (error) {
+        logout();
+        return;
+      }
+
+      /*
+       * Get Noten
+       */
+
+      const noten = await getNoten(user);
+
+      if (!noten) throw new Error("Error getting grades");
+
+      user.noten = noten;
+
+      dispatch({
+        type: UserPayloadType.INIT,
+        payload: user,
+      });
+    };
+
     const user_cookie_str = localStorage.getItem(USER_COOKIE_KEY);
 
     try {
       const user_cookie: UserCookie = JSON.parse(user_cookie_str!);
 
       if (user_cookie) {
-        dispatch({
-          type: UserPayloadType.UPDATE,
-          payload: user_cookie,
-        });
+        getUserInfoWithCookie(user_cookie).catch((err) => console.error(err));
       }
     } catch (error) {
       console.error(error);
     }
   }, []);
 
-  return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
+  const login = async (username: string, password: string) => {
+    const form = new URLSearchParams();
+    form.append("username", username);
+    form.append("password", password);
+
+    const user = await postLogin(form);
+
+    if (!user) throw new Error("Login error");
+
+    /*
+     * Get Noten
+     */
+
+    const noten = await getNoten(user);
+
+    if (!noten) throw new Error("Error getting grades");
+
+    user.noten = noten;
+
+    dispatch({
+      type: UserPayloadType.INIT,
+      payload: user,
+    });
+  };
+
+  const logout = () => {
+    dispatch({
+      type: UserPayloadType.RESET,
+    });
+
+    Router.push("/login");
+  };
+
+  return (
+    <UserContext.Provider value={{ state, dispatch, logout, login }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

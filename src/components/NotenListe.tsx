@@ -3,7 +3,7 @@ import NotenRow from "./NotenRow";
 import { v4 as uuidv4 } from "uuid";
 import { Note } from "types/noten.types";
 
-const NotenListe = ({ noten, show_excluded }: { noten: Array<Note>; show_excluded: boolean }) => {
+const NotenListe = ({ noten, show_excluded }: { noten?: Array<Note>; show_excluded: boolean }) => {
   return (
     <div className="flex justify-center w-full">
       <div className="flex w-full px-4 py-2 my-4 overflow-x-auto bg-blue-400 rounded-lg shadow-lg md:w-2/3 xl:w-1/2 md:mx-0 pwa:w-full">
@@ -20,7 +20,7 @@ const NotenListe = ({ noten, show_excluded }: { noten: Array<Note>; show_exclude
           </thead>
 
           <tbody className="">
-            {noten.map((note) => {
+            {noten?.map((note) => {
               if (!show_excluded && (note.exlude || note.perm_exlude)) return;
               return <NotenRow note={note} key={uuidv4()} />;
             })}
