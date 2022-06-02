@@ -10,9 +10,8 @@ interface UserFormData {
 }
 
 const LoginPage = () => {
-  const { state: user, login } = useContext(UserContext);
+  const { state: user, login, isLoading } = useContext(UserContext);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -25,18 +24,18 @@ const LoginPage = () => {
   const submit = (e: FormEvent) => {
     e.preventDefault();
 
-    setLoading(true);
+    // setLoading(true);
 
     login(form_data.username, form_data.password)
       .then(() => {
         setError(false);
-        setLoading(false);
+        // setLoading(false);
         Router.push("/noten");
       })
       .catch((err) => {
         console.error(err);
 
-        setLoading(false);
+        // setLoading(false);
         setError(true);
       });
   };
@@ -71,7 +70,7 @@ const LoginPage = () => {
 
       <Footer className="flex" />
 
-      {loading && <Loading />}
+      {isLoading && <Loading />}
     </div>
   );
 };

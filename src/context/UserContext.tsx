@@ -6,7 +6,7 @@ import {
   UserCookie,
   UserPayloadType,
 } from "types/user.types";
-import React, { createContext, useReducer, Dispatch, ReactNode, useEffect } from "react";
+import React, { createContext, useReducer, Dispatch, ReactNode, useEffect, useState } from "react";
 import Router from "next/router";
 import { getNoten, getUserInfo, postLogin } from "helper/apicalls";
 
@@ -15,11 +15,13 @@ export const UserContext = createContext<{
   dispatch: Dispatch<UserActions>;
   logout: () => void;
   login: (username: string, password: string) => Promise<void>;
+  isLoading: boolean;
 }>({
   state: DEFAULT_USER,
   dispatch: () => null,
   logout: () => null,
   login: async () => {},
+  isLoading: false,
 });
 
 const reducer = (state: User, action: UserActions) => {
@@ -50,6 +52,7 @@ const reducer = (state: User, action: UserActions) => {
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_USER);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getUserInfoWithCookie = async (user_cookie: UserCookie) => {
@@ -76,6 +79,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         type: UserPayloadType.INIT,
         payload: user,
       });
+      setIsLoading(false);
     };
 
     const user_cookie_str = localStorage.getItem(USER_COOKIE_KEY);
@@ -84,6 +88,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const user_cookie: UserCookie = JSON.parse(user_cookie_str!);
 
       if (user_cookie) {
+        setIsLoading(true);
         getUserInfoWithCookie(user_cookie).catch((err) => console.error(err));
       }
     } catch (error) {
@@ -92,6 +97,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (username: string, password: string) => {
+    setIsLoading(true);
+
     const form = new URLSearchParams();
     form.append("username", username);
     form.append("password", password);
@@ -114,18 +121,19 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       type: UserPayloadType.INIT,
       payload: user,
     });
+    setIsLoading(false);
   };
 
   const logout = () => {
     dispatch({
       type: UserPayloadType.RESET,
     });
-
+    setIsLoading(false);
     Router.push("/login");
   };
 
   return (
-    <UserContext.Provider value={{ state, dispatch, logout, login }}>
+    <UserContext.Provider value={{ state, dispatch, logout, login, isLoading }}>
       {children}
     </UserContext.Provider>
   );
