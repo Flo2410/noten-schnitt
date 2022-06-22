@@ -44,26 +44,26 @@ const LoginPage = () => {
     <div className="flex flex-col items-center justify-between w-screen h-screen px-2 md:px-0">
       <div></div>
       <form
-        className="flex flex-col w-full gap-4 p-4 bg-blue-500 rounded-lg shadow-lg md:w-2/3 lg:w-1/2 xl:w-1/4"
+        className="flex flex-col w-full gap-4 p-4 rounded-none shadow-fhwn md:w-2/3 lg:w-1/2 xl:w-1/4"
         onSubmit={submit}
       >
-        <h3 className="text-2xl font-bold text-center">Login</h3>
+        <h3 className="text-2xl text-center uppercase heading">Login</h3>
         {error && <span className="text-red-400">Username or password wrong!</span>}
         <input
           type="text"
-          className="w-full px-2 py-1 rounded-md"
+          className="w-full px-2 py-1 border-2 rounded-md border-primary"
           placeholder="username"
           onChange={(e) => inputChange({ username: e.target.value })}
         />
         <input
           type="password"
-          className="w-full px-2 py-1 rounded-md"
+          className="w-full px-2 py-1 border-2 rounded-md border-primary"
           placeholder="password"
           onChange={(e) => inputChange({ password: e.target.value })}
         />
         <input
           type="submit"
-          className="w-full py-2 bg-green-400 rounded-md cursor-pointer"
+          className="w-full py-2 text-lg text-white border-2 rounded-md cursor-pointer bg-primary hover:text-primary hover:bg-white border-primary"
           value="Login"
         />
       </form>
