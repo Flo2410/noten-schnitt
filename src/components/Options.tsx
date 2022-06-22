@@ -1,6 +1,6 @@
 import { UserContext } from "context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
-import { Note, Semester } from "types/noten.types";
+import { Semester } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -70,14 +70,14 @@ const Options = ({
 
   return (
     <div className="flex justify-center w-full mt-4">
-      <div className="w-full px-4 py-2 text-4xl bg-yellow-400 rounded-lg shadow-lg md:w-2/3 xl:w-1/2 pwa:w-full">
-        <form className="flex justify-between text-lg">
-          <div className="flex flex-col gap-4 sm:flex-row">
+      <div className="w-full px-4 py-2 text-4xl rounded-lg shadow-lg md:w-2/3 xl:w-1/2 pwa:w-full">
+        <form className="flex flex-col justify-between gap-2 text-lg sm:flex-row">
+          <div className="flex flex-wrap gap-4">
             {semesters.map((semester) => (
-              <label key={uuidv4()}>
+              <div key={uuidv4()} className="shrink-0">
                 <span className="mr-2">Semester {semester.semester}</span>
                 <input
-                  className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-gray-600 ring-offset-yellow-400 checked:bg-blue-500 ring-1"
+                  className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-light checked:bg-primary ring-1"
                   type="checkbox"
                   value={semester.semester}
                   checked={semester.checked}
@@ -85,27 +85,27 @@ const Options = ({
                     inputChange(semester.semester, v.target.checked);
                   }}
                 />
-              </label>
+              </div>
             ))}
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-8">
-            <label>
+          <div className="flex items-center justify-center gap-8 md:gap-2 md:flex-col sm:flex-row">
+            <div className="">
               <span className="mr-2">Show excluded</span>
               <input
-                className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-gray-600 ring-offset-yellow-400 checked:bg-blue-500 ring-1"
+                className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-gray-600 checked:bg-primary ring-1"
                 type="checkbox"
                 checked={show_excluded}
                 onChange={(v) => {
                   setShowExcluded(!show_excluded);
                 }}
               />
-            </label>
+            </div>
 
             <button
               type="reset"
               onClick={() => reset()}
-              className="flex items-center h-6 px-2 text-center rounded-sm hover:bg-blue-500 ring-offset-2 ring-gray-600 ring-offset-yellow-400 ring-1"
+              className="flex items-center h-8 px-4 text-center text-white border-2 rounded-md shadow-fhwn bg-primary hover:bg-white hover:text-primary border-primary"
             >
               <span>Reset</span>
             </button>

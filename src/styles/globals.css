@@ -4,6 +4,16 @@
 
 @layer base {
   body {
-    @apply bg-gray-200;
+    @apply bg-white font-fhwn text-dark;
+  }
+}
+
+@layer utilities {
+  .heading {
+    @apply font-bold text-primary;
+  }
+
+  .paragraph {
+    @apply font-normal text-dark;
   }
 }
