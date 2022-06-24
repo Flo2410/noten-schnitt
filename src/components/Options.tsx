@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Semester } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
+import CheckBox from "./CheckBox";
 
 const Options = ({
   show_excluded,
@@ -70,37 +71,26 @@ const Options = ({
 
   return (
     <div className="flex justify-center w-full mt-4">
-      <div className="w-full px-4 py-2 text-4xl rounded-lg shadow-lg md:w-2/3 xl:w-1/2 pwa:w-full">
+      <div className="w-full px-4 py-2 text-4xl shadow-fhwn md:w-2/3 2xl:w-1/2 pwa:w-full">
         <form className="flex flex-col justify-between gap-2 text-lg sm:flex-row">
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 justify-evenly">
             {semesters.map((semester) => (
-              <div key={uuidv4()} className="shrink-0">
-                <span className="mr-2">Semester {semester.semester}</span>
-                <input
-                  className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-light checked:bg-primary ring-1"
-                  type="checkbox"
-                  value={semester.semester}
-                  checked={semester.checked}
-                  onChange={(v) => {
-                    inputChange(semester.semester, v.target.checked);
-                  }}
-                />
-              </div>
+              <CheckBox
+                key={uuidv4()}
+                className="shrink-0"
+                label={`Semester ${semester.semester}`}
+                checked={semester.checked}
+                onChange={(checked) => inputChange(semester.semester, checked)}
+              />
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-8 md:gap-2 md:flex-col sm:flex-row">
-            <div className="">
-              <span className="mr-2">Show excluded</span>
-              <input
-                className="w-3 h-3 rounded-sm appearance-none ring-offset-2 ring-gray-600 checked:bg-primary ring-1"
-                type="checkbox"
-                checked={show_excluded}
-                onChange={(v) => {
-                  setShowExcluded(!show_excluded);
-                }}
-              />
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <CheckBox
+              label="Show exluded"
+              onChange={() => setShowExcluded(!show_excluded)}
+              checked={show_excluded}
+            />
 
             <button
               type="reset"
