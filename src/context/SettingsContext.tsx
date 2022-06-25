@@ -34,7 +34,6 @@ const reducer = (state: Settings, action: SettingsActions) => {
 
 export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_SETTINGS);
-  const [system_dark_mode, setSystemDarkMode] = useState(false);
 
   const setDarkModeClass = (dark_mode: boolean) => {
     document.body.classList.toggle("dark", dark_mode);
@@ -52,28 +51,15 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       if (value) settings = JSON.parse(value);
 
       dispatch({ type: SettingsPayloadType.INIT, payload: settings });
-
-      // event listener for system darkmode
-      // media_query.addEventListener("change", (e: MediaQueryListEvent) => {
-      //   setSystemDarkMode(e.matches);
-      // });
-
-      // setSystemDarkMode(media_query.matches);
     };
     loadSettings();
   }, []);
 
   useEffect(() => {
     // add "dark" class -> enables darkmode
-    // if (state.darkmode === DarkMode.SYSTEM)
-    //   setDarkModeClass(window.matchMedia("(prefers-color-scheme: dark)").matches);
     if (state.darkmode === DarkMode.DARK) setDarkModeClass(true);
     else if (state.darkmode === DarkMode.LIGHT) setDarkModeClass(false);
   }, [state.darkmode]);
-
-  // useEffect(() => {
-  //   if (state.darkmode === DarkMode.SYSTEM) setDarkModeClass(system_dark_mode);
-  // }, [system_dark_mode]);
 
   return (
     <SettingsContext.Provider value={{ state, dispatch }}>{children}</SettingsContext.Provider>
