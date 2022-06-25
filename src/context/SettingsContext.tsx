@@ -48,9 +48,13 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       const value = await localStorage.getItem(SETTINGS_COOKIE_KEY);
       let settings: Settings = DEFAULT_SETTINGS;
 
-      if (value) settings = JSON.parse(value);
-
-      dispatch({ type: SettingsPayloadType.INIT, payload: settings });
+      if (value) {
+        settings = JSON.parse(value);
+        dispatch({ type: SettingsPayloadType.INIT, payload: settings });
+      } else {
+        settings.darkmode = media_query.matches ? DarkMode.DARK : DarkMode.LIGHT;
+        dispatch({ type: SettingsPayloadType.UPDATE, payload: settings });
+      }
     };
     loadSettings();
   }, []);
