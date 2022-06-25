@@ -38,6 +38,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const setDarkModeClass = (dark_mode: boolean) => {
     document.body.classList.toggle("dark", dark_mode);
+    document.body.setAttribute("data-theme", dark_mode ? "dark" : "light");
   };
 
   useEffect(() => {
