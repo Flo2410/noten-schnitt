@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Semester } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
+import Button from "./Button";
 import CheckBox from "./CheckBox";
 
 const Options = ({
@@ -71,7 +72,7 @@ const Options = ({
 
   return (
     <div className="flex justify-center w-full mt-4">
-      <div className="w-full px-4 py-2 text-4xl shadow-fhwn md:w-2/3 2xl:w-1/2 pwa:w-full">
+      <div className="w-full px-4 py-2 text-4xl shadow-fhwn md:w-2/3 2xl:w-1/2 pwa:w-full dark:border">
         <form className="flex flex-col justify-between gap-2 text-lg sm:flex-row">
           <div className="flex flex-wrap gap-4 justify-evenly">
             {semesters.map((semester) => (
@@ -92,13 +93,7 @@ const Options = ({
               checked={show_excluded}
             />
 
-            <button
-              type="reset"
-              onClick={() => reset()}
-              className="flex items-center h-8 px-4 text-center text-white border-2 rounded-md shadow-fhwn bg-primary hover:bg-white hover:text-primary border-primary"
-            >
-              <span>Reset</span>
-            </button>
+            <Button type="reset" onClick={() => reset()} text="Reset" />
           </div>
         </form>
       </div>

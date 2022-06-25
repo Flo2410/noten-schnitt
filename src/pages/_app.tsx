@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { UserProvider } from "context/UserContext";
 import Head from "next/head";
+import { SettingsProvider } from "context/SettingsContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,9 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#E6E7EB" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </Head>
-      <UserProvider>
-        <Component {...pageProps} />
-      </UserProvider>
+      <SettingsProvider>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </SettingsProvider>
     </>
   );
 }

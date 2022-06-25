@@ -4,16 +4,20 @@
 
 @layer base {
   body {
-    @apply bg-white font-fhwn text-dark;
+    @apply font-fhwn;
   }
 }
 
 @layer utilities {
   .heading {
-    @apply font-bold text-primary;
+    @apply font-bold text-primary dark:text-white;
   }
 
   .paragraph {
-    @apply font-normal text-dark;
+    @apply font-normal text-dark dark:text-white;
+  }
+
+  .body-setup {
+    @apply bg-white text-dark dark:bg-primary dark:text-white;
   }
 }

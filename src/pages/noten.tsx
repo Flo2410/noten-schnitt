@@ -18,7 +18,7 @@ const NotenPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center px-2 md:px-0 pwa:px-2">
+    <div className="flex flex-col items-center px-2 md:px-0 pwa:px-2 body-setup">
       <UserHeader user={user} onLogout={() => logout()} />
       <NotenSchnitt noten={user.noten} />
       <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
