@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import NotenRow from "./NotenRow";
 import { v4 as uuidv4 } from "uuid";
 import { Note } from "types/noten.types";
+import { UserContext } from "context/UserContext";
+import { UserPayloadType } from "types/user.types";
 
-const NotenListe = ({ noten, show_excluded }: { noten?: Array<Note>; show_excluded: boolean }) => {
+const NotenListe = ({ show_excluded }: { show_excluded: boolean }) => {
+  const {
+    state: { noten },
+    dispatch,
+  } = useContext(UserContext);
   return (
     <div className="flex justify-center w-full">
       <div className="flex w-full px-4 py-2 my-4 overflow-x-auto dark:border shadow-fhwn md:w-2/3 2xl:w-1/2 md:mx-0 pwa:w-full">
@@ -20,9 +26,22 @@ const NotenListe = ({ noten, show_excluded }: { noten?: Array<Note>; show_exclud
           </thead>
 
           <tbody className="">
-            {noten?.map((note) => {
+            {noten?.map((note, index) => {
               if (!show_excluded && (note.exlude || note.perm_exlude)) return;
-              return <NotenRow note={note} key={uuidv4()} />;
+              return (
+                <NotenRow
+                  note={note}
+                  key={uuidv4()}
+                  onClick={() => {
+                    const new_noten = [...noten];
+                    new_noten[index].exlude = !new_noten[index].exlude;
+                    dispatch({
+                      type: UserPayloadType.UPDATE,
+                      payload: { noten: new_noten },
+                    });
+                  }}
+                />
+              );
             })}
           </tbody>
         </table>

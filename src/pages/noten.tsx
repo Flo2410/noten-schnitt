@@ -22,7 +22,7 @@ const NotenPage = () => {
       <UserHeader user={user} onLogout={() => logout()} />
       <NotenSchnitt noten={user.noten} />
       <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
-      <NotenListe noten={user.noten} show_excluded={show_excluded} />
+      <NotenListe show_excluded={show_excluded} />
 
       <Footer />
 
