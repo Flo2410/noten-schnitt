@@ -99,23 +99,23 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (username: string, password: string) => {
     setIsLoading(true);
 
-    //TODO: fix wrong pw disable loading
-
     const form = new URLSearchParams();
     form.append("username", username);
     form.append("password", password);
 
-    const user = await postLogin(form);
-
-    if (!user) throw new Error("Login error");
+    const user = await postLogin(form).catch(() => {
+      setIsLoading(false);
+      throw new Error("Login error");
+    });
 
     /*
      * Get Noten
      */
 
-    const noten = await getNoten(user);
-
-    if (!noten) throw new Error("Error getting grades");
+    const noten = await getNoten(user).catch(() => {
+      setIsLoading(false);
+      throw new Error("Error getting grades");
+    });
 
     user.noten = noten;
 
