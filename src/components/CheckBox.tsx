@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const CheckBox: FC<{
   className?: string;
@@ -7,7 +6,7 @@ const CheckBox: FC<{
   checked?: boolean;
   onChange: (checked: boolean) => void;
 }> = ({ className, label, checked = false, onChange }) => {
-  const id = uuidv4();
+  const id = `id-for-${label.replaceAll(" ", "-")}`;
   return (
     <div className={`${className ? className : ""}`}>
       <label className="mr-2 cursor-pointer" htmlFor={id}>
