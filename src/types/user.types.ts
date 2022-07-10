@@ -8,6 +8,7 @@ import { Note } from "./noten.types";
 export enum UserPayloadType {
   INIT = "INIT_USER",
   UPDATE = "UPDATE_USER",
+  UPDATE_NOTE = "UPDATE_USER_NOTE",
   RESET = "RESET_USER",
 }
 
@@ -26,6 +27,7 @@ export type User = {
 export type UserPayload = {
   [UserPayloadType.INIT]: User;
   [UserPayloadType.UPDATE]: Partial<User>;
+  [UserPayloadType.UPDATE_NOTE]: Partial<Note> & Required<Pick<Note, "internal_id">>;
   [UserPayloadType.RESET]: any;
 };
 

@@ -1,4 +1,5 @@
 export interface Note {
+  internal_id: string;
   note: string;
   art: string;
   lv: string;

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
 import { Note } from "types/noten.types";
+import { v4 as uuidv4 } from "uuid";
 
 const fetch = fetchCookie(nodeFetch);
 
@@ -38,6 +39,7 @@ export default async function handler(
   const noten: Array<Note> = [];
   let count = 0;
   let note: Note = {
+    internal_id: uuidv4(),
     note: "",
     art: "",
     lv: "",
@@ -71,6 +73,7 @@ export default async function handler(
         note.semester = item;
         noten.push(note);
         note = {
+          internal_id: uuidv4(),
           note: "",
           art: "",
           lv: "",

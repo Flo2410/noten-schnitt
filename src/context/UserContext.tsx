@@ -44,6 +44,22 @@ const reducer = (state: User, action: UserActions) => {
       }
 
       return { ...state, ...action.payload };
+
+    case UserPayloadType.UPDATE_NOTE:
+      const unmodified_note = state.noten?.find(
+        (note) => note.internal_id === action.payload.internal_id
+      );
+
+      if (!unmodified_note) return state;
+
+      const updated_note = { ...unmodified_note, ...action.payload };
+
+      const updated_noten = state.noten?.map((note) =>
+        note.internal_id === updated_note.internal_id ? updated_note : note
+      );
+
+      return { ...state, ...{ noten: updated_noten } };
+
     case UserPayloadType.RESET:
       localStorage.removeItem(USER_COOKIE_KEY);
       return DEFAULT_USER;
