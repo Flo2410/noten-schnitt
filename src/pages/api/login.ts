@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
 import { User } from "types/user.types";
+import { getCookiesAsString } from "helper/utils";
 
 const fetch = fetchCookie(nodeFetch);
 
@@ -94,7 +95,9 @@ const login = async (
       const body_2 = await data.text();
       const pers_nummer = Array.from(body_2.matchAll(/(?<=\()(\d+)(?=\))/g), (m) => m[0])[0];
 
-      return { cookie: cookies[0], pers_nummer: pers_nummer };
+      const session_cookie = await getSessionCookie(cookies[0]);
+
+      return { cookies: { fhwn: cookies[0], session: session_cookie }, pers_nummer: pers_nummer };
     }
   }
 
@@ -106,7 +109,7 @@ const getUserInfo = async (user: User): Promise<User> => {
     method: "GET",
     headers: {
       "User-Agent": "Mozilla/5.0",
-      Cookie: user.cookie,
+      Cookie: getCookiesAsString(user.cookies),
     },
   });
 
@@ -118,4 +121,18 @@ const getUserInfo = async (user: User): Promise<User> => {
   const course = arr[3].match(/(?<=\().+?(?=\))/g)![0];
 
   return { ...user, ...{ mat_nummer, name, course } };
+};
+
+const getSessionCookie = async (user_cookie: string): Promise<string> => {
+  const data = await nodeFetch("https://intranet.fhwn.ac.at/services/index.aspx", {
+    method: "GET",
+    headers: {
+      "User-Agent": "Mozilla/5.0",
+      Cookie: user_cookie,
+    },
+  });
+
+  const cookies = await data.headers.raw()["set-cookie"];
+
+  return cookies[0];
 };

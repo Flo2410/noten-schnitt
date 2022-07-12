@@ -16,7 +16,7 @@ export enum UserPayloadType {
 // Types
 //--------------------------------------------------------------------------------------------------------------------------------------------
 export type User = {
-  cookie: string;
+  cookies: UserCookies;
   pers_nummer: string;
   mat_nummer?: string;
   name?: string;
@@ -33,14 +33,20 @@ export type UserPayload = {
 
 export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
 
-export type UserCookie = Required<Pick<User, "cookie">>;
+export type UserCookies = {
+  fhwn: string;
+  session: string;
+};
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Constants
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 export const DEFAULT_USER: User = {
-  cookie: "",
+  cookies: {
+    fhwn: "",
+    session: "",
+  },
   pers_nummer: "",
   mat_nummer: "",
   name: "",

@@ -1,29 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
-import { User, UserCookie } from "types/user.types";
+import { User, UserCookies } from "types/user.types";
+import { getCookiesAsString } from "helper/utils";
 
 const fetch = fetchCookie(nodeFetch);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<User | "">) {
   console.log("POST User");
 
-  const user_cookie: UserCookie = req.body;
+  const user_cookies: UserCookies = req.body;
 
   try {
-    const user = await getUserInfo(user_cookie);
+    const user = await getUserInfo(user_cookies);
     res.status(200).send(user);
   } catch (err: any) {
     res.status(401).send("");
   }
 }
 
-const getUserInfo = async (user_cokkie: UserCookie): Promise<User> => {
+const getUserInfo = async (user_cokkies: UserCookies): Promise<User> => {
   const data = await fetch("https://intranet.fhwn.ac.at/services/stu_main.aspx", {
     method: "GET",
     headers: {
       "User-Agent": "Mozilla/5.0",
-      Cookie: user_cokkie.cookie,
+      Cookie: getCookiesAsString(user_cokkies),
     },
   });
 
@@ -43,7 +44,7 @@ const getUserInfo = async (user_cokkie: UserCookie): Promise<User> => {
   const course = pers_nummer_and_course[1].match(/(?<=\().+?(?=\))/g)![0];
 
   const user: User = {
-    cookie: user_cokkie.cookie,
+    cookies: user_cokkies,
     pers_nummer: pers_nummer,
     mat_nummer: mat_nummer,
     name: name,

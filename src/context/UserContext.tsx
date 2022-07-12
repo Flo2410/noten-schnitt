@@ -3,7 +3,7 @@ import {
   USER_COOKIE_KEY,
   User,
   UserActions,
-  UserCookie,
+  UserCookies,
   UserPayloadType,
 } from "types/user.types";
 import React, { createContext, useReducer, Dispatch, ReactNode, useEffect, useState } from "react";
@@ -27,20 +27,16 @@ export const UserContext = createContext<{
 const reducer = (state: User, action: UserActions) => {
   switch (action.type) {
     case UserPayloadType.INIT:
-      const user_cookie: Partial<User> = {
-        cookie: action.payload.cookie,
-      };
+      const user_cookies: UserCookies = action.payload.cookies;
 
-      localStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user_cookie));
+      localStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user_cookies));
 
       return action.payload;
     case UserPayloadType.UPDATE:
-      if (action.payload.cookie || action.payload.pers_nummer) {
-        const user_cookie: UserCookie = {
-          cookie: action.payload.cookie ? action.payload.cookie : state.cookie,
-        };
+      if (action.payload.cookies) {
+        const user_cookies: UserCookies = { ...state.cookies, ...action.payload.cookies };
 
-        localStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user_cookie));
+        localStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user_cookies));
       }
 
       return { ...state, ...action.payload };
@@ -71,11 +67,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const getUserInfoWithCookie = async (user_cookie: UserCookie) => {
+    const getUserInfoWithCookie = async (user_cookies: UserCookies) => {
       let user;
 
       try {
-        user = await getUserInfo(user_cookie);
+        user = await getUserInfo(user_cookies);
       } catch (error) {
         logout();
         return;
@@ -101,11 +97,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const user_cookie_str = localStorage.getItem(USER_COOKIE_KEY);
 
     try {
-      const user_cookie: UserCookie = JSON.parse(user_cookie_str!);
+      const user_cookies: UserCookies = JSON.parse(user_cookie_str!);
 
-      if (user_cookie) {
+      if (user_cookies) {
         setIsLoading(true);
-        getUserInfoWithCookie(user_cookie).catch((err) => console.error(err));
+        getUserInfoWithCookie(user_cookies).catch((err) => console.error(err));
       }
     } catch (error) {
       console.error(error);
