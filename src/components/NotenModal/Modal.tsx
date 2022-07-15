@@ -1,7 +1,7 @@
-import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { FaTimes } from "react-icons/fa";
-import Button from "./Button";
+import Button from "../Button";
 
 const Modal = ({
   children,
@@ -75,7 +75,7 @@ const Modal = ({
               <div
                 className={`inline-block w-full p-6 my-8 overflow-hidden text-left align-middle bg-white dark:bg-primary transition-all transform  rounded-md shadow-xl ${className}`}
               >
-                <Dialog.Title as="h2" className="text-2xl leading-6 heading">
+                <Dialog.Title as="h2" className="mb-4 text-2xl leading-6 heading">
                   {title}
 
                   <Button className="absolute cursor-pointer top-2 right-2" onClick={closeModal}>

@@ -1,16 +1,13 @@
 import NotenSchnitt from "components/ NotenSchnitt";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
-import Modal from "components/Modal";
 import NotenListe from "components/NotenListe";
 import NotenModal from "components/NotenModal";
 import Options from "components/Options";
 import UserHeader from "components/UserHeader";
-import { ModalContext } from "context/ModalContext";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { ModalPayloadType } from "types/modal.types";
 import { USER_COOKIE_KEY } from "types/user.types";
 
 const NotenPage = () => {

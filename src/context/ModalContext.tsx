@@ -48,7 +48,12 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     };
 
     if (state.is_open) load_course();
-    else dispatch({ type: ModalPayloadType.RESET });
+    else {
+      // Timout so to reset after closing animation
+      setTimeout(() => {
+        dispatch({ type: ModalPayloadType.RESET });
+      }, 200);
+    }
   }, [state.is_open]);
 
   return <ModalContext.Provider value={{ state, dispatch }}>{children}</ModalContext.Provider>;

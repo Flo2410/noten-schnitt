@@ -1,7 +1,9 @@
 import { ModalContext } from "context/ModalContext";
 import React, { useContext } from "react";
 import { ModalPayloadType } from "types/modal.types";
+import CourseOverview from "./CourseOverview";
 import Modal from "./Modal";
+import TimeTable from "./TimeTable";
 
 const NotenModal = () => {
   const { state: modal, dispatch: dispatchModal } = useContext(ModalContext);
@@ -14,7 +16,8 @@ const NotenModal = () => {
     >
       {modal.content && (
         <div className="paragraph">
-          {modal.content.fullname} {modal.content.id}
+          <TimeTable modal={modal} />
+          <CourseOverview modal={modal} />
         </div>
       )}
     </Modal>
