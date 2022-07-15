@@ -1,14 +1,16 @@
+import { ModalContext } from "context/ModalContext";
 import { UserContext } from "context/UserContext";
-import React, { useContext, useEffect, useState } from "react";
+import { getCourseInfo } from "helper/apicalls";
+import React, { useContext } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
+import { ModalPayloadType } from "types/modal.types";
 import { Note } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 
-const NotenRow = ({ note, onClick }: { note: Note; onClick?: () => void }) => {
-  const {
-    state: { noten },
-    dispatch,
-  } = useContext(UserContext);
+const NotenRow = ({ note }: { note: Note }) => {
+  const { state: user, dispatch } = useContext(UserContext);
+
+  const { state: modal_state, dispatch: dispatchModal } = useContext(ModalContext);
   // const [checked, setChecked] = useState(!note.perm_exlude);
 
   return (
@@ -24,7 +26,18 @@ const NotenRow = ({ note, onClick }: { note: Note; onClick?: () => void }) => {
           ? "hover:bg-primary/30 dark:hover:bg-white/50 even:bg-primary/5 dark:even:bg-white/10"
           : ""
       }`}
-      onClick={() => (onClick ? onClick() : null)}
+      onClick={() => {
+        dispatchModal({
+          type: ModalPayloadType.OPEN,
+          payload: {
+            course_req_params: {
+              course_fullname: `${note.lv}(${note.art})`,
+              course_semester: note.semester,
+            },
+            title: note.lv,
+          },
+        });
+      }}
     >
       <td>
         <div className="flex justify-center">
@@ -32,7 +45,7 @@ const NotenRow = ({ note, onClick }: { note: Note; onClick?: () => void }) => {
             <input
               type="checkbox"
               onChange={(e) => {
-                if (!noten) return;
+                if (!note) return;
 
                 // setChecked(!checked);
 

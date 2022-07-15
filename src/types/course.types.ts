@@ -31,3 +31,19 @@ export type CourseTimetable = Array<CourseTimetableEntry>;
 export type CoursePreview = Pick<Course, "id" | "fullname">;
 
 export type CoursePreviewList = Array<CoursePreview>;
+
+export type CourseRequestParams = {
+  course_fullname: string;
+  course_semester: string;
+};
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// Constants
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+export const DEFAULT_COURSE: Course = {
+  fullname: "",
+  id: "",
+  course_overview: [],
+  timetable: [],
+};

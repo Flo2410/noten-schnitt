@@ -5,7 +5,7 @@ import { useContext, useEffect } from "react";
 const Home = () => {
   const { state: user, dispatch: dispatchUser } = useContext(UserContext);
   useEffect(() => {
-    if (user.cookie) Router.push("/noten");
+    if (user.cookies.fhwn) Router.push("/noten");
     else Router.push("/login");
   }, []);
   return <></>;
