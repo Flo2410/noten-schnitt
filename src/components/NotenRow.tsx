@@ -13,10 +13,23 @@ const NotenRow = ({ note }: { note: Note }) => {
   const { state: modal_state, dispatch: dispatchModal } = useContext(ModalContext);
   // const [checked, setChecked] = useState(!note.perm_exlude);
 
+  const openModal = () => {
+    dispatchModal({
+      type: ModalPayloadType.OPEN,
+      payload: {
+        course_req_params: {
+          course_fullname: `${note.lv}(${note.art})`,
+          course_semester: note.semester,
+        },
+        title: note.lv,
+      },
+    });
+  };
+
   return (
     <tr
       className={`dark:bg-opacity-50 cursor-pointer
-      ${note.perm_exlude ? "bg-red-700/30 cursor-not-allowed" : ""} 
+      ${note.perm_exlude ? "bg-red-700/30 hover:bg-red-700/60" : ""} 
       ${
         note.exlude && !note.perm_exlude
           ? "bg-light/30 dark:bg-light/60 hover:bg-primary/30 dark:hover:bg-white/50"
@@ -26,18 +39,6 @@ const NotenRow = ({ note }: { note: Note }) => {
           ? "hover:bg-primary/30 dark:hover:bg-white/50 even:bg-primary/5 dark:even:bg-white/10"
           : ""
       }`}
-      onClick={() => {
-        dispatchModal({
-          type: ModalPayloadType.OPEN,
-          payload: {
-            course_req_params: {
-              course_fullname: `${note.lv}(${note.art})`,
-              course_semester: note.semester,
-            },
-            title: note.lv,
-          },
-        });
-      }}
     >
       <td>
         <div className="flex justify-center">
@@ -64,12 +65,12 @@ const NotenRow = ({ note }: { note: Note }) => {
           </label>
         </div>
       </td>
-      <td>{note.note}</td>
-      <td>{note.art}</td>
-      <td>{note.lv}</td>
-      <td>{note.ects}</td>
-      <td>{note.date}</td>
-      <td>{note.semester}</td>
+      <td onClick={() => openModal()}>{note.note}</td>
+      <td onClick={() => openModal()}>{note.art}</td>
+      <td onClick={() => openModal()}>{note.lv}</td>
+      <td onClick={() => openModal()}>{note.ects}</td>
+      <td onClick={() => openModal()}>{note.date}</td>
+      <td onClick={() => openModal()}>{note.semester}</td>
     </tr>
   );
 };
