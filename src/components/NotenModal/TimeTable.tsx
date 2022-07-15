@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ModalContent } from "types/modal.types";
 import TimeTableRow from "./TimeTableRow";
+import Loading from "./Loading";
 
 const TimeTable: FC<{ modal: ModalContent }> = ({ modal }) => {
   return (
@@ -24,9 +25,11 @@ const TimeTable: FC<{ modal: ModalContent }> = ({ modal }) => {
           </thead>
 
           <tbody>
-            {modal.content.timetable.map((timetable_entry) => (
-              <TimeTableRow timetable_entry={timetable_entry} key={uuidv4()} />
-            ))}
+            {modal.content.timetable.length > 0 &&
+              modal.content.timetable.map((timetable_entry) => (
+                <TimeTableRow timetable_entry={timetable_entry} key={uuidv4()} />
+              ))}
+            {modal.content.timetable.length <= 0 && <Loading count={5} cols={8} />}
           </tbody>
         </table>
       </div>
