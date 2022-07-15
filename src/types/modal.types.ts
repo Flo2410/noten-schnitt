@@ -3,55 +3,46 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 import { ActionMap } from "./context.types";
-import { Note } from "./noten.types";
+import { Course, CourseRequestParams, DEFAULT_COURSE } from "./course.types";
 
-export enum UserPayloadType {
-  INIT = "INIT_USER",
-  UPDATE = "UPDATE_USER",
-  UPDATE_NOTE = "UPDATE_USER_NOTE",
-  RESET = "RESET_USER",
+export enum ModalPayloadType {
+  INIT = "INIT_MODAL",
+  UPDATE_CONTENT = "UPDATE_CONTENT_MODAL",
+  OPEN = "OPEN_MODAl",
+  CLOSE = "CLOSE_MODAL",
+  RESET = "RESET_MODAL",
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Types
 //--------------------------------------------------------------------------------------------------------------------------------------------
-export type User = {
-  cookies: UserCookies;
-  pers_nummer: string;
-  mat_nummer?: string;
-  name?: string;
-  course?: string;
-  noten?: Array<Note>;
+export type ModalContent = {
+  title: string;
+  is_open: boolean;
+  course_req_params: CourseRequestParams;
+  content: Course;
 };
 
-export type UserPayload = {
-  [UserPayloadType.INIT]: User;
-  [UserPayloadType.UPDATE]: Partial<User>;
-  [UserPayloadType.UPDATE_NOTE]: Partial<Note> & Required<Pick<Note, "internal_id">>;
-  [UserPayloadType.RESET]: any;
+export type ModalPayload = {
+  [ModalPayloadType.INIT]: ModalContent;
+  [ModalPayloadType.UPDATE_CONTENT]: Course;
+  [ModalPayloadType.OPEN]: Pick<ModalContent, "title" | "course_req_params">;
+  [ModalPayloadType.CLOSE]: undefined;
+  [ModalPayloadType.RESET]: undefined;
 };
 
-export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
-
-export type UserCookies = {
-  fhwn: string;
-  session: string;
-};
+export type ModalActions = ActionMap<ModalPayload>[keyof ActionMap<ModalPayload>];
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Constants
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-export const DEFAULT_USER: User = {
-  cookies: {
-    fhwn: "",
-    session: "",
+export const DEFAULT_MODAL: ModalContent = {
+  title: "Modal",
+  is_open: false,
+  course_req_params: {
+    course_fullname: "",
+    course_semester: "",
   },
-  pers_nummer: "",
-  mat_nummer: "",
-  name: "",
-  course: "",
-  noten: [],
+  content: DEFAULT_COURSE,
 };
-
-export const USER_COOKIE_KEY = "user";

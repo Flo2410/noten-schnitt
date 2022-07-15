@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { UserProvider } from "context/UserContext";
 import Head from "next/head";
 import { SettingsProvider } from "context/SettingsContext";
+import { ModalProvider } from "context/ModalContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -22,7 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <SettingsProvider>
         <UserProvider>
-          <Component {...pageProps} />
+          <ModalProvider>
+            <Component {...pageProps} />
+          </ModalProvider>
         </UserProvider>
       </SettingsProvider>
     </>

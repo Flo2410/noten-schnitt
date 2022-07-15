@@ -13,7 +13,7 @@ const UserHeader = ({ user, onLogout }: { user: User; onLogout: () => void }) =>
           <span>STG: {user.course}</span>
         </div>
 
-        <Button text="Logout" onClick={() => onLogout()} />
+        <Button onClick={() => onLogout()}>Logout</Button>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import NotenSchnitt from "components/ NotenSchnitt";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
 import NotenListe from "components/NotenListe";
+import NotenModal from "components/NotenModal";
 import Options from "components/Options";
 import UserHeader from "components/UserHeader";
 import { UserContext } from "context/UserContext";
@@ -18,16 +19,17 @@ const NotenPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center min-h-screen px-2 md:px-0 pwa:px-2 body-setup">
-      <UserHeader user={user} onLogout={() => logout()} />
-      <NotenSchnitt noten={user.noten} />
-      <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
-      <NotenListe show_excluded={show_excluded} />
-
-      <Footer />
-
-      {isLoading && <Loading />}
-    </div>
+    <>
+      <div className="flex flex-col items-center min-h-screen px-2 md:px-0 pwa:px-2 body-setup">
+        <UserHeader user={user} onLogout={() => logout()} />
+        <NotenSchnitt noten={user.noten} />
+        <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
+        <NotenListe show_excluded={show_excluded} />
+        <Footer />
+        {isLoading && <Loading />}
+      </div>
+      <NotenModal />
+    </>
   );
 };
 

@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import nodeFetch from "node-fetch";
+import fetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
 import { Note } from "types/noten.types";
 import { v4 as uuidv4 } from "uuid";
+import { getCookiesAsString } from "helper/utils";
 
-const fetch = fetchCookie(nodeFetch);
+// const fetch = fetchCookie(nodeFetch);
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,7 +19,7 @@ export default async function handler(
       method: "GET",
       headers: {
         "User-Agent": "Mozilla/5.0",
-        Cookie: req.body.cookie,
+        Cookie: getCookiesAsString(req.body.cookies),
       },
     }
   );

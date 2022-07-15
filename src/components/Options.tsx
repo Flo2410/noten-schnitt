@@ -93,7 +93,9 @@ const Options = ({
               checked={show_excluded}
             />
 
-            <Button type="reset" onClick={() => reset()} text="Reset" />
+            <Button type="reset" onClick={() => reset()}>
+              Reset
+            </Button>
           </div>
         </form>
       </div>
