@@ -5,6 +5,8 @@ import Head from "next/head";
 import { SettingsProvider } from "context/SettingsContext";
 import { ModalProvider } from "context/ModalContext";
 
+import "react-loading-skeleton/dist/skeleton.css";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>

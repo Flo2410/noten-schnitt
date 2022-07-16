@@ -1,14 +1,13 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-
-import "react-loading-skeleton/dist/skeleton.css";
 
 const Loading: FC<{ count?: number; cols: number }> = ({ count = 1, cols }) => {
   let arr: Array<ReactNode> = [];
 
   for (let i = 0; i < cols; i++) {
     arr.push(
-      <td>
+      <td key={uuidv4()}>
         <Skeleton count={count} />
       </td>
     );

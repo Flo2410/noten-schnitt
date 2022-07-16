@@ -73,7 +73,7 @@ const Modal = ({
               leaveTo="opacity-0 scale-95"
             >
               <div
-                className={`inline-block w-full p-6 my-8 overflow-hidden text-left align-middle bg-white dark:bg-primary transition-all transform  rounded-md shadow-xl ${className}`}
+                className={`inline-block w-full p-6 my-8 overflow-hidden text-left align-middle bg-white dark:bg-primary transition-all transform rounded-md shadow-xl lg:w-3/4 xl:w-2/3 2xl:w-1/2 ${className}`}
               >
                 <Dialog.Title as="h2" className="mb-4 text-2xl leading-6 heading">
                   {title}
