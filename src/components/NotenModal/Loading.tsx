@@ -7,7 +7,7 @@ const Loading: FC<{ count?: number; cols: number }> = ({ count = 1, cols }) => {
 
   for (let i = 0; i < cols; i++) {
     arr.push(
-      <td key={uuidv4()}>
+      <td key={uuidv4()} className={`${i === cols - 1 ? "w-1/4" : ""}`}>
         <Skeleton count={count} />
       </td>
     );

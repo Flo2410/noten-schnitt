@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { FaTimes } from "react-icons/fa";
-import Button from "../Button";
 
 const Modal = ({
   children,
