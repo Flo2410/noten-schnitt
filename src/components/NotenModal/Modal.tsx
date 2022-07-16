@@ -78,9 +78,12 @@ const Modal = ({
                 <Dialog.Title as="h2" className="mb-4 text-2xl leading-6 heading">
                   {title}
 
-                  <Button className="absolute cursor-pointer top-2 right-2" onClick={closeModal}>
+                  <button
+                    className="absolute transition ease-in-out cursor-pointer top-2 right-2 text-primary hover:rotate-45 dark:text-white"
+                    onClick={closeModal}
+                  >
                     <FaTimes />
-                  </Button>
+                  </button>
                 </Dialog.Title>
 
                 {children}

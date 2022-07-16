@@ -7,7 +7,7 @@ const CourseOverview: FC<{ modal: ModalContent }> = ({ modal }) => {
   return (
     <div className="flex justify-center w-full">
       <div className="flex flex-col w-full px-4 py-2 dark:border shadow-fhwn">
-        <h3 className="pb-2 mb-4 text-xl border-b-2 heading border-b-primary">
+        <h3 className="pb-2 mb-4 text-xl border-b-2 heading border-primary dark:border-white">
           Lehrveranstaltungsbeschreibung
         </h3>
 

@@ -23,7 +23,7 @@
 
 @layer utilities {
   .heading {
-    @apply font-bold text-primary dark:text-secondary;
+    @apply font-bold text-primary dark:text-white;
   }
 
   .paragraph {
