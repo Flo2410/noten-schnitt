@@ -1,5 +1,5 @@
 import { SettingsContext } from "context/SettingsContext";
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext } from "react";
 import { DarkMode, SettingsPayloadType } from "types/settings.types";
 
 const ThemeSelect: FC<{ className?: string }> = ({ className }) => {

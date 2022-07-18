@@ -1,6 +1,5 @@
 import { ModalContext } from "context/ModalContext";
 import { UserContext } from "context/UserContext";
-import { getCourseInfo } from "helper/apicalls";
 import React, { useContext } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { ModalPayloadType } from "types/modal.types";

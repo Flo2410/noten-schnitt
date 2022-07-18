@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
-import fetchCookie from "fetch-cookie";
 import { Note } from "types/noten.types";
 import { v4 as uuidv4 } from "uuid";
 import { getCookiesAsString } from "helper/utils";

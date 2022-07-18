@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ModalContent } from "types/modal.types";
 import TimeTableRow from "./TimeTableRow";

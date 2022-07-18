@@ -1,15 +1,16 @@
 import fetch from "node-fetch";
-
 import { NextApiRequest, NextApiResponse } from "next";
-import { Course, CourseOverview, CoursePreview, CourseTimetable } from "types/course.types";
-import { getCoursesFromIntranet } from "./courses";
+import {
+  Course,
+  CourseOverview,
+  CoursePreview,
+  CoursePreviewList,
+  CourseTimetable,
+} from "types/course.types";
 import { getCookiesAsString } from "helper/utils";
 import { UserCookies } from "types/user.types";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse</*Course | string*/ any>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Course | string>) {
   console.log("POST Course");
 
   const course_fullname: string = req.body.course_fullname;
@@ -51,7 +52,7 @@ export default async function handler(
 const getCourseInfoFromIntranet = async (
   course_preview: CoursePreview,
   cookies: UserCookies
-): Promise</*Course*/ any> => {
+): Promise<Course> => {
   const data = await fetch(
     // https://intranet.fhwn.ac.at/Services/lvdokus/view_lv.aspx?stu=0&lvnr=18951
     `https://intranet.fhwn.ac.at/Services/lvdokus/view_lv.aspx?stu=0&lvnr=${course_preview.id}`,
@@ -81,12 +82,8 @@ const getCourseInfoFromIntranet = async (
 
   const timespan_str = arr_timetable[0].trim();
 
-  // arr_timetable = Array.from(timespan_str.matchAll(/(?<=<td>)(.*?)(?=<\/td>)/g), (m) =>
   arr_timetable = Array.from(timespan_str.matchAll(/(?<=<td>)([\s\S]*?)(?=<\/td>)/g), (m) => {
-    let str = m[0]
-      .replace("&nbsp;", "")
-      // .replace(/(\r\n|\n|\r)/gm, "")
-      .trim();
+    let str = m[0].replace("&nbsp;", "").trim();
 
     if (str.includes("span")) {
       const mat = str.match(/(?<=>)(.*?)(?=<)/g);
@@ -154,4 +151,41 @@ const getCourseInfoFromIntranet = async (
   };
 
   return course;
+};
+
+const getCoursesFromIntranet = async (
+  semester: string,
+  cookies: UserCookies
+): Promise<CoursePreviewList> => {
+  const data = await fetch(
+    //https://intranet.fhwn.ac.at/services/index.aspx?rtvID=RadTreeView2&rtnLevel=2&rtnID=t1&rtnParentPosition=110&rtnText=2.Semester&rtnValue=4%232010830009&rtnCategory=AllLVSem&rtnChecked=0
+    `https://intranet.fhwn.ac.at/services/index.aspx?rtvID=RadTreeView2&rtnLevel=2&rtnParentPosition=110&rtnValue=${semester}%232010830009&rtnCategory=AllLVSem`,
+    {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Cookie: getCookiesAsString(cookies),
+      },
+    }
+  );
+
+  let body = await data.text();
+
+  // Check if request was redirected to login page
+  if (data.url.includes("https://intranet.fhwn.ac.at/services/logon.aspx")) {
+    throw new Error("Cookie is not valid!");
+  }
+
+  const arr = Array.from(body.matchAll(/(?<=<a)(.*?)(?=<\/)/gs), (m) => m[0].trim()).filter(String);
+
+  const course_list: CoursePreviewList = [];
+
+  arr.forEach((str) => {
+    const fullname = str.match(/(?<=>)[\w].*/g)![0];
+    const id = str.match(/(?<=lvnr=)(.+?)(?=")/g)![0];
+
+    course_list.push({ id: id, fullname: fullname });
+  });
+
+  return course_list;
 };

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, Dispatch, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useReducer, Dispatch, useEffect, ReactNode } from "react";
 import {
   DarkMode,
   DEFAULT_SETTINGS,
