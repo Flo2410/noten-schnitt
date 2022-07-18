@@ -3,11 +3,12 @@ import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
 import { User } from "types/user.types";
 import { getCookiesAsString } from "helper/utils";
+import { log } from "helper/logger";
 
 const fetch = fetchCookie(nodeFetch);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<User | "">) {
-  console.log("POST Login");
+  const start_time = Date.now();
 
   try {
     const user = await getKeys()
@@ -17,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       .then((user) => getUserInfo(user));
 
     res.status(200).send(user);
+    log("info", req.method, req.url, 200, start_time, Date.now());
   } catch (error) {
     res.status(401).send("");
   }

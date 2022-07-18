@@ -9,9 +9,10 @@ import {
 } from "types/course.types";
 import { getCookiesAsString } from "helper/utils";
 import { UserCookies } from "types/user.types";
+import { log } from "helper/logger";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Course | string>) {
-  console.log("POST Course");
+  const start_time = Date.now();
 
   const course_fullname: string = req.body.course_fullname;
   const course_semester: string = req.body.course_semester;
@@ -33,20 +34,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   });
 
-  if (!course_preview_found)
-    return res
-      .status(404)
-      .send(`No course "${course_fullname}" found in semester ${course_semester}!`);
+  if (!course_preview_found) {
+    const error = `No course "${course_fullname}" found in semester ${course_semester}!`;
+    log("info", req.method, req.url, 404, start_time, Date.now(), {
+      course_fullname: course_fullname,
+      course_semester: course_semester,
+      error: error,
+    });
+    return res.status(404).send(error);
+  }
 
   // Get the course info
   const course = await getCourseInfoFromIntranet(course_preview_found, cookies).catch(() => {
     res.status(401).send("Cookie is not valid!2");
+    log("info", req.method, req.url, 401, start_time, Date.now(), {
+      course_fullname: course_fullname,
+      course_semester: course_semester,
+      error: "Cookie is not valid!2",
+    });
   });
 
   if (!course)
     return res.status(404).send(`Course info for ${course_fullname} could not be fetched!`);
 
   res.send(course);
+  log("info", req.method, req.url, 200, start_time, Date.now(), {
+    course_fullname: course_fullname,
+    course_semester: course_semester,
+  });
 }
 
 const getCourseInfoFromIntranet = async (

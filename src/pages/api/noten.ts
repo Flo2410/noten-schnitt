@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import { Note } from "types/noten.types";
 import { v4 as uuidv4 } from "uuid";
 import { getCookiesAsString } from "helper/utils";
+import { log } from "helper/logger";
 
 // const fetch = fetchCookie(nodeFetch);
 
@@ -10,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Array<Note> | string>
 ) {
-  console.log("POST Noten");
+  const start_time = Date.now();
 
   const data = await fetch(
     "https://intranet.fhwn.ac.at/services/noten/noten.aspx?matnummer=" + req.body.pers_nummer,
@@ -91,4 +92,5 @@ export default async function handler(
 
   noten.splice(0, 1);
   res.status(200).send(noten);
+  log("info", req.method, req.url, 200, start_time, Date.now());
 }
