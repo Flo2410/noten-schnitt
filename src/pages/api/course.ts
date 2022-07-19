@@ -35,11 +35,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   });
 
   if (!course_preview_found) {
-    const error = `No course "${course_fullname}" found in semester ${course_semester}!`;
+    const error = `No course ${course_fullname} found in semester ${course_semester}!`;
     log("info", req.method, req.url, 404, start_time, Date.now(), {
       course_fullname: course_fullname,
       course_semester: course_semester,
       error: error,
+      course_list: course_list,
     });
     return res.status(404).send(error);
   }
