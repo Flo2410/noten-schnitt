@@ -30,7 +30,7 @@ export const log = (
   }
 
   logger.info({
-    ...{ method: method, path: path, duration: end_time - start_time },
+    ...{ method: method, path: path, status: status, duration: end_time - start_time },
     ...etc,
   });
 };
