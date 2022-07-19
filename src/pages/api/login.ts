@@ -18,9 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       .then((user) => getUserInfo(user));
 
     res.status(200).send(user);
-    log("info", req.method, req.url, 200, start_time, Date.now());
+    log("info", req.method, req.url, 200, start_time, Date.now(), { course: user.course });
   } catch (error) {
     res.status(401).send("");
+    log("info", req.method, req.url, 401, start_time, Date.now(), { error: "Login failed" });
   }
 }
 
