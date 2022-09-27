@@ -121,7 +121,8 @@ const getUserInfo = async (user: User): Promise<User> => {
   name = name.substring(name.indexOf(" ") + 1);
   const arr = Array.from(body.matchAll(/(?<=6px;">).+?(?=<)/g), (m) => m[0]);
   const mat_nummer = arr[1];
-  const course = arr[3].match(/(?<=\().+?(?=\))/g)![0];
+  // const course = arr[3].match(/(?<=\().+?(?=\))/g)![0];
+  const course = "-"; //FIXME: Course not displayed on the intranet site enymore!
 
   return { ...user, ...{ mat_nummer, name, course } };
 };
