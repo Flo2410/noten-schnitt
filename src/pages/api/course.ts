@@ -69,6 +69,12 @@ const getCourseInfoFromIntranet = async (
   course_preview: CoursePreview,
   cookies: UserCookies
 ): Promise<Course> => {
+  const AbortController = globalThis.AbortController;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 5000);
+
   const data = await fetch(
     // https://intranet.fhwn.ac.at/Services/lvdokus/view_lv.aspx?stu=0&lvnr=18951
     `https://intranet.fhwn.ac.at/Services/lvdokus/view_lv.aspx?stu=0&lvnr=${course_preview.id}`,
@@ -80,6 +86,8 @@ const getCourseInfoFromIntranet = async (
       },
     }
   );
+
+  if (!controller.signal.aborted) clearTimeout(timeout);
 
   let body = await data.text();
 
