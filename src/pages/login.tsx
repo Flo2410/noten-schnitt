@@ -3,6 +3,7 @@ import Loading from "components/Loading";
 import { UserContext } from "context/UserContext";
 import Router from "next/router";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
+import { useUserStore } from "stores/userStore_v2";
 
 interface UserFormData {
   username: string;
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const { state: user, login, isLoading } = useContext(UserContext);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
+  const login_v2 = useUserStore((state) => state.login);
 
   useEffect(() => {
     if (user.cookies.fhwn) Router.push("/noten");
@@ -26,7 +28,11 @@ const LoginPage = () => {
 
     // setLoading(true);
 
-    login(form_data.username, form_data.password)
+    // login(form_data.username, form_data.password)
+    Promise.all([
+      login(form_data.username, form_data.password),
+      login_v2(form_data.username, form_data.password),
+    ])
       .then(() => {
         setError(false);
         // setLoading(false);
