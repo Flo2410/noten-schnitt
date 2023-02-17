@@ -7,7 +7,7 @@ import { UserPayloadType } from "./user.types";
 //--------------------------------------------------------------------------------------------------------------------------------------------
 export type User = {
   cookies: UserCookies;
-  noten_nummer: string;
+  student_pkz: string;
   pers_nummer?: string;
   mat_nummer?: string;
   name?: string;
@@ -38,7 +38,7 @@ export const DEFAULT_USER: User = {
     asp_net_core: "",
     culture: "",
   },
-  noten_nummer: "",
+  student_pkz: "",
   pers_nummer: "",
   mat_nummer: "",
   name: "",

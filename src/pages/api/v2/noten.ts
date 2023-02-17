@@ -17,7 +17,7 @@ export default async function handler(
   const dates = await getSemsterDates(req.body.cookies);
 
   const promises = dates.map((date) =>
-    getNotenForSemester(req.body.cookies, req.body.noten_nummer, date)
+    getNotenForSemester(req.body.cookies, req.body.student_pkz, date)
   );
 
   const noten = await (await Promise.all(promises)).flat();
@@ -53,11 +53,11 @@ const getSemsterDates = async (cookies: UserCookies) => {
 
 const getNotenForSemester = async (
   cookies: UserCookies,
-  noten_nummer: string,
+  student_pkz: string,
   semester_date: string
 ) => {
   const data = await fetch(
-    `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradesList?bisdatum=${semester_date}&selectedPkzFromStudent=${noten_nummer}`,
+    `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradesList?bisdatum=${semester_date}&selectedPkzFromStudent=${student_pkz}`,
     {
       method: "GET",
       headers: {
