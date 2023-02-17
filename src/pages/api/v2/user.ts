@@ -39,10 +39,11 @@ const getUserInfo = async (user_cookies: UserCookies): Promise<User> => {
   const mat_nummer = $("#collapseIDS > div > div:nth-child(2) > div.col-sm-9 > b").text();
   const name = $("#collapseNames > div > div > div.col-sm-9 > b").text();
 
-  const course = await getUserCourse(user_cookies);
+  const { course, student_pkz } = await getUserCourseAndPkz(user_cookies);
 
   const user: User = {
     cookies: user_cookies,
+    student_pkz: student_pkz,
     pers_nummer: pers_nummer,
     mat_nummer: mat_nummer,
     name: name,
@@ -52,7 +53,9 @@ const getUserInfo = async (user_cookies: UserCookies): Promise<User> => {
   return user;
 };
 
-const getUserCourse = async (user_cookies: UserCookies): Promise<string> => {
+const getUserCourseAndPkz = async (
+  user_cookies: UserCookies
+): Promise<{ course: string; student_pkz: string }> => {
   const data = await fetch("https://cis.fhwn.ac.at/Grades/StudentGradesOverview/Index", {
     method: "GET",
     headers: {
@@ -70,5 +73,9 @@ const getUserCourse = async (user_cookies: UserCookies): Promise<string> => {
   const $ = cheerio.load(html, null, false);
 
   const course = $("#selStudentPKZ").children().text();
-  return course;
+  const student_pkz = $("#selStudentPKZ > option")
+    .toArray()
+    .map((item) => item.attributes[0].value)[0];
+
+  return { course, student_pkz };
 };
