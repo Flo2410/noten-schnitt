@@ -11,29 +11,29 @@
     "deploy": "docker build -t ghcr.io/flo2410/noten-schnitt . && docker push  ghcr.io/flo2410/noten-schnitt"
   },
   "dependencies": {
-    "@headlessui/react": "1.7.5",
+    "@headlessui/react": "1.7.11",
     "cheerio": "^1.0.0-rc.12",
-    "daisyui": "2.43.2",
+    "daisyui": "2.50.1",
     "fetch-cookie": "2.1.0",
-    "next": "13.0.6",
+    "next": "13.1.6",
     "next-pwa": "5.6.0",
     "node-fetch": "3.3.0",
-    "pino": "8.7.0",
+    "pino": "8.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.7.1",
-    "react-loading-skeleton": "^3.1.0",
+    "react-loading-skeleton": "^3.1.1",
     "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@types/node": "18.11.14",
-    "@types/react": "18.0.26",
+    "@types/node": "18.13.0",
+    "@types/react": "18.0.28",
     "@types/uuid": "9.0.0",
     "autoprefixer": "10.4.13",
-    "eslint": "8.29.0",
-    "eslint-config-next": "13.0.6",
-    "postcss": "8.4.20",
-    "tailwindcss": "3.2.4",
-    "typescript": "4.9.4"
+    "eslint": "8.34.0",
+    "eslint-config-next": "13.1.6",
+    "postcss": "8.4.21",
+    "tailwindcss": "3.2.7",
+    "typescript": "4.9.5"
   }
 }
