@@ -20,6 +20,7 @@ const NotenListe = ({ show_excluded }: { show_excluded: boolean }) => {
               <th className="px-2">ECTS</th>
               <th className="px-2">Prüfungsdatum</th>
               <th className="px-2">Semester</th>
+              <th className="px-2">Quelle</th>
             </tr>
           </thead>
 

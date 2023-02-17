@@ -70,6 +70,7 @@ const NotenRow = ({ note }: { note: Note }) => {
       <td onClick={() => openModal()}>{note.ects}</td>
       <td onClick={() => openModal()}>{note.date}</td>
       <td onClick={() => openModal()}>{note.semester}</td>
+      <td onClick={() => openModal()}>{note.source}</td>
     </tr>
   );
 };

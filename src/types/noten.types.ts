@@ -8,6 +8,7 @@ export interface Note {
   semester: string;
   exlude: boolean;
   perm_exlude: boolean;
+  source: string;
 }
 
 export interface Semester {

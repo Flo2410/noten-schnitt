@@ -49,6 +49,7 @@ export default async function handler(
     semester: "",
     exlude: false,
     perm_exlude: false,
+    source: "Intranet",
   };
   const valid_noten = ["1", "2", "3", "4"];
 
@@ -83,6 +84,7 @@ export default async function handler(
           semester: "",
           exlude: false,
           perm_exlude: false,
+          source: "Intranet",
         };
         break;
     }

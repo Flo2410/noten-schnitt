@@ -109,6 +109,7 @@ const getNotenForSemester = async (
       semester: semester,
       exlude: false,
       perm_exlude: false,
+      source: "CIS",
     };
 
     return note;
