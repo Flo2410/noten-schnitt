@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNotenStore } from "stores/notenStore";
 import { Semester } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
@@ -14,44 +15,42 @@ const Options = ({
 }) => {
   const [semesters, setSemesters] = useState<Array<Semester>>([]);
   const [hasInit, setHasInit] = useState(false);
+  const [noten, update] = useNotenStore((state) => [state.noten, state.update]);
 
-  // useEffect(() => {
-  //   if (!hasInit && user.noten && user.noten?.length > 0) {
-  //     const temp: Array<number> = [];
+  useEffect(() => {
+    if (!hasInit && noten && noten?.length > 0) {
+      const temp: Array<number> = [];
 
-  //     user.noten.forEach((note) => {
-  //       const note_number = Number(note.semester);
-  //       if (!temp.includes(note_number)) temp.push(note_number);
-  //     });
+      noten.forEach((note) => {
+        const note_number = Number(note.semester);
+        if (!temp.includes(note_number)) temp.push(note_number);
+      });
 
-  //     temp.sort((a, b) => {
-  //       return a - b;
-  //     });
+      temp.sort((a, b) => {
+        return a - b;
+      });
 
-  //     const new_semester: Array<Semester> = [];
-  //     temp.forEach((t) => new_semester.push({ semester: t, checked: true }));
-  //     setSemesters(new_semester);
-  //     setHasInit(true);
-  //   }
-  // }, [user.noten]);
+      const new_semester: Array<Semester> = [];
+      temp.forEach((t) => new_semester.push({ semester: t, checked: true }));
+      setSemesters(new_semester);
+      setHasInit(true);
+    }
+  }, [noten]);
 
-  // useEffect(() => {
-  //   if (!user.noten) return;
+  useEffect(() => {
+    if (!noten) return;
 
-  //   const temp = [...user.noten];
-  //   temp.forEach((note) => {
-  //     semesters.forEach((sem) => {
-  //       if (Number(note.semester) === sem.semester) {
-  //         note.exlude = !sem.checked;
-  //       }
-  //     });
-  //   });
+    const temp = [...noten];
+    temp.forEach((note) => {
+      semesters.forEach((sem) => {
+        if (Number(note.semester) === sem.semester) {
+          note.exlude = !sem.checked;
+        }
+      });
+    });
 
-  //   dispatchUser({
-  //     type: UserPayloadType.UPDATE,
-  //     payload: { noten: temp },
-  //   });
-  // }, [semesters]);
+    update(temp);
+  }, [semesters]);
 
   const inputChange = (semester: number, checked: boolean): void => {
     const temp = [...semesters];

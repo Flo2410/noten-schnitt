@@ -47,6 +47,9 @@ export const useNotenStore = create<NotenStore>()(
 
         set({ noten: updated_noten });
       },
+      update: (noten) => {
+        set({ noten });
+      },
       clear: () => set({ noten: [] }),
     }),
     { name: "noten" }

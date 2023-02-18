@@ -23,5 +23,6 @@ export interface NotenStore {
   noten: Note[];
   init: (user_v1: User_v1, user_v2: User) => Promise<void>;
   update_note: (note: Partial<Note> & Pick<Note, "internal_id">) => void;
+  update: (noten: Note[]) => void;
   clear: () => void;
 }
