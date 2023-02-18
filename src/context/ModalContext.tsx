@@ -1,12 +1,5 @@
 import { getCourseInfo } from "helper/apicalls";
-import React, {
-  createContext,
-  useReducer,
-  Dispatch,
-  ReactNode,
-  useEffect,
-  useContext,
-} from "react";
+import React, { createContext, useReducer, Dispatch, ReactNode, useEffect } from "react";
 import { useUserStore } from "stores/userStore_v1";
 import { DEFAULT_MODAL, ModalContent, ModalActions, ModalPayloadType } from "types/modal.types";
 

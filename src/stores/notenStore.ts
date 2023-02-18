@@ -35,8 +35,17 @@ export const useNotenStore = create<NotenStore>()(
 
         set({ noten });
       },
-      update: (noten) => {
-        set({ noten: [...get().noten, ...noten] });
+      update_note: (note) => {
+        const unmodified_note = get().noten.find((item) => item.internal_id === note.internal_id);
+        if (!unmodified_note) return;
+
+        const updated_note = { ...unmodified_note, ...note };
+
+        const updated_noten = get().noten.map((note) =>
+          note.internal_id === updated_note.internal_id ? updated_note : note
+        );
+
+        set({ noten: updated_noten });
       },
       clear: () => set({ noten: [] }),
     }),
