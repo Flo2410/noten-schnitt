@@ -10,6 +10,8 @@ const NotenRow = ({ note }: { note: Note }) => {
   const { state: modal_state, dispatch: dispatchModal } = useContext(ModalContext);
 
   const openModal = () => {
+    if (note.source === "CIS") return;
+
     dispatchModal({
       type: ModalPayloadType.OPEN,
       payload: {
