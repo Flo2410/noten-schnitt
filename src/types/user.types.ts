@@ -21,7 +21,6 @@ export type User = {
   mat_nummer?: string;
   name?: string;
   course?: string;
-  noten?: Array<Note>;
 };
 
 export type UserPayload = {
@@ -51,7 +50,6 @@ export const DEFAULT_USER: User = {
   mat_nummer: "",
   name: "",
   course: "",
-  noten: [],
 };
 
 export const USER_COOKIE_KEY = "user";
