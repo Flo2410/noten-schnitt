@@ -7,8 +7,8 @@ import React, {
   useEffect,
   useContext,
 } from "react";
+import { useUserStore } from "stores/userStore_v1";
 import { DEFAULT_MODAL, ModalContent, ModalActions, ModalPayloadType } from "types/modal.types";
-import { UserContext } from "./UserContext";
 
 export const ModalContext = createContext<{
   state: ModalContent;
@@ -35,11 +35,11 @@ const reducer = (state: ModalContent, action: ModalActions) => {
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_MODAL);
-  const { state: user } = useContext(UserContext);
+  const user_v1 = useUserStore((state) => state.user);
 
   useEffect(() => {
     const load_course = async () => {
-      const course = await getCourseInfo(user.cookies, state.course_req_params).catch(() => {
+      const course = await getCourseInfo(user_v1.cookies, state.course_req_params).catch(() => {
         throw new Error("Could not load course info!");
       });
 

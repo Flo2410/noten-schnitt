@@ -24,11 +24,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </Head>
       <SettingsProvider>
-        <UserProvider>
-          <ModalProvider>
-            <Component {...pageProps} />
-          </ModalProvider>
-        </UserProvider>
+        <ModalProvider>
+          <Component {...pageProps} />
+        </ModalProvider>
       </SettingsProvider>
     </>
   );

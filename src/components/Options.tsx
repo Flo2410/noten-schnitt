@@ -1,5 +1,4 @@
-import { UserContext } from "context/UserContext";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Semester } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
@@ -15,45 +14,44 @@ const Options = ({
 }) => {
   const [semesters, setSemesters] = useState<Array<Semester>>([]);
   const [hasInit, setHasInit] = useState(false);
-  const { state: user, dispatch: dispatchUser } = useContext(UserContext);
 
-  useEffect(() => {
-    if (!hasInit && user.noten && user.noten?.length > 0) {
-      const temp: Array<number> = [];
+  // useEffect(() => {
+  //   if (!hasInit && user.noten && user.noten?.length > 0) {
+  //     const temp: Array<number> = [];
 
-      user.noten.forEach((note) => {
-        const note_number = Number(note.semester);
-        if (!temp.includes(note_number)) temp.push(note_number);
-      });
+  //     user.noten.forEach((note) => {
+  //       const note_number = Number(note.semester);
+  //       if (!temp.includes(note_number)) temp.push(note_number);
+  //     });
 
-      temp.sort((a, b) => {
-        return a - b;
-      });
+  //     temp.sort((a, b) => {
+  //       return a - b;
+  //     });
 
-      const new_semester: Array<Semester> = [];
-      temp.forEach((t) => new_semester.push({ semester: t, checked: true }));
-      setSemesters(new_semester);
-      setHasInit(true);
-    }
-  }, [user.noten]);
+  //     const new_semester: Array<Semester> = [];
+  //     temp.forEach((t) => new_semester.push({ semester: t, checked: true }));
+  //     setSemesters(new_semester);
+  //     setHasInit(true);
+  //   }
+  // }, [user.noten]);
 
-  useEffect(() => {
-    if (!user.noten) return;
+  // useEffect(() => {
+  //   if (!user.noten) return;
 
-    const temp = [...user.noten];
-    temp.forEach((note) => {
-      semesters.forEach((sem) => {
-        if (Number(note.semester) === sem.semester) {
-          note.exlude = !sem.checked;
-        }
-      });
-    });
+  //   const temp = [...user.noten];
+  //   temp.forEach((note) => {
+  //     semesters.forEach((sem) => {
+  //       if (Number(note.semester) === sem.semester) {
+  //         note.exlude = !sem.checked;
+  //       }
+  //     });
+  //   });
 
-    dispatchUser({
-      type: UserPayloadType.UPDATE,
-      payload: { noten: temp },
-    });
-  }, [semesters]);
+  //   dispatchUser({
+  //     type: UserPayloadType.UPDATE,
+  //     payload: { noten: temp },
+  //   });
+  // }, [semesters]);
 
   const inputChange = (semester: number, checked: boolean): void => {
     const temp = [...semesters];

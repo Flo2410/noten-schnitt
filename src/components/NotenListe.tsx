@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import NotenRow from "./NotenRow";
 import { v4 as uuidv4 } from "uuid";
-import { UserContext } from "context/UserContext";
+import { Note } from "types/noten.types";
 
-const NotenListe = ({ show_excluded }: { show_excluded: boolean }) => {
-  const {
-    state: { noten },
-  } = useContext(UserContext);
+const NotenListe = ({ noten, show_excluded }: { noten: Note[]; show_excluded: boolean }) => {
   return (
     <div className="flex justify-center w-full">
       <div className="flex w-full px-4 py-2 my-4 overflow-x-auto dark:border shadow-fhwn md:w-2/3 2xl:w-1/2 md:mx-0 pwa:w-full">

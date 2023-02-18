@@ -2,9 +2,6 @@
 // Enums
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-import { ActionMap } from "./context.types";
-import { Note } from "./noten.types";
-
 export enum UserPayloadType {
   INIT = "INIT_USER",
   UPDATE = "UPDATE_USER",
@@ -22,15 +19,6 @@ export type User = {
   name?: string;
   course?: string;
 };
-
-export type UserPayload = {
-  [UserPayloadType.INIT]: User;
-  [UserPayloadType.UPDATE]: Partial<User>;
-  [UserPayloadType.UPDATE_NOTE]: Partial<Note> & Required<Pick<Note, "internal_id">>;
-  [UserPayloadType.RESET]: any;
-};
-
-export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
 
 export type UserCookies = {
   fhwn: string;

@@ -1,4 +1,5 @@
 import { User } from "./user-v2.types";
+import { User as User_v1 } from "./user.types";
 
 export interface Note {
   internal_id: string;
@@ -20,7 +21,7 @@ export interface Semester {
 
 export interface NotenStore {
   noten: Note[];
-  init: (user: User) => Promise<void>;
+  init: (user_v1: User_v1, user_v2: User) => Promise<void>;
   update: (noten: Note[]) => void;
   clear: () => void;
 }

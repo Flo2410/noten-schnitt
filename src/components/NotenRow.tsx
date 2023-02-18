@@ -1,14 +1,10 @@
 import { ModalContext } from "context/ModalContext";
-import { UserContext } from "context/UserContext";
 import React, { useContext } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { ModalPayloadType } from "types/modal.types";
 import { Note } from "types/noten.types";
-import { UserPayloadType } from "types/user.types";
 
 const NotenRow = ({ note }: { note: Note }) => {
-  const { state: user, dispatch } = useContext(UserContext);
-
   const { state: modal_state, dispatch: dispatchModal } = useContext(ModalContext);
   // const [checked, setChecked] = useState(!note.perm_exlude);
 
@@ -50,10 +46,10 @@ const NotenRow = ({ note }: { note: Note }) => {
                 // setChecked(!checked);
 
                 //FIXME: Find out why the animation won't work with the dispatch
-                dispatch({
-                  type: UserPayloadType.UPDATE_NOTE,
-                  payload: { internal_id: note.internal_id, exlude: !note.exlude },
-                });
+                // dispatch({
+                //   type: UserPayloadType.UPDATE_NOTE,
+                //   payload: { internal_id: note.internal_id, exlude: !note.exlude },
+                // });
               }}
               disabled={note.perm_exlude}
               checked={!note.perm_exlude && !note.exlude}
