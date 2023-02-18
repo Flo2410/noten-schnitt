@@ -1,3 +1,4 @@
+import { Note } from "types/noten.types";
 import { User, UserCookies } from "types/user-v2.types";
 
 export const postLogin = (form: URLSearchParams): Promise<UserCookies> => {
@@ -19,4 +20,14 @@ export const getUserInfo = (user_cookies: UserCookies): Promise<User> => {
 
     return data.json();
   });
+};
+
+export const getNoten = (user: Pick<User, "cookies" | "student_pkz">): Promise<Array<Note>> => {
+  return fetch("/api/v2/noten", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  }).then((data) => data.json());
 };
