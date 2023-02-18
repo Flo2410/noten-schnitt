@@ -3,11 +3,6 @@ import { DEFAULT_USER, User } from "types/user-v2.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface UserState {
-  user: User;
-  login: (username: string, password: string) => Promise<void>;
-}
-
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
