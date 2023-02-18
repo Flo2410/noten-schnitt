@@ -98,17 +98,18 @@ const getNotenForSemester = async (
 
     const art = arr[0].match(/(?<=\()(.*?)(?=\))/g)?.[0] ?? "";
     const lv = arr[0].replace(`(${art})`, "").trim();
+    const grade = arr[1].match(/\d/g)?.[0] ?? "";
 
     let note: Note = {
       internal_id: uuidv4(),
-      note: arr[1].match(/\d/g)?.[0] ?? "",
+      note: grade,
       art: art,
       lv: lv,
       ects: "",
       date: semester_date,
       semester: semester,
       exlude: false,
-      perm_exlude: false,
+      perm_exlude: grade.match(/[1-4]/g) ? false : true,
       source: "CIS",
     };
 
