@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { UserProvider } from "context/UserContext";
 import Head from "next/head";
 import { SettingsProvider } from "context/SettingsContext";
 import { ModalProvider } from "context/ModalContext";
