@@ -50,33 +50,23 @@ const login = async (username: string, password: string): Promise<UserCookies> =
 
   const cookies = await data.headers.raw()["set-cookie"];
 
-  if (cookies?.length > 1) {
-    const key = cookies[1].match(/.AspNetCore.Cookies=.*?;/g);
+  if (cookies?.length >= 1) {
+    let culture_cookie = "culture=de;";
+    let session_cookie = "";
+
+    if (cookies.length === 2) {
+      culture_cookie = cookies[0];
+      session_cookie = cookies[1];
+    } else {
+      session_cookie = cookies[0];
+    }
+
+    const key = session_cookie.match(/.AspNetCore.Cookies=.*?;/g);
 
     if (key && key[0].length > 5) {
-      return { culture: cookies[0], asp_net_core: cookies[1] };
+      return { culture: culture_cookie, asp_net_core: session_cookie };
     }
   }
 
   throw new Error(await data.text());
 };
-
-// const getUserInfo = async (user: User): Promise<User> => {
-//   const data = await fetch("https://intranet.fhwn.ac.at/services/stu_main.aspx", {
-//     method: "GET",
-//     headers: {
-//       "User-Agent": "Mozilla/5.0",
-//       Cookie: getCookiesAsString(user.cookies),
-//     },
-//   });
-
-//   const body = await data.text();
-//   let name = Array.from(body.matchAll(/(?<=Uberschrift1">).*(?=<)/g), (m) => m[0])[0];
-//   name = name.substring(name.indexOf(" ") + 1);
-//   const arr = Array.from(body.matchAll(/(?<=6px;">).+?(?=<)/g), (m) => m[0]);
-//   const mat_nummer = arr[1];
-//   // const course = arr[3].match(/(?<=\().+?(?=\))/g)![0];
-//   const course = "-"; //FIXME: Course not displayed on the intranet site enymore!
-
-//   return { ...user, ...{ mat_nummer, name, course } };
-// };
