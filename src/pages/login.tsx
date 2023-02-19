@@ -3,6 +3,7 @@ import Router from "next/router";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useUserStore } from "stores/userStore_v2";
 import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
+import Loading from "components/Loading";
 
 interface UserFormData {
   username: string;
@@ -10,6 +11,7 @@ interface UserFormData {
 }
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
   const [user_v2, login_v2] = useUserStore((state) => [state.user, state.login]);
@@ -25,7 +27,7 @@ const LoginPage = () => {
   const submit = (e: FormEvent) => {
     e.preventDefault();
 
-    // setLoading(true);
+    setIsLoading(true);
 
     Promise.all([
       login_v1(form_data.username, form_data.password),
@@ -33,13 +35,13 @@ const LoginPage = () => {
     ])
       .then(() => {
         setError(false);
-        // setLoading(false);
+        // setIsLoading(false);
         Router.push("/noten");
       })
       .catch((err) => {
         console.error(err);
 
-        // setLoading(false);
+        setIsLoading(false);
         setError(true);
       });
   };
@@ -74,7 +76,7 @@ const LoginPage = () => {
 
       <Footer className="flex" />
 
-      {/* {isLoading && <Loading />} */}
+      {isLoading && <Loading />}
     </div>
   );
 };
