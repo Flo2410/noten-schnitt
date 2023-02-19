@@ -1,6 +1,6 @@
 import Footer from "components/Footer";
 import Router from "next/router";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useUserStore } from "stores/userStore_v2";
 import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 
@@ -12,12 +12,12 @@ interface UserFormData {
 const LoginPage = () => {
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
-  const login_v2 = useUserStore((state) => state.login);
-  const login_v1 = useUserStore_v1((state) => state.login);
+  const [user_v2, login_v2] = useUserStore((state) => [state.user, state.login]);
+  const [user_v1, login_v1] = useUserStore_v1((state) => [state.user, state.login]);
 
-  // useEffect(() => {
-  //   if (user.cookies.fhwn) Router.push("/noten");
-  // }, [user]);
+  useEffect(() => {
+    if (user_v1.cookies.fhwn && user_v2.cookies.asp_net_core) Router.push("/noten");
+  }, []);
 
   const inputChange = (value: Partial<UserFormData>): void =>
     setFormData({ ...form_data, ...value });
