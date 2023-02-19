@@ -6,7 +6,10 @@ import { log } from "helper/logger";
 
 const fetch = fetchCookie(nodeFetch);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<UserCookies | "">) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<UserCookies | string>
+) {
   const start_time = Date.now();
 
   try {
@@ -14,9 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     res.status(200).send(user_cookies);
     log("info", req.method, req.url, 200, start_time, Date.now());
-  } catch (error) {
-    res.status(401).send("");
-    log("info", req.method, req.url, 401, start_time, Date.now(), { error: "Login failed" });
+  } catch (error: any) {
+    res.status(401).send(`${error}`);
+    log("info", req.method, req.url, 401, start_time, Date.now(), {
+      error: `Login failed - ${error}`,
+    });
   }
 }
 
@@ -53,7 +58,7 @@ const login = async (username: string, password: string): Promise<UserCookies> =
     }
   }
 
-  throw new Error("Unauthorized");
+  throw new Error(await data.text());
 };
 
 // const getUserInfo = async (user: User): Promise<User> => {
