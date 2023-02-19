@@ -4,6 +4,7 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { useUserStore } from "stores/userStore_v2";
 import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 import Loading from "components/Loading";
+import { useGlobalLogout } from "hooks/useLogout";
 
 interface UserFormData {
   username: string;
@@ -16,6 +17,8 @@ const LoginPage = () => {
   const [error, setError] = useState(false);
   const [user_v2, login_v2] = useUserStore((state) => [state.user, state.login]);
   const [user_v1, login_v1] = useUserStore_v1((state) => [state.user, state.login]);
+
+  const globalLogout = useGlobalLogout();
 
   useEffect(() => {
     if (user_v1.cookies.fhwn && user_v2.cookies.asp_net_core) Router.push("/noten");
@@ -43,6 +46,8 @@ const LoginPage = () => {
 
         setIsLoading(false);
         setError(true);
+
+        globalLogout(false);
       });
   };
 

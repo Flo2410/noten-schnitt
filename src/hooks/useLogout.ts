@@ -10,10 +10,10 @@ export const useGlobalLogout = () => {
 
   const router = useRouter();
 
-  return () => {
+  return (redirect = true) => {
     logout_v1();
     logout_v2();
     clear_noten();
-    router.push("/login");
+    if (redirect) router.push("/login");
   };
 };
