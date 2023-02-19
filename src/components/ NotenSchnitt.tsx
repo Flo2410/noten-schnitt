@@ -24,7 +24,7 @@ const NotenSchnitt = ({ noten }: { noten?: Array<Note> }) => {
       <div className="grid w-full grid-cols-1 px-4 py-2 text-4xl shadow-fhwn 2xl:w-1/2 md:grid-cols-2 sm:flex-row md:w-2/3 pwa:w-full dark:border">
         <span className="text-center heading">Notenschnitt: </span>
         <div className="flex justify-center w-full paragraph">
-          <span>{schnitt.toFixed(2)}</span>
+          <span>{Number.isNaN(schnitt) ? 0 : schnitt.toFixed(2)}</span>
         </div>
 
         <span className="text-center heading ">ECTS ges.: </span>

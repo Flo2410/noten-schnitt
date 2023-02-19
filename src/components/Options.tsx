@@ -1,5 +1,5 @@
-import { UserContext } from "context/UserContext";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNotenStore } from "stores/notenStore";
 import { Semester } from "types/noten.types";
 import { UserPayloadType } from "types/user.types";
 import { v4 as uuidv4 } from "uuid";
@@ -15,13 +15,13 @@ const Options = ({
 }) => {
   const [semesters, setSemesters] = useState<Array<Semester>>([]);
   const [hasInit, setHasInit] = useState(false);
-  const { state: user, dispatch: dispatchUser } = useContext(UserContext);
+  const [noten, update] = useNotenStore((state) => [state.noten, state.update]);
 
   useEffect(() => {
-    if (!hasInit && user.noten && user.noten?.length > 0) {
+    if (!hasInit && noten && noten?.length > 0) {
       const temp: Array<number> = [];
 
-      user.noten.forEach((note) => {
+      noten.forEach((note) => {
         const note_number = Number(note.semester);
         if (!temp.includes(note_number)) temp.push(note_number);
       });
@@ -35,12 +35,12 @@ const Options = ({
       setSemesters(new_semester);
       setHasInit(true);
     }
-  }, [user.noten]);
+  }, [noten]);
 
   useEffect(() => {
-    if (!user.noten) return;
+    if (!noten) return;
 
-    const temp = [...user.noten];
+    const temp = [...noten];
     temp.forEach((note) => {
       semesters.forEach((sem) => {
         if (Number(note.semester) === sem.semester) {
@@ -49,10 +49,7 @@ const Options = ({
       });
     });
 
-    dispatchUser({
-      type: UserPayloadType.UPDATE,
-      payload: { noten: temp },
-    });
+    update(temp);
   }, [semesters]);
 
   const inputChange = (semester: number, checked: boolean): void => {

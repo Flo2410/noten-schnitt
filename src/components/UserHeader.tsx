@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "types/user.types";
+import { User } from "types/user-v2.types";
 import Button from "./Button";
 
 const UserHeader = ({ user, onLogout }: { user: User; onLogout: () => void }) => {
@@ -9,7 +9,7 @@ const UserHeader = ({ user, onLogout }: { user: User; onLogout: () => void }) =>
         <span className="heading">{user.name}</span>
         <div className="flex gap-4">
           <span>Matr. Nr.: {user.mat_nummer}</span>
-          <span>PKZ: {user.pers_nummer}</span>
+          <span>PKZ: {user.student_pkz}</span>
           <span>STG: {user.course}</span>
         </div>
 

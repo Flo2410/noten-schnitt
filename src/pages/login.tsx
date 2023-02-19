@@ -1,8 +1,9 @@
 import Footer from "components/Footer";
-import Loading from "components/Loading";
-import { UserContext } from "context/UserContext";
 import Router from "next/router";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
+import { useUserStore } from "stores/userStore_v2";
+import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
+import Loading from "components/Loading";
 
 interface UserFormData {
   username: string;
@@ -10,13 +11,15 @@ interface UserFormData {
 }
 
 const LoginPage = () => {
-  const { state: user, login, isLoading } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
+  const [user_v2, login_v2] = useUserStore((state) => [state.user, state.login]);
+  const [user_v1, login_v1] = useUserStore_v1((state) => [state.user, state.login]);
 
   useEffect(() => {
-    if (user.cookies.fhwn) Router.push("/noten");
-  }, [user]);
+    if (user_v1.cookies.fhwn && user_v2.cookies.asp_net_core) Router.push("/noten");
+  }, []);
 
   const inputChange = (value: Partial<UserFormData>): void =>
     setFormData({ ...form_data, ...value });
@@ -24,18 +27,21 @@ const LoginPage = () => {
   const submit = (e: FormEvent) => {
     e.preventDefault();
 
-    // setLoading(true);
+    setIsLoading(true);
 
-    login(form_data.username, form_data.password)
+    Promise.all([
+      login_v1(form_data.username, form_data.password),
+      login_v2(form_data.username, form_data.password),
+    ])
       .then(() => {
         setError(false);
-        // setLoading(false);
+        // setIsLoading(false);
         Router.push("/noten");
       })
       .catch((err) => {
         console.error(err);
 
-        // setLoading(false);
+        setIsLoading(false);
         setError(true);
       });
   };

@@ -1,28 +1,31 @@
-//--------------------------------------------------------------------------------------------------------------------------------------------
-// Enums
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-export enum UserPayloadType {
-  INIT = "INIT_USER",
-  UPDATE = "UPDATE_USER",
-  UPDATE_NOTE = "UPDATE_USER_NOTE",
-  RESET = "RESET_USER",
-}
+import { ActionMap } from "./context.types";
+import { Note } from "./noten.types";
+import { UserPayloadType } from "./user.types";
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Types
 //--------------------------------------------------------------------------------------------------------------------------------------------
 export type User = {
   cookies: UserCookies;
-  pers_nummer: string;
+  student_pkz: string;
+  pers_nummer?: string;
   mat_nummer?: string;
   name?: string;
   course?: string;
 };
 
+export type UserPayload = {
+  [UserPayloadType.INIT]: User;
+  [UserPayloadType.UPDATE]: Partial<User>;
+  [UserPayloadType.UPDATE_NOTE]: Partial<Note> & Required<Pick<Note, "internal_id">>;
+  [UserPayloadType.RESET]: any;
+};
+
+export type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
+
 export type UserCookies = {
-  fhwn: string;
-  session: string;
+  asp_net_core: string;
+  culture: string;
 };
 
 export interface UserState {
@@ -37,9 +40,10 @@ export interface UserState {
 
 export const DEFAULT_USER: User = {
   cookies: {
-    fhwn: "",
-    session: "",
+    asp_net_core: "",
+    culture: "",
   },
+  student_pkz: "",
   pers_nummer: "",
   mat_nummer: "",
   name: "",

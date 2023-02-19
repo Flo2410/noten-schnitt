@@ -1,18 +1,17 @@
 import { ModalContext } from "context/ModalContext";
-import { UserContext } from "context/UserContext";
 import React, { useContext } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
+import { useNotenStore } from "stores/notenStore";
 import { ModalPayloadType } from "types/modal.types";
 import { Note } from "types/noten.types";
-import { UserPayloadType } from "types/user.types";
 
 const NotenRow = ({ note }: { note: Note }) => {
-  const { state: user, dispatch } = useContext(UserContext);
-
+  const update_note = useNotenStore((state) => state.update_note);
   const { state: modal_state, dispatch: dispatchModal } = useContext(ModalContext);
-  // const [checked, setChecked] = useState(!note.perm_exlude);
 
   const openModal = () => {
+    if (note.source === "CIS") return;
+
     dispatchModal({
       type: ModalPayloadType.OPEN,
       payload: {
@@ -50,10 +49,7 @@ const NotenRow = ({ note }: { note: Note }) => {
                 // setChecked(!checked);
 
                 //FIXME: Find out why the animation won't work with the dispatch
-                dispatch({
-                  type: UserPayloadType.UPDATE_NOTE,
-                  payload: { internal_id: note.internal_id, exlude: !note.exlude },
-                });
+                update_note({ internal_id: note.internal_id, exlude: !note.exlude });
               }}
               disabled={note.perm_exlude}
               checked={!note.perm_exlude && !note.exlude}
@@ -70,6 +66,7 @@ const NotenRow = ({ note }: { note: Note }) => {
       <td onClick={() => openModal()}>{note.ects}</td>
       <td onClick={() => openModal()}>{note.date}</td>
       <td onClick={() => openModal()}>{note.semester}</td>
+      <td onClick={() => openModal()}>{note.source}</td>
     </tr>
   );
 };
