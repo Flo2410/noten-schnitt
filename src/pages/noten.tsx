@@ -12,6 +12,7 @@ import { useUserStore } from "stores/userStore_v2";
 import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 import { DEFAULT_USER, User } from "types/user-v2.types";
 import { Note } from "types/noten.types";
+import { MissingECTS } from "components/Warning/MissingECTS";
 
 const NotenPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +53,7 @@ const NotenPage = () => {
     <>
       <div className="flex flex-col items-center min-h-screen px-2 md:px-0 pwa:px-2 body-setup">
         <UserHeader user={user_v2_state} onLogout={logout} />
+        <MissingECTS />
         <NotenSchnitt noten={noten_state} />
         <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
         <NotenListe noten={noten_state} show_excluded={show_excluded} />
