@@ -14,6 +14,7 @@ import { DEFAULT_USER, User } from "types/user-v2.types";
 import { Note } from "types/noten.types";
 
 const NotenPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [show_excluded, setShowExcluded] = useState(true);
   const [user_v2, logout_v2] = useUserStore((state) => [state.user, state.logout]);
   const [user_v1, logout_v1] = useUserStore_v1((state) => [state.user, state.logout]);
@@ -28,7 +29,11 @@ const NotenPage = () => {
   ]);
 
   useEffect(() => {
-    init_noten_v2(user_v1, user_v2).catch(logout);
+    if (noten.length === 0)
+      init_noten_v2(user_v1, user_v2)
+        .then(() => setIsLoading(false))
+        .catch(logout);
+    else setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -51,7 +56,7 @@ const NotenPage = () => {
         <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
         <NotenListe noten={noten_state} show_excluded={show_excluded} />
         <Footer />
-        {/* {isLoading && <Loading />} */}
+        {isLoading && <Loading />}
       </div>
       <NotenModal />
     </>
