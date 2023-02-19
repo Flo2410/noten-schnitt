@@ -22,26 +22,20 @@ const NotenPage = () => {
   ]);
 
   useEffect(() => {
-    // if (!localStorage.getItem(USER_COOKIE_KEY)) {
-    //   logout_v2();
-    //   clear_noten();
-    //   // Router.push("/login");
-    // }
-    init_noten_v2(user_v1, user_v2);
+    init_noten_v2(user_v1, user_v2).catch(logout);
   }, []);
+
+  const logout = () => {
+    logout_v1();
+    logout_v2();
+    clear_noten();
+    Router.push("/login");
+  };
 
   return (
     <>
       <div className="flex flex-col items-center min-h-screen px-2 md:px-0 pwa:px-2 body-setup">
-        <UserHeader
-          user={user_v2}
-          onLogout={() => {
-            logout_v1();
-            logout_v2();
-            clear_noten();
-            Router.push("/login");
-          }}
-        />
+        <UserHeader user={user_v2} onLogout={logout} />
         <NotenSchnitt noten={noten} />
         <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />
         <NotenListe noten={noten} show_excluded={show_excluded} />
