@@ -56,20 +56,24 @@ const getUserInfo = async (user_cookies: UserCookies): Promise<User> => {
 const getUserCourseAndPkz = async (
   user_cookies: UserCookies
 ): Promise<{ course: string; student_pkz: string }> => {
-  const data = await fetch("https://cis.fhwn.ac.at/Grades/StudentGradesOverview/Index", {
-    method: "GET",
-    headers: {
-      "User-Agent": "Mozilla/5.0",
-      Cookie: getCookiesAsString(user_cookies),
-    },
-  });
+  const data = await fetch(
+    "https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradeOverviewIndex",
+    {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Cookie: getCookiesAsString(user_cookies),
+      },
+    }
+  );
 
   // Check if request was redirected to login page
   if (data.url.includes("https://cis.fhwn.ac.at/Home/Index")) {
     throw new Error("Cookie is not valid!");
   }
 
-  const html = await data.text();
+  const json = await data.json();
+  let html = json.Result as string;
   const $ = cheerio.load(html, null, false);
 
   const course = $("#selStudentPKZ").children().text();

@@ -27,20 +27,24 @@ export default async function handler(
 }
 
 const getSemsterDates = async (cookies: UserCookies) => {
-  const data = await fetch(`https://cis.fhwn.ac.at/Grades/StudentGradesOverview/Index`, {
-    method: "GET",
-    headers: {
-      "User-Agent": "Mozilla/5.0",
-      Cookie: getCookiesAsString(cookies),
-    },
-  });
+  const data = await fetch(
+    `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradeOverviewIndex`,
+    {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Cookie: getCookiesAsString(cookies),
+      },
+    }
+  );
 
   // Check if request was redirected to login page
   if (data.url.includes("https://cis.fhwn.ac.at/Home/Index")) {
     throw new Error("Cookie is not valid!");
   }
 
-  let html = await data.text();
+  const json = await data.json();
+  let html = json.Result as string;
   html = html.replaceAll("\t", "").replaceAll("\r", "").replaceAll("\n", "");
   const $ = cheerio.load(html, null, false);
 
