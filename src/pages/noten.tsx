@@ -5,7 +5,6 @@ import NotenListe from "components/NotenListe";
 import NotenModal from "components/NotenModal";
 import Options from "components/Options";
 import UserHeader from "components/UserHeader";
-import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { useNotenStore } from "stores/notenStore";
 import { useUserStore } from "stores/userStore_v2";
@@ -29,11 +28,11 @@ const NotenPage = () => {
   const globalLogout = useGlobalLogout();
 
   useEffect(() => {
-    if (noten.length === 0)
-      init_noten_v2(user_v1, user_v2)
-        .then(() => setIsLoading(false))
-        .catch(globalLogout);
-    else setIsLoading(false);
+    // if (noten.length === 0)
+    init_noten_v2(user_v1, user_v2)
+      .then(() => setIsLoading(false))
+      .catch(globalLogout);
+    // else setIsLoading(false);
   }, []);
 
   useEffect(() => {
