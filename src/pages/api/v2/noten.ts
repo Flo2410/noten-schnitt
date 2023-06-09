@@ -43,8 +43,7 @@ const getSemsterDates = async (cookies: UserCookies) => {
     throw new Error("Cookie is not valid!");
   }
 
-  const json = await data.json();
-  let html = json.Result as string;
+  let html = await data.text();
   html = html.replaceAll("\t", "").replaceAll("\r", "").replaceAll("\n", "");
   const $ = cheerio.load(html, null, false);
 

@@ -72,8 +72,7 @@ const getUserCourseAndPkz = async (
     throw new Error("Cookie is not valid!");
   }
 
-  const json = await data.json();
-  let html = json.Result as string;
+  let html = await data.text();
   const $ = cheerio.load(html, null, false);
 
   const course = $("#selStudentPKZ").children().text();
