@@ -1,4 +1,3 @@
-import { ModalProvider } from "context/ModalContext";
 import { SettingsProvider } from "context/SettingsContext";
 import { Metadata } from "next";
 
@@ -29,11 +28,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
-      <SettingsProvider>
-        <ModalProvider>
-          <body>{children}</body>
-        </ModalProvider>
-      </SettingsProvider>
+      <body>
+        <SettingsProvider>{children}</SettingsProvider>
+      </body>
     </html>
   );
 }

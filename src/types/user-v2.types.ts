@@ -1,10 +1,16 @@
 import { ActionMap } from "./context.types";
 import { Note } from "./noten.types";
-import { UserPayloadType } from "./user.types";
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Types
 //--------------------------------------------------------------------------------------------------------------------------------------------
+export enum UserPayloadType {
+  INIT = "INIT_USER",
+  UPDATE = "UPDATE_USER",
+  UPDATE_NOTE = "UPDATE_USER_NOTE",
+  RESET = "RESET_USER",
+}
+
 export type User = {
   cookies: UserCookies;
   student_pkz: string;

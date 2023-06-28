@@ -1,5 +1,4 @@
 import { User } from "./user-v2.types";
-import { User as User_v1 } from "./user.types";
 
 export interface Note {
   internal_id: string;

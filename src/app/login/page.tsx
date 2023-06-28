@@ -2,7 +2,6 @@
 import Footer from "components/Footer";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useUserStore } from "stores/userStore_v2";
-import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 import Loading from "components/Loading";
 import { useGlobalLogout } from "hooks/useLogout";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,4 @@
 import { getNoten } from "helper/apicalls_v2";
-import { getNoten as getNoten_v1 } from "helper/apicalls";
 import { NotenStore } from "types/noten.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
