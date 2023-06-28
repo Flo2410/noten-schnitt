@@ -1,3 +1,4 @@
+"use client";
 import NotenSchnitt from "components/ NotenSchnitt";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
@@ -8,7 +9,6 @@ import UserHeader from "components/UserHeader";
 import React, { useEffect, useState } from "react";
 import { useNotenStore } from "stores/notenStore";
 import { useUserStore } from "stores/userStore_v2";
-import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 import { DEFAULT_USER, User } from "types/user-v2.types";
 import { Note } from "types/noten.types";
 import { MissingECTS } from "components/Warning/MissingECTS";
@@ -18,7 +18,6 @@ const NotenPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [show_excluded, setShowExcluded] = useState(true);
   const user_v2 = useUserStore((state) => state.user);
-  const user_v1 = useUserStore_v1((state) => state.user);
 
   const [user_v2_state, setUser_v2_state] = useState<User>(DEFAULT_USER);
   const [noten_state, setNoten_state] = useState<Note[]>([]);
@@ -29,7 +28,7 @@ const NotenPage = () => {
 
   useEffect(() => {
     // if (noten.length === 0)
-    init_noten_v2(user_v1, user_v2)
+    init_noten_v2(user_v2)
       .then(() => setIsLoading(false))
       .catch(globalLogout);
     // else setIsLoading(false);

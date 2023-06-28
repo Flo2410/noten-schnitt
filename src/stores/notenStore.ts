@@ -9,24 +9,12 @@ export const useNotenStore = create<NotenStore>()(
   persist(
     (set, get) => ({
       noten: [],
-      init: async (user_v1, user_v2) => {
-        const noten_v1 = await getNoten_v1(user_v1).catch(() => {
-          throw new Error("Error fetching grades from intranet");
-        });
-
-        const noten_v2 = await getNoten(
+      init: async (user_v2) => {
+        const noten = await getNoten(
           (({ cookies, student_pkz }) => ({ cookies, student_pkz }))(user_v2)
         ).catch(() => {
           throw new Error("Error fetching grades from cis");
         });
-
-        // filter duplicates
-        const noten_v2_filtered = noten_v2.filter(
-          (note_v2) =>
-            noten_v1.filter((note_v1) => note_v1.semester === note_v2.semester).length === 0
-        );
-
-        let noten = [...noten_v1, ...noten_v2_filtered]; // combine grades from v1 and v2
 
         // noten.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         noten.sort(

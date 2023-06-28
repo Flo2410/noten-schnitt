@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext, useReducer, Dispatch, useEffect, ReactNode } from "react";
 import {
   DarkMode,

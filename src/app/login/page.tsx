@@ -1,10 +1,11 @@
+"use client";
 import Footer from "components/Footer";
-import Router from "next/router";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useUserStore } from "stores/userStore_v2";
 import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 import Loading from "components/Loading";
 import { useGlobalLogout } from "hooks/useLogout";
+import { useRouter } from "next/navigation";
 
 interface UserFormData {
   username: string;
@@ -16,12 +17,13 @@ const LoginPage = () => {
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
   const [user_v2, login_v2] = useUserStore((state) => [state.user, state.login]);
-  const [user_v1, login_v1] = useUserStore_v1((state) => [state.user, state.login]);
+
+  const router = useRouter();
 
   const globalLogout = useGlobalLogout();
 
   useEffect(() => {
-    if (user_v1.cookies.fhwn && user_v2.cookies.asp_net_core) Router.push("/noten");
+    if (user_v2.cookies.asp_net_core) router.push("/noten");
   }, []);
 
   const inputChange = (value: Partial<UserFormData>): void =>
@@ -32,14 +34,11 @@ const LoginPage = () => {
 
     setIsLoading(true);
 
-    Promise.all([
-      login_v1(form_data.username, form_data.password),
-      login_v2(form_data.username, form_data.password),
-    ])
+    Promise.all([login_v2(form_data.username, form_data.password)])
       .then(() => {
         setError(false);
         // setIsLoading(false);
-        Router.push("/noten");
+        router.push("/noten");
       })
       .catch((err) => {
         console.error(err);

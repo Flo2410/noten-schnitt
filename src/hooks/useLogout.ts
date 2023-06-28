@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import { useNotenStore } from "stores/notenStore";
 import { useUserStore as useUserStore_v1 } from "stores/userStore_v1";
 import { useUserStore as useUserStore_v2 } from "stores/userStore_v2";

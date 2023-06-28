@@ -1,3 +1,4 @@
+"use client";
 import { getCourseInfo } from "helper/apicalls";
 import React, { createContext, useReducer, Dispatch, ReactNode, useEffect } from "react";
 import { useUserStore } from "stores/userStore_v1";
