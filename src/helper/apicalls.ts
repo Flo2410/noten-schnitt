@@ -1,5 +1,5 @@
 import { Note } from "types/noten.types";
-import { User, UserCookies } from "types/user-v2.types";
+import { User, UserCookies } from "types/user.types";
 
 export const postLogin = (form: URLSearchParams): Promise<UserCookies> => {
   return fetch("/api/v2/login", {

@@ -7,8 +7,8 @@ import Options from "components/Options";
 import UserHeader from "components/UserHeader";
 import React, { useEffect, useState } from "react";
 import { useNotenStore } from "stores/notenStore";
-import { useUserStore } from "stores/userStore_v2";
-import { DEFAULT_USER, User } from "types/user-v2.types";
+import { useUserStore } from "stores/userStore";
+import { DEFAULT_USER, User } from "types/user.types";
 import { Note } from "types/noten.types";
 import { MissingECTS } from "components/Warning/MissingECTS";
 import { useGlobalLogout } from "hooks/useLogout";
@@ -16,32 +16,32 @@ import { useGlobalLogout } from "hooks/useLogout";
 const NotenPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [show_excluded, setShowExcluded] = useState(true);
-  const user_v2 = useUserStore((state) => state.user);
+  const user = useUserStore((state) => state.user);
 
-  const [user_v2_state, setUser_v2_state] = useState<User>(DEFAULT_USER);
-  const [noten_state, setNoten_state] = useState<Note[]>([]);
+  const [user_state, setUserState] = useState<User>(DEFAULT_USER);
+  const [noten_state, setNotenState] = useState<Note[]>([]);
 
-  const [init_noten_v2, noten] = useNotenStore((state) => [state.init, state.noten]);
+  const [init_noten, noten] = useNotenStore((state) => [state.init, state.noten]);
 
   const globalLogout = useGlobalLogout();
 
   useEffect(() => {
     // if (noten.length === 0)
-    init_noten_v2(user_v2)
+    init_noten(user)
       .then(() => setIsLoading(false))
       .catch(globalLogout);
     // else setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    setUser_v2_state(user_v2);
-    setNoten_state(noten);
-  }, [user_v2, noten]);
+    setUserState(user);
+    setNotenState(noten);
+  }, [user, noten]);
 
   return (
     <>
       <div className="flex flex-col items-center min-h-screen px-2 md:px-0 pwa:px-2 body-setup">
-        <UserHeader user={user_v2_state} onLogout={globalLogout} />
+        <UserHeader user={user_state} onLogout={globalLogout} />
         <MissingECTS />
         <NotenSchnitt noten={noten_state} />
         <Options show_excluded={show_excluded} setShowExcluded={setShowExcluded} />

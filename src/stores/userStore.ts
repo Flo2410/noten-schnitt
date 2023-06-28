@@ -1,6 +1,6 @@
 "use client";
-import { getUserInfo, postLogin } from "helper/apicalls_v2";
-import { DEFAULT_USER, UserState } from "types/user-v2.types";
+import { getUserInfo, postLogin } from "helper/apicalls";
+import { DEFAULT_USER, UserState } from "types/user.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -28,7 +28,7 @@ export const useUserStore = create<UserState>()(
       logout: () => set({ user: DEFAULT_USER }),
     }),
     {
-      name: "user_v2",
+      name: "user",
     }
   )
 );

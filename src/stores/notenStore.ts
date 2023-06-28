@@ -1,4 +1,4 @@
-import { getNoten } from "helper/apicalls_v2";
+import { getNoten } from "helper/apicalls";
 import { NotenStore } from "types/noten.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -8,9 +8,9 @@ export const useNotenStore = create<NotenStore>()(
   persist(
     (set, get) => ({
       noten: [],
-      init: async (user_v2) => {
+      init: async (user) => {
         const noten = await getNoten(
-          (({ cookies, student_pkz }) => ({ cookies, student_pkz }))(user_v2)
+          (({ cookies, student_pkz }) => ({ cookies, student_pkz }))(user)
         ).catch(() => {
           throw new Error("Error fetching grades from cis");
         });

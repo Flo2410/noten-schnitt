@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "types/user-v2.types";
+import { User } from "types/user.types";
 import Button from "./Button";
 
 const UserHeader = ({ user, onLogout }: { user: User; onLogout: () => void }) => {

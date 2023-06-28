@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getCookiesAsString } from "helper/utils";
 import { log } from "helper/logger";
 import { Note } from "types/noten.types";
-import { UserCookies } from "types/user-v2.types";
+import { UserCookies } from "types/user.types";
 // const fetch = fetchCookie(nodeFetch);
 
 export default async function handler(

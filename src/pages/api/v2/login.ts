@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodeFetch from "node-fetch";
 import fetchCookie from "fetch-cookie";
-import { UserCookies } from "types/user-v2.types";
+import { UserCookies } from "types/user.types";
 import { log } from "helper/logger";
 
 const fetch = fetchCookie(nodeFetch);

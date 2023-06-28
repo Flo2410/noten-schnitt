@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as cheerio from "cheerio";
-import { User, UserCookies } from "types/user-v2.types";
+import { User, UserCookies } from "types/user.types";
 import { getCookiesAsString } from "helper/utils";
 import { log } from "helper/logger";
 
