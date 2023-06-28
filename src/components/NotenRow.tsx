@@ -1,27 +1,13 @@
-import { ModalContext } from "context/ModalContext";
-import React, { useContext } from "react";
+import React from "react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { useNotenStore } from "stores/notenStore";
-import { ModalPayloadType } from "types/modal.types";
 import { Note } from "types/noten.types";
 
 const NotenRow = ({ note }: { note: Note }) => {
   const update_note = useNotenStore((state) => state.update_note);
-  const { state: modal_state, dispatch: dispatchModal } = useContext(ModalContext);
 
   const openModal = () => {
     if (note.source === "CIS") return;
-
-    dispatchModal({
-      type: ModalPayloadType.OPEN,
-      payload: {
-        course_req_params: {
-          course_fullname: `${note.lv}(${note.art})`,
-          course_semester: note.semester,
-        },
-        title: note.lv,
-      },
-    });
   };
 
   return (

@@ -3,7 +3,6 @@ import NotenSchnitt from "components/ NotenSchnitt";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
 import NotenListe from "components/NotenListe";
-import NotenModal from "components/NotenModal";
 import Options from "components/Options";
 import UserHeader from "components/UserHeader";
 import React, { useEffect, useState } from "react";
@@ -50,7 +49,6 @@ const NotenPage = () => {
         <Footer />
         {isLoading && <Loading />}
       </div>
-      <NotenModal />
     </>
   );
 };
