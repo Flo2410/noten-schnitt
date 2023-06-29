@@ -1,16 +1,14 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useUserStore } from "stores/userStore";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { auth_options } from "./api/auth/[...nextauth]/auth_options";
 
-const Home = () => {
-  const user = useUserStore((state) => state.user);
-  const router = useRouter();
+const Home = async () => {
+  const session = await getServerSession(auth_options);
+  console.log("session", session);
 
-  useEffect(() => {
-    if (user.cookies.asp_net_core) router.push("/noten");
-    else router.push("/login");
-  }, []);
+  if (!session) return redirect("/login");
+  else return redirect("/noten_new");
+
   return <></>;
 };
 

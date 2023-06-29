@@ -2,6 +2,8 @@ import { SettingsProvider } from "context/SettingsContext";
 import { Metadata } from "next";
 
 import "../styles/globals.css";
+import Footer from "components/Footer";
+import AuthContext from "components/AuthContext";
 // import "react-loading-skeleton/dist/skeleton.css";
 
 export const metadata: Metadata = {
@@ -29,7 +31,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de">
       <body>
-        <SettingsProvider>{children}</SettingsProvider>
+        <AuthContext>
+          <SettingsProvider>
+            <div className="flex flex-col min-h-screen body-setup">
+              {children}
+              <Footer />
+            </div>
+          </SettingsProvider>
+        </AuthContext>
       </body>
     </html>
   );
