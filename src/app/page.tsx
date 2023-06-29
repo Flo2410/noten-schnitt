@@ -4,12 +4,9 @@ import { auth_options } from "./api/auth/[...nextauth]/auth_options";
 
 const Home = async () => {
   const session = await getServerSession(auth_options);
-  console.log("session", session);
 
   if (!session) return redirect("/login");
-  else return redirect("/noten_new");
-
-  return <></>;
+  else return redirect("/noten");
 };
 
 export default Home;
