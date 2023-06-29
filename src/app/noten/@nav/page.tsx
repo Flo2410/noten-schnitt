@@ -1,5 +1,6 @@
 import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import Button from "components/Button";
+import { LogoutButton } from "components/NavBar/LogoutButton";
 import { getServerSession } from "next-auth";
 
 const Nav = async () => {
@@ -14,10 +15,7 @@ const Nav = async () => {
         <span>PKZ: {session?.user.student_pkz}</span>
         <span>STG: {session?.user.course}</span>
       </div>
-
-      <Button inverted_colors={true} className="w-full md:w-auto">
-        Logout
-      </Button>
+      <LogoutButton />
     </div>
   );
 };
