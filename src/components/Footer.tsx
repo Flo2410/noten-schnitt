@@ -6,7 +6,7 @@ import ThemeSelect from "./ThemeSelect";
 const Footer = ({ className }: { className?: string }) => {
   return (
     <div
-      className={`flex w-full mb-4 justify-around text-primary dark:text-white md:w-2/3 2xl:w-1/2 md:mx-0 pwa:w-full  ${
+      className={`flex w-full self-center mb-4 justify-around text-primary dark:text-white md:w-2/3 2xl:w-1/2 md:mx-0 pwa:w-full  ${
         className ? className : ""
       }`}
     >
