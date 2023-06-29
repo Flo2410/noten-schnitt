@@ -1,3 +1,4 @@
+"use client";
 import { SettingsContext } from "context/SettingsContext";
 import React, { FC, useContext } from "react";
 import { DarkMode, SettingsPayloadType } from "types/settings.types";
