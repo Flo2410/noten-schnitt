@@ -1,23 +1,23 @@
 import { ReactNode } from "react";
 
-const NotenLayout = async ({
+const GradesLayout = async ({
   children,
   nav,
-  noten,
+  grades,
 }: {
   children: ReactNode;
   nav: ReactNode;
-  noten: ReactNode;
+  grades: ReactNode;
 }) => {
   return (
     <>
       <div className="px-2 pt-2 space-y-2 dark:text-white text-primary">
         {nav}
-        {noten}
+        {grades}
         {children}
       </div>
     </>
   );
 };
 
-export default NotenLayout;
+export default GradesLayout;

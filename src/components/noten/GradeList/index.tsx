@@ -1,10 +1,10 @@
 "use client";
-import NotenRow from "./NotenRow";
 import { v4 as uuidv4 } from "uuid";
 import { useGradeStore } from "stores/gradeStore";
 import { Grade } from "types/grade.types";
+import GradeRow from "./GradeRow";
 
-const NotenListe = () => {
+export const GradeList = () => {
   const { grades, update_grade } = useGradeStore((state) => ({
     grades: state.grades,
     update_grade: state.update_grade,
@@ -44,12 +44,10 @@ const NotenListe = () => {
         <tbody className="">
           {grades?.map((grade) => {
             if (!show_excluded && (grade.options.exlude || grade.options.perm_exlude)) return;
-            return <NotenRow grade={grade} onClick={() => update_note(grade)} key={uuidv4()} />;
+            return <GradeRow grade={grade} onClick={() => update_note(grade)} key={uuidv4()} />;
           })}
         </tbody>
       </table>
     </div>
   );
 };
-
-export default NotenListe;

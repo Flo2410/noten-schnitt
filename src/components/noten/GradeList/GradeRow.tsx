@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { Grade } from "types/grade.types";
 
-const NotenRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }) => {
+const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }) => {
   return (
     <tr
       className={clsx(
@@ -53,4 +53,4 @@ const NotenRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
   );
 };
 
-export default NotenRow;
+export default GradeRow;

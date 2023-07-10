@@ -1,24 +1,26 @@
 import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import { GradeStoreInitiator } from "components/GradeStoreInitiator";
-import NotenListe from "components/noten/NotenListe";
+import { GradeList } from "components/noten/GradeList";
 import { get_cis_grade_infos_for_user } from "helper/fhwn_cis/grades";
+import { get_moodle_course_list } from "helper/moodle/courses";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-const NotenPage = async () => {
+const GradePage = async () => {
   const session = await getServerSession(auth_options);
 
   if (!session?.user) redirect("/login");
 
   const cis_infos = await get_cis_grade_infos_for_user(session.user);
+  const moodle_infos = await get_moodle_course_list(session.user.moodle_user);
 
   return (
     <>
-      <GradeStoreInitiator cis_infos={cis_infos} moodle_infos={null} />
-      <NotenListe />
+      <GradeStoreInitiator cis_infos={cis_infos} moodle_infos={moodle_infos} />
+      <GradeList />
     </>
     // </div>
   );
 };
 
-export default NotenPage;
+export default GradePage;
