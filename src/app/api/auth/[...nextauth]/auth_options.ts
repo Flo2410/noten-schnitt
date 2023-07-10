@@ -17,7 +17,7 @@ export const auth_options: AuthOptions = {
         email: { label: "Email", type: "email", placeholder: "email@example.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      authorize: async (credentials, req) => {
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid.
@@ -40,13 +40,13 @@ export const auth_options: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user: User }) {
+    jwt: async ({ token, user }: { token: JWT; user: User }) => {
       if (user) {
         token.user = { ...user };
       }
       return token;
     },
-    async session({ session, token }) {
+    session: async ({ session, token }) => {
       session.user = { ...token.user };
       return session;
     },
