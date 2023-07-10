@@ -1,10 +1,10 @@
 "use client";
 import clsx from "clsx";
-import React from "react";
+import React, { FC } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { Note } from "types/noten.types";
 
-const NotenRow = ({ note }: { note: Note }) => {
+const NotenRow: FC<{ note: Note; onClick?: () => void }> = ({ note, onClick }) => {
   return (
     <tr
       className={clsx(
@@ -17,7 +17,7 @@ const NotenRow = ({ note }: { note: Note }) => {
           !note.perm_exlude &&
           "hover:bg-primary/20 dark:hover:bg-white/50 even:bg-primary/5 dark:even:bg-white/10"
       )}
-      onClick={() => console.log(note)}
+      onClick={onClick}
     >
       <td className="group-last:rounded-bl">
         <div className="flex justify-center">
