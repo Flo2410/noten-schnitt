@@ -43,7 +43,8 @@ const send_login_request = async (
     }
   );
 
-  const cookies = res.headers.getSetCookie(); // TODO: Report bug to TypeScript! The type is missing
+  //@ts-ignore
+  const cookies: string[] = res.headers.getSetCookie(); // TODO: Report bug to TypeScript! The type is missing
 
   if (cookies?.length >= 1) {
     let culture_cookie = "culture=de;";
