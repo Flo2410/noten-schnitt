@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNotenStore } from "stores/notenStore";
 import { Semester } from "types/noten.types";
 import { v4 as uuidv4 } from "uuid";
-import Button from "./Button";
+import Button from "../Button";
 import CheckBox from "./CheckBox";
 
 const Options = ({

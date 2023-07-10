@@ -1,7 +1,7 @@
 import React from "react";
 
 const NotenPage = () => {
-  return <div>NotenPage</div>;
+  return <></>;
 };
 
 export default NotenPage;

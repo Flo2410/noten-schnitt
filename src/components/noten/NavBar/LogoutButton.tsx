@@ -12,7 +12,7 @@ export const LogoutButton = () => {
   };
 
   return (
-    <Button inverted_colors={true} onClick={logout} className="w-full md:w-auto">
+    <Button inverted_colors={false} onClick={logout} className="w-full md:w-auto">
       Logout
     </Button>
   );

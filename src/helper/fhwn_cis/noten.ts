@@ -1,32 +1,39 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import * as cheerio from "cheerio";
-import { v4 as uuidv4 } from "uuid";
 import { getCookiesAsString } from "helper/utils";
-import { log } from "helper/logger";
-import { Note } from "types/noten.types";
 import { UserCookies } from "types/user.types";
-// const fetch = fetchCookie(nodeFetch);
+import * as cheerio from "cheerio";
+import { Note } from "types/noten.types";
+import { v4 as uuidv4 } from "uuid";
+import { log } from "helper/logger";
+import { User } from "next-auth";
+import moment from "moment";
 
-export default async function handler(
-  req: NextApiRequest,
-  // res: NextApiResponse<Array<Note> | string>
-  res: NextApiResponse<any>
-) {
+export const get_noten_for_user = async (user: User): Promise<Note[] | null> => {
   const start_time = Date.now();
 
-  const dates = await getSemsterDates(req.body.cookies);
+  try {
+    const dates = await get_semster_dates(user.cookies);
 
-  const promises = dates.map((date) =>
-    getNotenForSemester(req.body.cookies, req.body.student_pkz, date)
-  );
+    const promises = dates.map((date) =>
+      get_noten_for_semester(user.cookies, user.student_pkz, date)
+    );
 
-  const noten = await (await Promise.all(promises)).flat();
+    const noten = await (await Promise.all(promises)).flat();
 
-  res.status(200).send(noten);
-  log("info", req.method, req.url, 200, start_time, Date.now());
-}
+    noten.sort((a, b) => moment(b.date, "DD.MM.YYYY").unix() - moment(a.date, "DD.MM.YYYY").unix());
 
-const getSemsterDates = async (cookies: UserCookies) => {
+    log("info", undefined, undefined, 200, start_time, Date.now());
+
+    return noten;
+  } catch (err: any) {
+    log("info", undefined, undefined, 401, start_time, Date.now(), {
+      error: `Error getting grades - ${err}`,
+    });
+  }
+
+  return null;
+};
+
+const get_semster_dates = async (cookies: UserCookies) => {
   const data = await fetch(
     `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradeOverviewIndex`,
     {
@@ -54,7 +61,7 @@ const getSemsterDates = async (cookies: UserCookies) => {
   return dates;
 };
 
-const getNotenForSemester = async (
+const get_noten_for_semester = async (
   cookies: UserCookies,
   student_pkz: string,
   semester_date: string

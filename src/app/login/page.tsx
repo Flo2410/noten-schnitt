@@ -64,7 +64,7 @@ const LoginPage = () => {
       className="flex flex-col w-full gap-4 p-4 m-auto rounded-none shadow-fhwn md:w-2/3 lg:w-1/2 xl:w-1/4 dark:border"
       onSubmit={submit}
     >
-      <h3 className="text-2xl text-center uppercase heading">Login</h3>
+      <h3 className="text-2xl font-bold text-center uppercase">Login</h3>
       {error && <span className="text-red-400">Username or password wrong!</span>}
       <input
         type="text"
