@@ -12,6 +12,7 @@ module.exports = {
       },
       boxShadow: {
         fhwn: "0px 3px 6px rgb(0 0 0 / 10%)",
+        "fhwn-white": "0px 0px 10px rgb(255 255 255 / 10%)",
       },
       colors: {
         primary: "#163072",
