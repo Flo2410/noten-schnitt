@@ -35,8 +35,8 @@ const LoginPage = () => {
 
     if (signin_res?.ok && !signin_res.error) {
       setError(false);
-      // router.push("/noten");
-      router.push("/");
+      router.push("/noten");
+      // router.push("/");
     } else {
       setError(true);
     }
