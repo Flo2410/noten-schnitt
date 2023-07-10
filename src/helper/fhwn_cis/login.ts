@@ -1,9 +1,5 @@
-import fetchCookie from "fetch-cookie";
 import { log } from "helper/logger";
-import nodeFetch from "node-fetch";
 import { UserCookies } from "types/user.types";
-
-const fetch = fetchCookie(nodeFetch);
 
 export const login = async (username: string, password: string): Promise<UserCookies | null> => {
   const start_time = Date.now();
@@ -33,7 +29,7 @@ const send_login_request = async (
   form.append("SelectedLanguage", "de"); //TODO: allow for changing the language
   form.append("X-Requested-With", "XMLHttpRequest");
 
-  const data = await fetch(
+  const res = await fetch(
     "https://cis.fhwn.ac.at/Home/Login",
     // "http://127.0.0.1:9090/services/logon.aspx?ReturnUrl=/services/index.aspx",
     {
@@ -47,7 +43,7 @@ const send_login_request = async (
     }
   );
 
-  const cookies = await data.headers.raw()["set-cookie"];
+  const cookies = res.headers.getSetCookie(); // TODO: Report bug to TypeScript! The type is missing
 
   if (cookies?.length >= 1) {
     let culture_cookie = "culture=de;";
@@ -67,5 +63,5 @@ const send_login_request = async (
     }
   }
 
-  throw new Error(await data.text());
+  throw new Error(await res.text());
 };
