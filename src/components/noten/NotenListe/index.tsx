@@ -1,25 +1,29 @@
 "use client";
-import React, { useState } from "react";
 import NotenRow from "./NotenRow";
 import { v4 as uuidv4 } from "uuid";
-import { Note } from "types/noten.types";
+import { useGradeStore } from "stores/gradeStore";
+import { Grade } from "types/grade.types";
 
-const NotenListe = ({ noten, show_excluded }: { noten: Note[]; show_excluded: boolean }) => {
-  const [noten_state, set_noten_state] = useState(noten);
+const NotenListe = () => {
+  const { grades, update_grade } = useGradeStore((state) => ({
+    grades: state.grades,
+    update_grade: state.update_grade,
+  }));
 
-  const update_note = (note: Note) => {
-    const index = noten.findIndex((val, i) => {
-      return val.internal_id === note.internal_id;
+  const show_excluded = true; // FIXME: make this an option
+
+  const update_note = (grade: Grade) => {
+    const index = grades.findIndex((val, i) => {
+      return val.internal_id === grade.internal_id;
     });
 
     if (index < 0) return;
 
-    const temp_noten = [...noten_state];
-    note.exlude = !note.exlude;
-    temp_noten[index] = note;
-    set_noten_state(temp_noten);
+    const temp_grade = { ...grade };
+    temp_grade.options.exlude = !grade.options.exlude;
+    update_grade(temp_grade);
 
-    console.log(note);
+    console.log(temp_grade);
   };
 
   return (
@@ -38,9 +42,9 @@ const NotenListe = ({ noten, show_excluded }: { noten: Note[]; show_excluded: bo
         </thead>
 
         <tbody className="">
-          {noten_state?.map((note) => {
-            if (!show_excluded && (note.exlude || note.perm_exlude)) return;
-            return <NotenRow note={note} onClick={() => update_note(note)} key={uuidv4()} />;
+          {grades?.map((grade) => {
+            if (!show_excluded && (grade.options.exlude || grade.options.perm_exlude)) return;
+            return <NotenRow grade={grade} onClick={() => update_note(grade)} key={uuidv4()} />;
           })}
         </tbody>
       </table>

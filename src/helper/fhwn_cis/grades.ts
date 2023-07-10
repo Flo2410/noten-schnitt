@@ -1,32 +1,33 @@
 import { getCookiesAsString } from "helper/utils";
 import { UserCookies } from "types/user.types";
 import * as cheerio from "cheerio";
-import { Note } from "types/noten.types";
-import { v4 as uuidv4 } from "uuid";
+import { CISGradeInfo } from "types/grade.types";
 import { log } from "helper/logger";
 import { User } from "next-auth";
 import moment from "moment";
 
-export const get_noten_for_user = async (user: User): Promise<Note[] | null> => {
+export const get_cis_grade_infos_for_user = async (user: User): Promise<CISGradeInfo[] | null> => {
   const start_time = Date.now();
 
   try {
     const dates = await get_semster_dates(user.cookies);
 
     const promises = dates.map((date) =>
-      get_noten_for_semester(user.cookies, user.student_pkz, date)
+      get_cis_grade_infos_for_semester(user.cookies, user.student_pkz, date)
     );
 
-    const noten = await (await Promise.all(promises)).flat();
+    const grade_infos = await (await Promise.all(promises)).flat();
 
-    noten.sort((a, b) => moment(b.date, "DD.MM.YYYY").unix() - moment(a.date, "DD.MM.YYYY").unix());
+    grade_infos.sort(
+      (a, b) => moment(b.date, "DD.MM.YYYY").unix() - moment(a.date, "DD.MM.YYYY").unix()
+    );
 
     log("info", undefined, undefined, 200, start_time, Date.now());
 
-    return noten;
+    return grade_infos;
   } catch (err: any) {
     log("info", undefined, undefined, 401, start_time, Date.now(), {
-      error: `Error getting grades - ${err}`,
+      error: `Error getting cis grade infos - ${err}`,
     });
   }
 
@@ -61,11 +62,11 @@ const get_semster_dates = async (cookies: UserCookies) => {
   return dates;
 };
 
-const get_noten_for_semester = async (
+const get_cis_grade_infos_for_semester = async (
   cookies: UserCookies,
   student_pkz: string,
   semester_date: string
-) => {
+): Promise<CISGradeInfo[]> => {
   const data = await fetch(
     `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradesList?bisdatum=${semester_date}&selectedPkzFromStudent=${student_pkz}`,
     {
@@ -100,7 +101,7 @@ const get_noten_for_semester = async (
     .split("</tr>")
     .filter((item) => item);
 
-  const noten = trs.map((tr) => {
+  const grade_infos: CISGradeInfo[] = trs.map((tr) => {
     const arr = tr
       .replaceAll("<td>", "")
       .split("</td>")
@@ -110,21 +111,16 @@ const get_noten_for_semester = async (
     const lv = arr[0].replace(`(${art})`, "").trim();
     const grade = arr[1].match(/\d/g)?.[0] ?? "";
 
-    let note: Note = {
-      internal_id: uuidv4(),
-      note: grade,
-      art: art,
-      lv: lv,
-      ects: "",
-      date: semester_date,
+    const grade_info: CISGradeInfo = {
+      name: lv,
+      type: art,
       semester: semester,
-      exlude: false,
-      perm_exlude: grade.match(/[1-4]/g) ? false : true,
-      source: "CIS",
+      date: semester_date,
+      grade: grade,
     };
 
-    return note;
+    return grade_info;
   });
 
-  return noten;
+  return grade_infos;
 };

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-const NotenLayout = ({
+const NotenLayout = async ({
   children,
   nav,
   noten,
@@ -10,11 +10,13 @@ const NotenLayout = ({
   noten: ReactNode;
 }) => {
   return (
-    <div className="px-2 pt-2 space-y-2 dark:text-white text-primary">
-      {nav}
-      {noten}
-      {children}
-    </div>
+    <>
+      <div className="px-2 pt-2 space-y-2 dark:text-white text-primary">
+        {nav}
+        {noten}
+        {children}
+      </div>
+    </>
   );
 };
 
