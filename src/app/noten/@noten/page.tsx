@@ -2,11 +2,13 @@ import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import NotenListe from "components/noten/NotenListe";
 import { get_noten_for_user } from "helper/fhwn_cis/noten";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 const NotenPage = async () => {
   const session = await getServerSession(auth_options);
 
-  if (!session?.user) throw new Error("Error loading User");
+  if (!session?.user) redirect("/login");
+
   const noten = await get_noten_for_user(session.user);
 
   return (
