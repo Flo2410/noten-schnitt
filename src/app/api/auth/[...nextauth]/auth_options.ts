@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 import { get_user_info } from "helper/fhwn_cis/user";
 import { MoodleClient } from "moodle-webservice";
+import { get_moodle_user_info } from "helper/moodle/user";
 
 export const auth_options: AuthOptions = {
   providers: [
@@ -45,7 +46,18 @@ export const auth_options: AuthOptions = {
         });
 
         if (!token) return null;
-        user.moodle_token = token;
+        const moodle_user = await get_moodle_user_info(token);
+
+        user.moodle_user = {
+          token: token,
+          first_name: moodle_user.firstname,
+          full_name: moodle_user.fullname,
+          lang: moodle_user.lang,
+          last_name: moodle_user.lastname,
+          user_id: moodle_user.userid,
+          user_name: moodle_user.username,
+          user_picture_url: moodle_user.userpictureurl,
+        };
 
         return user;
       },
