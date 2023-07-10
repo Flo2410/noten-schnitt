@@ -1,8 +1,10 @@
+import "server-only";
 import { login } from "helper/fhwn_cis/login";
 import { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 import { get_user_info } from "helper/fhwn_cis/user";
+import { MoodleClient } from "moodle-webservice";
 
 export const auth_options: AuthOptions = {
   providers: [
@@ -34,6 +36,16 @@ export const auth_options: AuthOptions = {
         // get user info
         const user = await get_user_info(fhwn_session);
         if (!user) return null;
+
+        // CIS Login Succesfull
+        // Now try moodle
+        const { token } = await MoodleClient.authenticate({
+          baseUrl: process.env.MOODLE_URL ?? "",
+          credentials: { username: credentials.email, password: credentials.password },
+        });
+
+        if (!token) return null;
+        user.moodle_token = token;
 
         return user;
       },

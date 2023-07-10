@@ -4,6 +4,7 @@
 
 export type User = {
   cookies: UserCookies;
+  moodle_token: string;
   student_pkz: string;
   pers_nummer?: string;
   mat_nummer?: string;
@@ -26,6 +27,7 @@ export const DEFAULT_USER: User = {
     asp_net_core: "",
     culture: "",
   },
+  moodle_token: "",
   student_pkz: "",
   pers_nummer: "",
   mat_nummer: "",
