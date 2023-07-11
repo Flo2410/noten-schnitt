@@ -16,6 +16,7 @@
     "clsx": "^1.2.1",
     "daisyui": "3.2.1",
     "fastest-levenshtein": "^1.0.16",
+    "lodash.merge": "^4.6.2",
     "moment": "^2.29.4",
     "moodle-webservice": "^1.8.1",
     "next": "13.4.7",
@@ -31,6 +32,7 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
+    "@types/lodash.merge": "^4.6.7",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/uuid": "9.0.2",
