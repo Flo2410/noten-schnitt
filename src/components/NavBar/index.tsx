@@ -2,7 +2,7 @@ import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import { LogoutButton } from "components/grades/NavBar/LogoutButton";
 import { getServerSession } from "next-auth";
 
-const NavPage = async () => {
+export const NavBar = async () => {
   const session = await getServerSession(auth_options);
 
   return (
@@ -18,5 +18,3 @@ const NavPage = async () => {
     </div>
   );
 };
-
-export default NavPage;

@@ -10,10 +10,8 @@ import { redirect } from "next/navigation";
 const GradePage = async () => {
   const session = await getServerSession(auth_options);
 
-  if (!session?.user) redirect("/login");
-
-  const cis_infos = await get_cis_grade_infos_for_user(session.user);
-  const moodle_infos = await get_moodle_course_list(session.user.moodle_user);
+  const cis_infos = await get_cis_grade_infos_for_user(session!.user);
+  const moodle_infos = await get_moodle_course_list(session!.user.moodle_user);
 
   if (!cis_infos || !moodle_infos) redirect("/login");
 
