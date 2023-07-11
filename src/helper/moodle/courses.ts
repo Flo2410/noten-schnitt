@@ -7,7 +7,10 @@ import { MoodleGradeInfo } from "types/grade.types";
 export const get_moodle_course_list = async (
   moodle_user: MoodleUser
 ): Promise<MoodleGradeInfo[]> => {
-  const moodle = MoodleApi({ baseUrl: process.env.MOODLE_URL ?? "", token: moodle_user.token });
+  const moodle = MoodleApi({
+    baseUrl: process.env.NEXT_PUBLIC_MOODLE_URL ?? "",
+    token: moodle_user.token,
+  });
   const moodle_courses: IMoodleCourse[] = await moodle.core.enrol.getUsersCourses({
     userid: moodle_user.user_id,
   });

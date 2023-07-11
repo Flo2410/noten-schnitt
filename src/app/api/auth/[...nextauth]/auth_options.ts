@@ -41,7 +41,7 @@ export const auth_options: AuthOptions = {
         // CIS Login Succesfull
         // Now try moodle
         const { token } = await MoodleClient.authenticate({
-          baseUrl: process.env.MOODLE_URL ?? "",
+          baseUrl: process.env.NEXT_PUBLIC_MOODLE_URL ?? "",
           credentials: { username: credentials.email, password: credentials.password },
         });
 
