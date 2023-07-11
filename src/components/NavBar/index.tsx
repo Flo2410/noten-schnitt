@@ -1,6 +1,6 @@
 import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import { Card } from "components/Card";
-import { LogoutButton } from "components/grades/NavBar/LogoutButton";
+import { LogoutButton } from "./LogoutButton";
 import { getServerSession } from "next-auth";
 
 export const NavBar = async () => {
