@@ -19,7 +19,8 @@ export const PDFView: FC<{ course_id: number }> = async ({ course_id }) => {
     >
       <div className="flex flex-col items-center justify-center space-y-2">
         <p className="text-center">
-          Your web browser doesn&apos;t have a PDF plugin. Instead you can download the PDF file.
+          Your web browser doesn&apos;t have a PDF plugin. Instead you can download the
+          PDF file.
         </p>
         <a href={`${pdf}?token=${session.user.moodle_user.token}`} download={true}>
           <Button>Download</Button>

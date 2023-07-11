@@ -11,8 +11,8 @@ const GradePage = async ({ params }: { params: { id: string } }) => {
   if (!grade) return;
 
   return (
-    <Card className="!items-start flex-1 flex-col">
-      <div className="flex flex-col flex-1 w-full space-y-4">
+    <Card className="flex-1 flex-col !items-start">
+      <div className="flex w-full flex-1 flex-col space-y-4">
         <CourseInfo grade={grade} />
         <PDFView course_id={grade.moodle_info.id} />
       </div>

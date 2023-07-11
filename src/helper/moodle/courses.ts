@@ -1,9 +1,9 @@
 import "server-only";
 
-import MoodleApi, { IMoodleCourse } from "moodle-webservice";
-import { MoodleUser } from "types/user.types";
-import { MoodleGradeInfo } from "types/grade.types";
 import { closest } from "fastest-levenshtein";
+import MoodleApi, { IMoodleCourse } from "moodle-webservice";
+import { MoodleGradeInfo } from "types/grade.types";
+import { MoodleUser } from "types/user.types";
 
 export const get_moodle_course_list = async (
   moodle_user: MoodleUser

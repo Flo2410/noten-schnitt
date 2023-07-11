@@ -1,11 +1,10 @@
 "use client";
-import React, { FormEvent, useState } from "react";
-import Loading from "components/Loading";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
-import { Card } from "components/Card";
 import Button from "components/Button";
+import { Card } from "components/Card";
 import { HorizontalLodingSpinner } from "components/HorizontalLoadingSpinner";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 interface UserFormData {
   username: string;
@@ -44,20 +43,20 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-1 px-2">
+    <div className="flex flex-1 items-center justify-center px-2">
       <Card className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/4">
-        <form className="flex flex-col w-full gap-4 p-4" onSubmit={submit}>
-          <h3 className="text-2xl font-bold text-center uppercase">Login</h3>
+        <form className="flex w-full flex-col gap-4 p-4" onSubmit={submit}>
+          <h3 className="text-center text-2xl font-bold uppercase">Login</h3>
           {error && <span className="text-red-400">Username or password wrong!</span>}
           <input
             type="text"
-            className="w-full px-2 py-1 border-2 rounded border-primary dark:border-white dark:bg-primary"
+            className="w-full rounded border-2 border-primary px-2 py-1 dark:border-white dark:bg-primary"
             placeholder="username"
             onChange={(e) => inputChange({ username: e.target.value })}
           />
           <input
             type="password"
-            className="w-full px-2 py-1 border-2 rounded border-primary dark:border-white dark:bg-primary"
+            className="w-full rounded border-2 border-primary px-2 py-1 dark:border-white dark:bg-primary"
             placeholder="password"
             onChange={(e) => inputChange({ password: e.target.value })}
           />

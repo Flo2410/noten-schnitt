@@ -1,6 +1,6 @@
 "use client";
 import clsx from "clsx";
-import React, { FC } from "react";
+import { FC } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { useGradeStore } from "stores/gradeStore";
 import { Grade } from "types/grade.types";
@@ -11,20 +11,22 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
   return (
     <tr
       className={clsx(
-        "cursor-pointer group",
+        "group cursor-pointer",
         grade.options.perm_exlude && "bg-red-700/30 hover:bg-red-700/60",
         grade.options.exlude &&
           !grade.options.perm_exlude &&
-          "bg-light/30 dark:bg-light/60 hover:bg-primary/30 dark:hover:bg-white/50",
+          "bg-light/30 hover:bg-primary/30 dark:bg-light/60 dark:hover:bg-white/50",
         !grade.options.exlude &&
           !grade.options.perm_exlude &&
-          "hover:bg-primary/20 dark:hover:bg-white/50 even:bg-primary/5 dark:even:bg-white/10"
+          "even:bg-primary/5 hover:bg-primary/20 dark:even:bg-white/10 dark:hover:bg-white/50"
       )}
     >
       <td className="px-2 py-2 group-last:rounded-bl">
         <div className="flex justify-center">
           <label
-            className={`swap swap-rotate ${grade.options.perm_exlude ? "cursor-not-allowed" : ""}`}
+            className={`swap swap-rotate ${
+              grade.options.perm_exlude ? "cursor-not-allowed" : ""
+            }`}
           >
             <input
               type="checkbox"
@@ -39,8 +41,8 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
               checked={!grade.options.perm_exlude && !grade.options.exlude}
             />
 
-            <FiCheck className="w-4 h-4 swap-on" />
-            <FiX className="w-4 h-4 swap-off" />
+            <FiCheck className="swap-on h-4 w-4" />
+            <FiX className="swap-off h-4 w-4" />
           </label>
         </div>
       </td>

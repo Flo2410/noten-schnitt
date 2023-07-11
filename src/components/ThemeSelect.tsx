@@ -1,13 +1,13 @@
 "use client";
 import { SettingsContext } from "context/SettingsContext";
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 import { DarkMode, SettingsPayloadType } from "types/settings.types";
 
 const ThemeSelect: FC<{ className?: string }> = ({ className }) => {
   const { state, dispatch } = useContext(SettingsContext);
 
   return (
-    <label className={`swap swap-rotate ${className ? className : ""}`}>
+    <label className={`swap-rotate swap ${className ? className : ""}`}>
       <input
         type="checkbox"
         checked={state.darkmode === DarkMode.DARK}
@@ -22,7 +22,7 @@ const ThemeSelect: FC<{ className?: string }> = ({ className }) => {
       />
 
       <svg
-        className="w-8 h-8 fill-current swap-on"
+        className="swap-on h-8 w-8 fill-current"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -30,7 +30,7 @@ const ThemeSelect: FC<{ className?: string }> = ({ className }) => {
       </svg>
 
       <svg
-        className="w-8 h-8 fill-current swap-off"
+        className="swap-off h-8 w-8 fill-current"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

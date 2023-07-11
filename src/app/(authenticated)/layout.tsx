@@ -9,7 +9,7 @@ const AuthenticatedLayout = async ({ children }: { children: ReactNode }) => {
   if (!session) redirect("/login");
 
   return (
-    <div className="flex flex-col flex-1 px-2 pt-2 space-y-2 dark:text-white text-primary">
+    <div className="flex flex-1 flex-col space-y-2 px-2 pt-2 text-primary dark:text-white">
       <NavBar />
       {children}
     </div>

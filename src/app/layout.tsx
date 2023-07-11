@@ -1,10 +1,9 @@
 import { SettingsProvider } from "context/SettingsContext";
 import { Metadata } from "next";
 
-import "../styles/globals.css";
-import Footer from "components/Footer";
 import AuthContext from "components/AuthContext";
-// import "react-loading-skeleton/dist/skeleton.css";
+import Footer from "components/Footer";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Notenschnitt",
@@ -33,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AuthContext>
           <SettingsProvider>
-            <div className="flex flex-col min-h-screen body-setup">
+            <div className="body-setup flex min-h-screen flex-col">
               {children}
               <Footer />
             </div>

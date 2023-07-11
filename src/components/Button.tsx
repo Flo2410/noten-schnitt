@@ -1,18 +1,15 @@
-import React, { ButtonHTMLAttributes, FC } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 
-const Button: FC<ButtonHTMLAttributes<HTMLButtonElement> & { inverted_colors?: boolean }> = ({
-  children,
-  className,
-  inverted_colors = false,
-  ...props
-}) => {
+const Button: FC<
+  ButtonHTMLAttributes<HTMLButtonElement> & { inverted_colors?: boolean }
+> = ({ children, className, inverted_colors = false, ...props }) => {
   return (
     <button
-      className={`flex justify-center h-8 px-4 text-center items-center border-2 rounded shadow-fhwn 
+      className={`flex h-8 items-center justify-center rounded border-2 px-4 text-center shadow-fhwn 
       ${
         inverted_colors
-          ? "text-primary bg-white hover:bg-primary hover:text-white border-white dark:bg-primary dark:border-primary dark:text-white dark:hover:text-primary dark:hover:bg-white"
-          : "text-white bg-primary hover:bg-white hover:text-primary border-primary dark:bg-white dark:border-white dark:text-primary dark:hover:text-white dark:hover:bg-primary"
+          ? "border-white bg-white text-primary hover:bg-primary hover:text-white dark:border-primary dark:bg-primary dark:text-white dark:hover:bg-white dark:hover:text-primary"
+          : "border-primary bg-primary text-white hover:bg-white hover:text-primary dark:border-white dark:bg-white dark:text-primary dark:hover:bg-primary dark:hover:text-white"
       } ${className ? className : ""}`}
       {...props}
     >

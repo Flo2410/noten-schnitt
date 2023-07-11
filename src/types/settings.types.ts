@@ -28,7 +28,8 @@ export type SettingsPayload = {
   [SettingsPayloadType.RESET]: Settings;
 };
 
-export type SettingsActions = ActionMap<SettingsPayload>[keyof ActionMap<SettingsPayload>];
+export type SettingsActions =
+  ActionMap<SettingsPayload>[keyof ActionMap<SettingsPayload>];
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Constants

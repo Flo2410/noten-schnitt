@@ -5,7 +5,7 @@ export const Card = React.forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
   ({ children, className, ...props }, ref) => (
     <div
       className={clsx(
-        "flex items-center justify-between p-2 overflow-x-auto bg-white rounded dark:bg-primary shadow-fhwn dark:shadow-fhwn-white",
+        "flex items-center justify-between overflow-x-auto rounded bg-white p-2 shadow-fhwn dark:bg-primary dark:shadow-fhwn-white",
         className
       )}
       {...props}

@@ -1,12 +1,12 @@
 import "server-only";
 
 import { login } from "helper/fhwn_cis/login";
-import { AuthOptions, User } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { JWT } from "next-auth/jwt";
 import { get_user_info } from "helper/fhwn_cis/user";
-import { MoodleClient } from "moodle-webservice";
 import { get_moodle_user_info } from "helper/moodle/user";
+import { MoodleClient } from "moodle-webservice";
+import { AuthOptions, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const auth_options: AuthOptions = {
   providers: [

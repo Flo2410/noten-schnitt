@@ -1,4 +1,4 @@
-import pino, { Level, levels } from "pino";
+import pino from "pino";
 export const logger = pino();
 
 export const log = (

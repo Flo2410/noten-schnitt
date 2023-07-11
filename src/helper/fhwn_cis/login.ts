@@ -1,7 +1,10 @@
 import { log } from "helper/logger";
 import { UserCookies } from "types/user.types";
 
-export const login = async (username: string, password: string): Promise<UserCookies | null> => {
+export const login = async (
+  username: string,
+  password: string
+): Promise<UserCookies | null> => {
   const start_time = Date.now();
 
   try {

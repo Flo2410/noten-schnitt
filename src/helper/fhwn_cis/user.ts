@@ -1,7 +1,7 @@
+import * as cheerio from "cheerio";
 import { log } from "helper/logger";
 import { getCookiesAsString } from "helper/utils";
 import { User, UserCookies } from "types/user.types";
-import * as cheerio from "cheerio";
 
 export const get_user_info = async (
   user_cookies: UserCookies
@@ -21,7 +21,9 @@ export const get_user_info = async (
   return null;
 };
 
-const request_user_info = async (user_cookies: UserCookies): Promise<Omit<User, "moodle_user">> => {
+const request_user_info = async (
+  user_cookies: UserCookies
+): Promise<Omit<User, "moodle_user">> => {
   const data = await fetch("https://cis.fhwn.ac.at/Home/Profile", {
     method: "GET",
     headers: {
@@ -38,7 +40,9 @@ const request_user_info = async (user_cookies: UserCookies): Promise<Omit<User, 
   const html = await data.text();
   const $ = cheerio.load(html, null, false);
 
-  const pers_nummer = $("#collapseIDS > div > div:nth-child(1) > div.col-sm-9 > b").text();
+  const pers_nummer = $(
+    "#collapseIDS > div > div:nth-child(1) > div.col-sm-9 > b"
+  ).text();
   const mat_nummer = $("#collapseIDS > div > div:nth-child(2) > div.col-sm-9 > b").text();
   const name = $("#collapseNames > div > div > div.col-sm-9 > b").text();
 

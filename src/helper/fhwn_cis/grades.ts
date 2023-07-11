@@ -1,12 +1,14 @@
-import { getCookiesAsString } from "helper/utils";
-import { UserCookies } from "types/user.types";
 import * as cheerio from "cheerio";
-import { CISGradeInfo } from "types/grade.types";
 import { log } from "helper/logger";
-import { User } from "next-auth";
+import { getCookiesAsString } from "helper/utils";
 import moment from "moment";
+import { User } from "next-auth";
+import { CISGradeInfo } from "types/grade.types";
+import { UserCookies } from "types/user.types";
 
-export const get_cis_grade_infos_for_user = async (user: User): Promise<CISGradeInfo[] | null> => {
+export const get_cis_grade_infos_for_user = async (
+  user: User
+): Promise<CISGradeInfo[] | null> => {
   const start_time = Date.now();
 
   try {

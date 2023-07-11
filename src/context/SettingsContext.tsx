@@ -1,12 +1,12 @@
 "use client";
-import React, { createContext, useReducer, Dispatch, useEffect, ReactNode } from "react";
+import React, { Dispatch, ReactNode, createContext, useEffect, useReducer } from "react";
 import {
-  DarkMode,
   DEFAULT_SETTINGS,
+  DarkMode,
+  SETTINGS_COOKIE_KEY,
   Settings,
   SettingsActions,
   SettingsPayloadType,
-  SETTINGS_COOKIE_KEY,
 } from "types/settings.types";
 
 export const SettingsContext = createContext<{
@@ -67,6 +67,8 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [state.darkmode]);
 
   return (
-    <SettingsContext.Provider value={{ state, dispatch }}>{children}</SettingsContext.Provider>
+    <SettingsContext.Provider value={{ state, dispatch }}>
+      {children}
+    </SettingsContext.Provider>
   );
 };

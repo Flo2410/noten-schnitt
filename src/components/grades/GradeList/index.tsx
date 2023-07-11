@@ -1,9 +1,9 @@
 "use client";
-import { useGradeStore } from "stores/gradeStore";
-import { useRouter } from "next/navigation";
-import GradeRow from "./GradeRow";
 import { Card } from "components/Card";
 import { nanoid } from "nanoid";
+import { useRouter } from "next/navigation";
+import { useGradeStore } from "stores/gradeStore";
+import GradeRow from "./GradeRow";
 
 export const GradeList = () => {
   const { grades } = useGradeStore((state) => ({
@@ -16,8 +16,8 @@ export const GradeList = () => {
 
   return (
     <Card>
-      <table className="min-w-full text-center table-auto">
-        <thead className="font-bold border-b-2 border-primary dark:border-white">
+      <table className="min-w-full table-auto text-center">
+        <thead className="border-b-2 border-primary font-bold dark:border-white">
           <tr>
             <th className="px-2"></th>
             <th className="px-2">Note</th>
@@ -31,7 +31,8 @@ export const GradeList = () => {
 
         <tbody>
           {grades?.map((grade) => {
-            if (!show_excluded && (grade.options.exlude || grade.options.perm_exlude)) return;
+            if (!show_excluded && (grade.options.exlude || grade.options.perm_exlude))
+              return;
             return (
               <GradeRow
                 grade={grade}

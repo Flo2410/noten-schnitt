@@ -1,7 +1,7 @@
 "use client";
+import merge from "lodash.merge";
 import { GradeStore } from "types/grade.types";
 import { create } from "zustand";
-import merge from "lodash.merge";
 
 export const useGradeStore = create<GradeStore>()((set, get) => ({
   grades: [],
