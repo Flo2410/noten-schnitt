@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "docker build -t ghcr.io/flo2410/noten-schnitt . && docker push  ghcr.io/flo2410/noten-schnitt"
+    "deploy": "docker build -t ghcr.io/flo2410/noten-schnitt:testing . && docker push  ghcr.io/flo2410/noten-schnitt:testing"
   },
   "dependencies": {
     "@headlessui/react": "1.7.15",
