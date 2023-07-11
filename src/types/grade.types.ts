@@ -33,7 +33,7 @@ export interface Semester {
 
 export interface GradeStore {
   grades: Grade[];
-  init: (cis_infos: CISGradeInfo[], moodle_infos: MoodleGradeInfo[] | null) => Promise<void>;
+  init: (cis_infos: CISGradeInfo[], moodle_infos: MoodleGradeInfo[]) => Promise<void>;
   update_grade: (grade: Partial<Grade> & Pick<Grade, "internal_id">) => void;
   update: (grade: Grade[]) => void;
   clear: () => void;
