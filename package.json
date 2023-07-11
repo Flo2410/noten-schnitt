@@ -3,6 +3,7 @@
   "version": "1.5.1",
   "private": true,
   "license": "GNU GPLv3",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import("prettier").Options} */
+const config = {
   tabWidth: 2,
   useTabs: false,
   plugins: [
@@ -8,3 +9,5 @@ module.exports = {
   pluginSearchDirs: false,
   tailwindFunctions: ["clsx"],
 };
+
+export default config;
