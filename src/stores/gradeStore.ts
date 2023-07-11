@@ -23,5 +23,8 @@ export const useGradeStore = create<GradeStore>()((set, get) => ({
   update: (grades) => {
     set({ grades });
   },
+  get_grade_by_id: (id) => {
+    return get().grades.find((grade) => grade.internal_id === id);
+  },
   clear: () => set({ grades: [] }),
 }));

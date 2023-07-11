@@ -33,5 +33,6 @@ export interface GradeStore {
   init: (grades: Grade[]) => Promise<void>;
   update_grade: (partial_grade: DeepPartial<Grade> & Pick<Grade, "internal_id">) => void;
   update: (grade: Grade[]) => void;
+  get_grade_by_id: (id: string) => Grade | undefined;
   clear: () => void;
 }
