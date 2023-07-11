@@ -9,16 +9,13 @@ export const useGradeStore = create<GradeStore>()((set, get) => ({
   init: async (cis_infos, moodle_infos) => {
     // CIS Infos are the primary source
     const grades: Grade[] = cis_infos.map((cis_info) => {
+      // Find the corresponding moodle info
+      const moodle_info = moodle_infos?.find((info) => info.fullname.includes(cis_info.name))!;
+
       return {
         internal_id: uuidv4(),
         cis_info: cis_info,
-        moodle_info: {
-          displayname: "",
-          ects: "",
-          fullname: "",
-          id: 0,
-          shortname: "",
-        },
+        moodle_info: moodle_info,
         options: {
           exlude: false,
           perm_exlude: cis_info.grade.match(/[1-4]/g) ? false : true,

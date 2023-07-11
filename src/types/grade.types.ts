@@ -16,7 +16,7 @@ export interface MoodleGradeInfo {
   fullname: string;
   displayname: string;
   id: number;
-  ects: string;
+  ects?: string;
 }
 
 export interface Grade {
