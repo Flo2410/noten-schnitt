@@ -1,4 +1,5 @@
 import "server-only";
+
 import { login } from "helper/fhwn_cis/login";
 import { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -35,8 +36,8 @@ export const auth_options: AuthOptions = {
         if (!fhwn_session) return null;
 
         // get user info
-        const user = await get_user_info(fhwn_session);
-        if (!user) return null;
+        const cis_user = await get_user_info(fhwn_session);
+        if (!cis_user) return null;
 
         // CIS Login Succesfull
         // Now try moodle
@@ -48,15 +49,18 @@ export const auth_options: AuthOptions = {
         if (!token) return null;
         const moodle_user = await get_moodle_user_info(token);
 
-        user.moodle_user = {
-          token: token,
-          first_name: moodle_user.firstname,
-          full_name: moodle_user.fullname,
-          lang: moodle_user.lang,
-          last_name: moodle_user.lastname,
-          user_id: moodle_user.userid,
-          user_name: moodle_user.username,
-          user_picture_url: moodle_user.userpictureurl,
+        const user: User = {
+          ...cis_user,
+          moodle_user: {
+            token: token,
+            first_name: moodle_user.firstname,
+            full_name: moodle_user.fullname,
+            lang: moodle_user.lang,
+            last_name: moodle_user.lastname,
+            user_id: moodle_user.userid,
+            user_name: moodle_user.username,
+            user_picture_url: moodle_user.userpictureurl,
+          },
         };
 
         return user;

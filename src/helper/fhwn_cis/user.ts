@@ -3,7 +3,9 @@ import { getCookiesAsString } from "helper/utils";
 import { User, UserCookies } from "types/user.types";
 import * as cheerio from "cheerio";
 
-export const get_user_info = async (user_cookies: UserCookies): Promise<User | null> => {
+export const get_user_info = async (
+  user_cookies: UserCookies
+): Promise<Omit<User, "moodle_user"> | null> => {
   const start_time = Date.now();
 
   try {
@@ -19,7 +21,7 @@ export const get_user_info = async (user_cookies: UserCookies): Promise<User | n
   return null;
 };
 
-const request_user_info = async (user_cookies: UserCookies): Promise<User> => {
+const request_user_info = async (user_cookies: UserCookies): Promise<Omit<User, "moodle_user">> => {
   const data = await fetch("https://cis.fhwn.ac.at/Home/Profile", {
     method: "GET",
     headers: {
@@ -42,7 +44,7 @@ const request_user_info = async (user_cookies: UserCookies): Promise<User> => {
 
   const { course, student_pkz } = await get_user_course_and_pkz(user_cookies);
 
-  const user: User = {
+  const user = {
     cookies: user_cookies,
     student_pkz: student_pkz,
     pers_nummer: pers_nummer,
