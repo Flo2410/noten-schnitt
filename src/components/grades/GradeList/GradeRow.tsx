@@ -31,8 +31,7 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
               onChange={(e) => {
                 if (!grade) return;
 
-                update_grade({
-                  internal_id: grade.internal_id,
+                update_grade(grade.moodle_info.id, {
                   options: { exlude: !grade.options.exlude },
                 });
               }}
