@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Card } from "components/Card";
 import Button from "components/Button";
+import { HorizontalLodingSpinner } from "components/HorizontalLoadingSpinner";
 
 interface UserFormData {
   username: string;
@@ -33,8 +34,8 @@ const LoginPage = () => {
     });
 
     if (signin_res?.ok && !signin_res.error) {
-      setError(false);
       router.push("/grades");
+      setError(false);
     } else {
       setError(true);
     }
@@ -59,9 +60,9 @@ const LoginPage = () => {
           placeholder="password"
           onChange={(e) => inputChange({ password: e.target.value })}
         />
-        <Button type="submit" disabled={isLoading}>
-          Login
-          {isLoading && <Loading />}
+        <Button type="submit" disabled={isLoading} className="group">
+          {!isLoading && "Login"}
+          {isLoading && <HorizontalLodingSpinner />}
         </Button>
       </form>
     </Card>
