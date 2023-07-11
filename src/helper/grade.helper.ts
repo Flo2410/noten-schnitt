@@ -2,8 +2,10 @@ import "server-only";
 
 import moment from "moment";
 import { CISGradeInfo, Grade, MoodleGradeInfo } from "types/grade.types";
-import { v4 as uuidv4 } from "uuid";
 import { closest } from "fastest-levenshtein";
+import { User } from "next-auth";
+import { get_cis_grade_infos_for_user } from "./fhwn_cis/grades";
+import { get_moodle_course_list } from "./moodle/courses";
 
 export const make_grades = async (
   cis_infos: CISGradeInfo[],
@@ -45,7 +47,6 @@ export const make_grades = async (
     }
 
     const grade: Grade = {
-      internal_id: uuidv4(),
       cis_info: cis_info,
       moodle_info: moodle_info!,
       options: {
@@ -70,4 +71,18 @@ export const make_grades = async (
   );
 
   return grades;
+};
+
+export const get_grades = async (user: User): Promise<Grade[] | null> => {
+  const cis_infos = await get_cis_grade_infos_for_user(user);
+  const moodle_infos = await get_moodle_course_list(user.moodle_user);
+
+  if (!cis_infos || !moodle_infos) return null;
+
+  return make_grades(cis_infos, moodle_infos);
+};
+
+export const get_grade_by_id = async (user: User, grade_id: number): Promise<Grade | undefined> => {
+  const grades = await get_grades(user);
+  return grades?.find((grade) => grade.moodle_info.id === grade_id);
 };

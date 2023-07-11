@@ -36,7 +36,7 @@ export const GradeList = () => {
               <GradeRow
                 grade={grade}
                 key={uuidv4()}
-                onClick={() => router.push(`/grade/${grade.internal_id}`)}
+                onClick={() => router.push(`/grade/${grade.moodle_info.id}`)}
               />
             );
           })}

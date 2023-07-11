@@ -22,7 +22,6 @@ export interface MoodleGradeInfo {
 }
 
 export interface Grade {
-  internal_id: string;
   options: GradeOptions;
   cis_info: CISGradeInfo;
   moodle_info: MoodleGradeInfo;
@@ -31,8 +30,8 @@ export interface Grade {
 export interface GradeStore {
   grades: Grade[];
   init: (grades: Grade[]) => Promise<void>;
-  update_grade: (partial_grade: DeepPartial<Grade> & Pick<Grade, "internal_id">) => void;
+  update_grade: (id: number, partial_grade: DeepPartial<Grade>) => void;
   update: (grade: Grade[]) => void;
-  get_grade_by_id: (id: string) => Grade | undefined;
+  get_grade_by_id: (id: number) => Grade | undefined;
   clear: () => void;
 }

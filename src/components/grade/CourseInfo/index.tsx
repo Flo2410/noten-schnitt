@@ -1,13 +1,8 @@
-"use client";
-
 import Button from "components/Button";
 import { FC } from "react";
-import { useGradeStore } from "stores/gradeStore";
+import { Grade } from "types/grade.types";
 
-export const CourseInfo: FC<{ grade_id: string }> = ({ grade_id }) => {
-  const get_grade_by_id = useGradeStore((state) => state.get_grade_by_id);
-  const grade = get_grade_by_id(grade_id);
-
+export const CourseInfo: FC<{ grade: Grade }> = async ({ grade }) => {
   return (
     <div className="flex items-center justify-between">
       <div>
