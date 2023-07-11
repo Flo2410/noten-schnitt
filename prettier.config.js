@@ -8,6 +8,8 @@ const config = {
   ],
   pluginSearchDirs: false,
   tailwindFunctions: ["clsx"],
+  trailingComma: "es5",
+  printWidth: 90,
 };
 
 export default config;
