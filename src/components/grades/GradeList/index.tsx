@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useGradeStore } from "stores/gradeStore";
 import { Grade } from "types/grade.types";
 import GradeRow from "./GradeRow";
+import { Card } from "components/Card";
 
 export const GradeList = () => {
   const { grades } = useGradeStore((state) => ({
@@ -12,7 +13,7 @@ export const GradeList = () => {
   const show_excluded = true; // FIXME: make this an option
 
   return (
-    <div className="flex items-center justify-between p-2 overflow-x-auto bg-white rounded md:flex-row dark:bg-primary shadow-fhwn dark:shadow-fhwn-white">
+    <Card>
       <table className="min-w-full text-center table-auto">
         <thead className="font-bold border-b-2 border-primary dark:border-white">
           <tr>
@@ -33,6 +34,6 @@ export const GradeList = () => {
           })}
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 };

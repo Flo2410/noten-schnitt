@@ -1,4 +1,5 @@
 import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
+import { Card } from "components/Card";
 import { LogoutButton } from "components/grades/NavBar/LogoutButton";
 import { getServerSession } from "next-auth";
 
@@ -6,7 +7,7 @@ export const NavBar = async () => {
   const session = await getServerSession(auth_options);
 
   return (
-    <div className="flex flex-col items-center justify-between px-4 py-2 bg-white rounded md:flex-row dark:bg-primary shadow-fhwn dark:shadow-fhwn-white">
+    <Card>
       <span className="font-bold">{session?.user.name}</span>
 
       <div className="flex gap-4">
@@ -15,6 +16,6 @@ export const NavBar = async () => {
         <span>STG: {session?.user.course}</span>
       </div>
       <LogoutButton />
-    </div>
+    </Card>
   );
 };
