@@ -19,6 +19,7 @@
     "lodash.merge": "^4.6.2",
     "moment": "^2.29.4",
     "moodle-webservice": "git+https://github.com/Flo2410/moodle-webservice.git#publish",
+    "nanoid": "^4.0.2",
     "next": "13.4.7",
     "next-auth": "^4.22.1",
     "next-pwa": "5.6.0",
@@ -28,7 +29,6 @@
     "react-icons": "4.10.1",
     "react-loading-skeleton": "^3.3.1",
     "server-only": "^0.0.1",
-    "uuid": "9.0.0",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
@@ -37,7 +37,6 @@
     "@types/node": "20.4.1",
     "@types/node-fetch": "^2.6.4",
     "@types/react": "18.2.14",
-    "@types/uuid": "9.0.2",
     "autoprefixer": "10.4.14",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",

@@ -1,9 +1,9 @@
 "use client";
-import { v4 as uuidv4 } from "uuid";
 import { useGradeStore } from "stores/gradeStore";
 import { useRouter } from "next/navigation";
 import GradeRow from "./GradeRow";
 import { Card } from "components/Card";
+import { nanoid } from "nanoid";
 
 export const GradeList = () => {
   const { grades } = useGradeStore((state) => ({
@@ -35,7 +35,7 @@ export const GradeList = () => {
             return (
               <GradeRow
                 grade={grade}
-                key={uuidv4()}
+                key={nanoid()}
                 onClick={() => router.push(`/grade/${grade.moodle_info.id}`)}
               />
             );
