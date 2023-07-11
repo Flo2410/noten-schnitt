@@ -1,17 +1,18 @@
 "use client";
 import { GradeStore } from "types/grade.types";
 import { create } from "zustand";
+import merge from "lodash.merge";
 
 export const useGradeStore = create<GradeStore>()((set, get) => ({
   grades: [],
   init: async (grades) => {
     set({ grades });
   },
-  update_grade: (grade) => {
-    const unmodified_grade = get().grades.find((item) => item.internal_id === grade.internal_id);
-    if (!unmodified_grade) return;
+  update_grade: (partial_grade) => {
+    const grade = get().grades.find((item) => item.internal_id === partial_grade.internal_id);
+    if (!grade) return;
 
-    const updated_grade = { ...unmodified_grade, ...grade };
+    const updated_grade = merge({}, grade, partial_grade);
 
     const updated_grades = get().grades.map((grade) =>
       grade.internal_id === updated_grade.internal_id ? updated_grade : grade

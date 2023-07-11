@@ -1,3 +1,5 @@
+import { DeepPartial } from "./utility.types";
+
 export interface GradeOptions {
   exlude: boolean;
   perm_exlude: boolean;
@@ -29,7 +31,7 @@ export interface Grade {
 export interface GradeStore {
   grades: Grade[];
   init: (grades: Grade[]) => Promise<void>;
-  update_grade: (grade: Partial<Grade> & Pick<Grade, "internal_id">) => void;
+  update_grade: (partial_grade: DeepPartial<Grade> & Pick<Grade, "internal_id">) => void;
   update: (grade: Grade[]) => void;
   clear: () => void;
 }
