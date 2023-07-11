@@ -26,11 +26,6 @@ export interface Grade {
   moodle_info: MoodleGradeInfo;
 }
 
-export interface Semester {
-  semester: number;
-  checked: boolean;
-}
-
 export interface GradeStore {
   grades: Grade[];
   init: (grades: Grade[]) => Promise<void>;
