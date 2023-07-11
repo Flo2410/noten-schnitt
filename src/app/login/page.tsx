@@ -13,11 +13,8 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
   const [error, setError] = useState(false);
-  // const [user, login] = useUserStore((state) => [state.user, state.login]);
 
   const router = useRouter();
-
-  // const globalLogout = useGlobalLogout();
 
   const inputChange = (value: Partial<UserFormData>): void =>
     setFormData({ ...form_data, ...value });
@@ -36,27 +33,11 @@ const LoginPage = () => {
     if (signin_res?.ok && !signin_res.error) {
       setError(false);
       router.push("/grades");
-      // router.push("/");
     } else {
       setError(true);
     }
 
     setIsLoading(false);
-
-    // login(form_data.username, form_data.password)
-    //   .then(() => {
-    //     setError(false);
-    //     // setIsLoading(false);
-    //     router.push("/noten");
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-
-    //     setIsLoading(false);
-    //     setError(true);
-
-    //     globalLogout(false);
-    //   });
   };
 
   return (
