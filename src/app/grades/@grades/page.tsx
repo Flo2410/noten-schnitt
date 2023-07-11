@@ -1,6 +1,6 @@
 import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import { GradeStoreInitiator } from "components/GradeStoreInitiator";
-import { GradeList } from "components/noten/GradeList";
+import { GradeList } from "components/grades/GradeList";
 import { get_cis_grade_infos_for_user } from "helper/fhwn_cis/grades";
 import { make_grades } from "helper/grade.helper";
 import { get_moodle_course_list } from "helper/moodle/courses";

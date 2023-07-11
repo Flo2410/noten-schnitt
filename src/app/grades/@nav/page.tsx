@@ -1,5 +1,5 @@
 import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
-import { LogoutButton } from "components/noten/NavBar/LogoutButton";
+import { LogoutButton } from "components/grades/NavBar/LogoutButton";
 import { getServerSession } from "next-auth";
 
 const NavPage = async () => {

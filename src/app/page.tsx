@@ -6,7 +6,7 @@ const Home = async () => {
   const session = await getServerSession(auth_options);
 
   if (!session) return redirect("/login");
-  else return redirect("/noten");
+  else return redirect("/grades");
 };
 
 export default Home;
