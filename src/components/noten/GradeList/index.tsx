@@ -5,26 +5,11 @@ import { Grade } from "types/grade.types";
 import GradeRow from "./GradeRow";
 
 export const GradeList = () => {
-  const { grades, update_grade } = useGradeStore((state) => ({
+  const { grades } = useGradeStore((state) => ({
     grades: state.grades,
-    update_grade: state.update_grade,
   }));
 
   const show_excluded = true; // FIXME: make this an option
-
-  const update_note = (grade: Grade) => {
-    const index = grades.findIndex((val, i) => {
-      return val.internal_id === grade.internal_id;
-    });
-
-    if (index < 0) return;
-
-    const temp_grade = { ...grade };
-    temp_grade.options.exlude = !grade.options.exlude;
-    update_grade(temp_grade);
-
-    console.log(temp_grade);
-  };
 
   return (
     <div className="flex items-center justify-between p-2 overflow-x-auto bg-white rounded md:flex-row dark:bg-primary shadow-fhwn dark:shadow-fhwn-white">
@@ -44,7 +29,7 @@ export const GradeList = () => {
         <tbody className="">
           {grades?.map((grade) => {
             if (!show_excluded && (grade.options.exlude || grade.options.perm_exlude)) return;
-            return <GradeRow grade={grade} onClick={() => update_note(grade)} key={uuidv4()} />;
+            return <GradeRow grade={grade} key={uuidv4()} onClick={() => console.log(grade)} />;
           })}
         </tbody>
       </table>

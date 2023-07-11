@@ -2,9 +2,12 @@
 import clsx from "clsx";
 import React, { FC } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
+import { useGradeStore } from "stores/gradeStore";
 import { Grade } from "types/grade.types";
 
 const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }) => {
+  const update_grade = useGradeStore((state) => state.update_grade);
+
   return (
     <tr
       className={clsx(
@@ -17,7 +20,6 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
           !grade.options.perm_exlude &&
           "hover:bg-primary/20 dark:hover:bg-white/50 even:bg-primary/5 dark:even:bg-white/10"
       )}
-      onClick={onClick}
     >
       <td className="group-last:rounded-bl">
         <div className="flex justify-center">
@@ -29,10 +31,10 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
               onChange={(e) => {
                 if (!grade) return;
 
-                // setChecked(!checked);
-
-                //FIXME: Find out why the animation won't work with the dispatch
-                // update_grade({ internal_id: grade.internal_id, exlude: !grade.exlude });
+                update_grade({
+                  internal_id: grade.internal_id,
+                  options: { exlude: !grade.options.exlude },
+                });
               }}
               disabled={grade.options.perm_exlude}
               checked={!grade.options.perm_exlude && !grade.options.exlude}
@@ -43,12 +45,14 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
           </label>
         </div>
       </td>
-      <td>{grade.cis_info.grade}</td>
-      <td>{grade.cis_info.type}</td>
-      <td>{grade.cis_info.name}</td>
-      <td>{grade.moodle_info?.ects}</td>
-      <td>{grade.cis_info.date}</td>
-      <td className="group-last:rounded-br">{grade.cis_info.semester}</td>
+      <td onClick={onClick}>{grade.cis_info.grade}</td>
+      <td onClick={onClick}>{grade.cis_info.type}</td>
+      <td onClick={onClick}>{grade.cis_info.name}</td>
+      <td onClick={onClick}>{grade.moodle_info?.ects}</td>
+      <td onClick={onClick}>{grade.cis_info.date}</td>
+      <td onClick={onClick} className="group-last:rounded-br">
+        {grade.cis_info.semester}
+      </td>
     </tr>
   );
 };
