@@ -29,7 +29,7 @@ export const GradeList = () => {
           </tr>
         </thead>
 
-        <tbody className="">
+        <tbody>
           {grades?.map((grade) => {
             if (!show_excluded && (grade.options.exlude || grade.options.perm_exlude)) return;
             return (

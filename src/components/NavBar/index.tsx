@@ -7,7 +7,7 @@ export const NavBar = async () => {
   const session = await getServerSession(auth_options);
 
   return (
-    <Card>
+    <Card className="flex-col md:flex-row">
       <span className="font-bold">{session?.user.name}</span>
 
       <div className="flex gap-4">

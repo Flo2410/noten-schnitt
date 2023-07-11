@@ -21,7 +21,7 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
           "hover:bg-primary/20 dark:hover:bg-white/50 even:bg-primary/5 dark:even:bg-white/10"
       )}
     >
-      <td className="group-last:rounded-bl">
+      <td className="px-2 py-2 group-last:rounded-bl">
         <div className="flex justify-center">
           <label
             className={`swap swap-rotate ${grade.options.perm_exlude ? "cursor-not-allowed" : ""}`}

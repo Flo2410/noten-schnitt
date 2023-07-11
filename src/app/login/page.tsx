@@ -44,28 +44,30 @@ const LoginPage = () => {
   };
 
   return (
-    <Card className="m-auto md:w-2/3 lg:w-1/2 xl:w-1/4">
-      <form className="flex flex-col w-full gap-4 p-4" onSubmit={submit}>
-        <h3 className="text-2xl font-bold text-center uppercase">Login</h3>
-        {error && <span className="text-red-400">Username or password wrong!</span>}
-        <input
-          type="text"
-          className="w-full px-2 py-1 border-2 rounded border-primary dark:border-white dark:bg-primary"
-          placeholder="username"
-          onChange={(e) => inputChange({ username: e.target.value })}
-        />
-        <input
-          type="password"
-          className="w-full px-2 py-1 border-2 rounded border-primary dark:border-white dark:bg-primary"
-          placeholder="password"
-          onChange={(e) => inputChange({ password: e.target.value })}
-        />
-        <Button type="submit" disabled={isLoading} className="group">
-          {!isLoading && "Login"}
-          {isLoading && <HorizontalLodingSpinner />}
-        </Button>
-      </form>
-    </Card>
+    <div className="flex items-center justify-center flex-1 px-2">
+      <Card className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/4">
+        <form className="flex flex-col w-full gap-4 p-4" onSubmit={submit}>
+          <h3 className="text-2xl font-bold text-center uppercase">Login</h3>
+          {error && <span className="text-red-400">Username or password wrong!</span>}
+          <input
+            type="text"
+            className="w-full px-2 py-1 border-2 rounded border-primary dark:border-white dark:bg-primary"
+            placeholder="username"
+            onChange={(e) => inputChange({ username: e.target.value })}
+          />
+          <input
+            type="password"
+            className="w-full px-2 py-1 border-2 rounded border-primary dark:border-white dark:bg-primary"
+            placeholder="password"
+            onChange={(e) => inputChange({ password: e.target.value })}
+          />
+          <Button type="submit" disabled={isLoading} className="group">
+            {!isLoading && "Login"}
+            {isLoading && <HorizontalLodingSpinner />}
+          </Button>
+        </form>
+      </Card>
+    </div>
   );
 };
 

@@ -4,10 +4,10 @@ import { Grade } from "types/grade.types";
 
 export const CourseInfo: FC<{ grade: Grade }> = async ({ grade }) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
       <div>
         <h1 className="text-2xl font-bold">
-          {grade?.cis_info.name} {grade?.cis_info.type}
+          {grade?.cis_info.name}&nbsp;{grade?.cis_info.type}
         </h1>
         <span className="text-sm">{grade?.moodle_info.fullname}</span>
       </div>
