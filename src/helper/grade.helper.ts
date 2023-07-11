@@ -37,7 +37,10 @@ export const make_grades = async (
       moodle_info = moodle_info_matches?.find((info) => info.fullname === moodle_closest);
     } else {
       // no match
-      moodle_closest = closest(cis_info.name, moodle_infos?.map((info) => info.fullname)!);
+      moodle_closest = closest(
+        `${cis_info.name} ${cis_info.type}`,
+        moodle_infos?.map((info) => info.fullname)!
+      );
       moodle_info = moodle_infos?.find((info) => info.fullname === moodle_closest);
     }
 
