@@ -24,6 +24,8 @@ const LoginPage = () => {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
     setIsLoading(true);
 
     const signin_res = await signIn("credentials", {
