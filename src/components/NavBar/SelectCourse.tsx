@@ -38,7 +38,7 @@ export const SelectCourse = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="fixed mt-1 max-h-60 overflow-auto rounded bg-white p-1 text-base shadow-fhwn focus:outline-none sm:text-sm">
+          <Listbox.Options className="mt-1 max-h-60 overflow-auto rounded bg-white p-1 text-base shadow-fhwn focus:outline-none sm:text-sm">
             {user?.courses.map((course) => (
               <Listbox.Option
                 key={nanoid()}
