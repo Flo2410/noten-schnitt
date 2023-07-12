@@ -13,14 +13,19 @@ export interface MoodleUser {
   user_picture_url: string;
 }
 
+export interface Course {
+  name: string;
+  student_pkz: string;
+}
+
 export type User = {
   cookies: UserCookies;
   moodle_user: MoodleUser;
-  student_pkz: string;
   pers_nummer?: string;
   mat_nummer?: string;
   name?: string;
-  course?: string;
+  courses: Course[];
+  selected_course: Course;
   email: string;
 };
 
@@ -48,10 +53,10 @@ export const DEFAULT_USER: User = {
     user_name: "",
     user_picture_url: "",
   },
-  student_pkz: "",
   pers_nummer: "",
   mat_nummer: "",
   name: "",
-  course: "",
+  courses: [],
+  selected_course: { name: "", student_pkz: "" },
   email: "",
 };

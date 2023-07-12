@@ -5,8 +5,8 @@ import { get_user_info } from "helper/fhwn_cis/user";
 import { get_moodle_user_info } from "helper/moodle/user";
 import { MoodleClient } from "moodle-webservice";
 import { AuthOptions, User } from "next-auth";
-import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { Course } from "types/user.types";
 
 export const auth_options: AuthOptions = {
   providers: [
@@ -69,10 +69,23 @@ export const auth_options: AuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user }: { token: JWT; user: User }) => {
+    jwt: async ({ token, user, trigger, session }) => {
       if (user) {
         token.user = { ...user };
       }
+
+      const selected_course: Course | undefined = session?.selected_course;
+      if (
+        trigger === "update" &&
+        selected_course &&
+        token.user.courses.find(
+          (course) =>
+            course.name === selected_course.name &&
+            course.student_pkz === selected_course.student_pkz
+        )
+      )
+        token.user.selected_course = selected_course;
+
       return token;
     },
     session: async ({ session, token }) => {

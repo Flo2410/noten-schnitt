@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import { log } from "helper/logger";
 import { getCookiesAsString } from "helper/utils";
-import { User, UserCookies } from "types/user.types";
+import { Course, User, UserCookies } from "types/user.types";
 
 export const get_user_info = async (
   user_cookies: UserCookies
@@ -46,23 +46,21 @@ const request_user_info = async (
   const mat_nummer = $("#collapseIDS > div > div:nth-child(2) > div.col-sm-9 > b").text();
   const name = $("#collapseNames > div > div > div.col-sm-9 > b").text();
 
-  const { course, student_pkz } = await get_user_course_and_pkz(user_cookies);
+  const courses = await get_user_courses_and_pkz(user_cookies);
 
-  const user = {
+  const user: Omit<User, "moodle_user" | "email"> = {
     cookies: user_cookies,
-    student_pkz: student_pkz,
     pers_nummer: pers_nummer,
     mat_nummer: mat_nummer,
     name: name,
-    course: course,
+    courses: courses,
+    selected_course: courses[0],
   };
 
   return user;
 };
 
-const get_user_course_and_pkz = async (
-  user_cookies: UserCookies
-): Promise<{ course: string; student_pkz: string }> => {
+const get_user_courses_and_pkz = async (user_cookies: UserCookies): Promise<Course[]> => {
   const data = await fetch(
     "https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradeOverviewIndex",
     {
@@ -82,10 +80,15 @@ const get_user_course_and_pkz = async (
   let html = await data.text();
   const $ = cheerio.load(html, null, false);
 
-  const course = $("#selStudentPKZ").children().text();
-  const student_pkz = $("#selStudentPKZ > option")
-    .toArray()
-    .map((item) => item.attributes[0].value)[0];
+  const options = $("select#selStudentPKZ option");
 
-  return { course, student_pkz };
+  const courses: Course[] = [];
+
+  options.each((i, el) => {
+    const pkz = $(el).attr("value") ?? "";
+    const name = $(el).text();
+    courses.push({ student_pkz: pkz, name });
+  });
+
+  return courses;
 };
