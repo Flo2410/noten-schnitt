@@ -11,11 +11,14 @@ export const NavBar = async () => {
     <Card className="flex-col md:flex-row">
       <span className="font-bold">{session?.user.name}</span>
 
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
         <span>Matr. Nr.: {session?.user.mat_nummer}</span>
         <span>PKZ: {session?.user.selected_course.student_pkz}</span>
 
-        <SelectCourse />
+        <div className="flex items-center gap-x-2">
+          <span>STG:</span>
+          <SelectCourse />
+        </div>
       </div>
       <LogoutButton />
     </Card>
