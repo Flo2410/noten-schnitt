@@ -5,7 +5,7 @@ import { User, UserCookies } from "types/user.types";
 
 export const get_user_info = async (
   user_cookies: UserCookies
-): Promise<Omit<User, "moodle_user"> | null> => {
+): Promise<Omit<User, "moodle_user" | "email"> | null> => {
   const start_time = Date.now();
 
   try {
@@ -23,7 +23,7 @@ export const get_user_info = async (
 
 const request_user_info = async (
   user_cookies: UserCookies
-): Promise<Omit<User, "moodle_user">> => {
+): Promise<Omit<User, "moodle_user" | "email">> => {
   const data = await fetch("https://cis.fhwn.ac.at/Home/Profile", {
     method: "GET",
     headers: {

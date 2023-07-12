@@ -51,6 +51,7 @@ export const auth_options: AuthOptions = {
 
         const user: User = {
           ...cis_user,
+          email: credentials.email,
           moodle_user: {
             token: token,
             first_name: moodle_user.firstname,

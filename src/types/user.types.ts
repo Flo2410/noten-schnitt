@@ -21,7 +21,7 @@ export type User = {
   mat_nummer?: string;
   name?: string;
   course?: string;
-  email?: string;
+  email: string;
 };
 
 export type UserCookies = {
