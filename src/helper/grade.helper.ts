@@ -78,7 +78,7 @@ export const get_grades = async (user: User): Promise<Grade[] | null> => {
   const cis_infos = await get_cis_grade_infos_for_user(user);
   const moodle_infos = await get_moodle_course_list(user.moodle_user);
 
-  if (!cis_infos || cis_infos.length === 0 || moodle_infos.length === 0) return null;
+  if (!cis_infos || moodle_infos.length === 0) return null;
 
   return make_grades(cis_infos, moodle_infos);
 };

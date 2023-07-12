@@ -2,16 +2,23 @@
 
 import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 
 export const SelectCourse = () => {
   const session = useSession();
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const on_change = async (e: ChangeEvent<HTMLSelectElement>) => {
     const selected_course = session.data?.user.courses.find(
       (course) => course.name === e.target.value
     );
     await session.update({ selected_course: selected_course });
+
+    if (pathname !== "/grades") router.replace("/grades");
+    else window.location.reload(); // FIXME: this is done to reload the grades
   };
 
   return (

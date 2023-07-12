@@ -1,19 +1,20 @@
-"use client";
+import { auth_options } from "app/api/auth/[...nextauth]/auth_options";
 import { Card } from "components/Card";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 import { LogoutButton } from "./LogoutButton";
 import { SelectCourse } from "./SelectCourse";
 
-export const NavBar = () => {
-  const session = useSession();
+export const NavBar = async () => {
+  const session = await getServerSession(auth_options);
 
   return (
     <Card className="flex-col md:flex-row">
-      <span className="font-bold">{session.data?.user.name}</span>
+      <span className="font-bold">{session?.user.name}</span>
 
       <div className="flex gap-4">
-        <span>Matr. Nr.: {session.data?.user.mat_nummer}</span>
-        <span>PKZ: {session.data?.user.selected_course.student_pkz}</span>
+        <span>Matr. Nr.: {session?.user.mat_nummer}</span>
+        <span>PKZ: {session?.user.selected_course.student_pkz}</span>
+
         <SelectCourse />
       </div>
       <LogoutButton />

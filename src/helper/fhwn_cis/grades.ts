@@ -12,10 +12,14 @@ export const get_cis_grade_infos_for_user = async (
   const start_time = Date.now();
 
   try {
-    const dates = await get_semster_dates(user.cookies);
+    const dates = await get_semster_dates(user.cookies, user.selected_course.student_pkz);
 
     const promises = dates.map((date) =>
-      get_cis_grade_infos_for_semester(user.cookies, user.student_pkz, date)
+      get_cis_grade_infos_for_semester(
+        user.cookies,
+        user.selected_course.student_pkz,
+        date
+      )
     );
 
     const grade_infos = await (await Promise.all(promises)).flat();
@@ -36,9 +40,9 @@ export const get_cis_grade_infos_for_user = async (
   return null;
 };
 
-const get_semster_dates = async (cookies: UserCookies) => {
+const get_semster_dates = async (cookies: UserCookies, student_pkz: string) => {
   const data = await fetch(
-    `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/GradeOverviewIndex`,
+    `https://cis.fhwn.ac.at/Grades/StudentGradesOverview/LoadSemester?selectedPkzFromStudent=${student_pkz}`,
     {
       method: "GET",
       headers: {
