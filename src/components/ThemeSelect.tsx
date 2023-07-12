@@ -1,22 +1,32 @@
 "use client";
-import { SettingsContext } from "context/SettingsContext";
-import { FC, useContext } from "react";
-import { DarkMode, SettingsPayloadType } from "types/settings.types";
+import clsx from "clsx";
+import { FC, useEffect } from "react";
+import { useSettingsStore } from "stores/settingsStore";
+import { DarkMode } from "types/settings.types";
 
 const ThemeSelect: FC<{ className?: string }> = ({ className }) => {
-  const { state, dispatch } = useContext(SettingsContext);
+  const { settings, update } = useSettingsStore();
+
+  useEffect(() => {
+    // add "dark" class -> enables darkmode
+    if (settings.darkmode === DarkMode.DARK) set_dark_mode_class(true);
+    else if (settings.darkmode === DarkMode.LIGHT) set_dark_mode_class(false);
+  }, [settings.darkmode]);
+
+  const set_dark_mode_class = (dark_mode: boolean) => {
+    document.body.classList.toggle("dark", dark_mode);
+    document.body.setAttribute("data-theme", dark_mode ? "dark" : "light");
+  };
 
   return (
-    <label className={`swap-rotate swap ${className ? className : ""}`}>
+    <label className={clsx("swap swap-rotate", className)}>
       <input
         type="checkbox"
-        checked={state.darkmode === DarkMode.DARK}
-        onChange={(e) => {
-          dispatch({
-            type: SettingsPayloadType.UPDATE,
-            payload: {
-              darkmode: state.darkmode === DarkMode.DARK ? DarkMode.LIGHT : DarkMode.DARK,
-            },
+        checked={settings.darkmode === DarkMode.DARK}
+        onChange={() => {
+          update({
+            darkmode:
+              settings.darkmode === DarkMode.DARK ? DarkMode.LIGHT : DarkMode.DARK,
           });
         }}
       />

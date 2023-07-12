@@ -1,4 +1,3 @@
-import { SettingsProvider } from "context/SettingsContext";
 import { Metadata } from "next";
 
 import AuthContext from "components/AuthContext";
@@ -31,12 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de">
       <body>
         <AuthContext>
-          <SettingsProvider>
-            <div className="body-setup flex min-h-screen flex-col">
-              {children}
-              <Footer />
-            </div>
-          </SettingsProvider>
+          <div className="body-setup flex min-h-screen flex-col">
+            {children}
+            <Footer />
+          </div>
         </AuthContext>
       </body>
     </html>
