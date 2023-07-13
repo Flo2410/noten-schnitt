@@ -1,3 +1,5 @@
+import "server-only";
+
 import * as cheerio from "cheerio";
 import { log } from "helper/logger";
 import { getCookiesAsString } from "helper/utils";
@@ -95,9 +97,9 @@ const get_cis_grade_infos_for_semester = async (
 
   const $ = cheerio.load(html, null, false);
 
-  const tbody = $("div.viewDesktop > div.accordion > div > div > div > table > tbody");
+  const tbody = $("div.viewDesktop > table > tbody");
 
-  const semester = $("h4.smallerText").first().text().match(/\d/g)?.[0] ?? "";
+  const semester = $("div.card-header").first().text().match(/\d/g)?.[0] ?? "";
 
   const trs = tbody
     .toString()
