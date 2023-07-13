@@ -7,6 +7,8 @@ export const get_raw_course_info_from_pdf = async (pdf_url: string) => {
 
   const blob = await res.blob();
   const array_buf = await blob.arrayBuffer();
+
+  // @ts-ignore
   const buffer = Buffer.from(array_buf, "binary");
 
   const raw_data = await pdf_parse(buffer, { max: 1 });
