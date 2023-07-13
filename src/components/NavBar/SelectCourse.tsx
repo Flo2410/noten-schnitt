@@ -27,7 +27,7 @@ export const SelectCourse = () => {
 
   return (
     <Listbox value={selected_course?.name} onChange={on_change}>
-      <div className="relative">
+      <div className="">
         <Listbox.Button className="flex h-8 min-w-[8.5rem] items-center justify-between space-x-2 rounded border-2 border-primary bg-primary px-4 text-center text-white shadow-fhwn hover:bg-white hover:text-primary dark:border-white dark:bg-white dark:text-primary dark:hover:bg-primary dark:hover:text-white">
           <span className="block truncate">{selected_course?.name}</span>
           <HiOutlineChevronDown className="h-5 w-5" aria-hidden="true" />
@@ -38,7 +38,7 @@ export const SelectCourse = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="mt-1 max-h-60 overflow-auto rounded bg-white p-1 text-base shadow-fhwn focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 overflow-auto rounded bg-white p-1 text-base shadow-fhwn focus:outline-none sm:text-sm">
             {user?.courses.map((course) => (
               <Listbox.Option
                 key={nanoid()}
