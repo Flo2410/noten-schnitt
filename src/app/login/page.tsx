@@ -2,7 +2,7 @@
 import Button from "components/Button";
 import { Card } from "components/Card";
 import { HorizontalLodingSpinner } from "components/HorizontalLoadingSpinner";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -17,6 +17,9 @@ const LoginPage = () => {
   const [error, setError] = useState(false);
 
   const router = useRouter();
+
+  const session = useSession();
+  if (session.status === "authenticated") router.replace("/grades");
 
   const inputChange = (value: Partial<UserFormData>): void =>
     setFormData({ ...form_data, ...value });
