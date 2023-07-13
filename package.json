@@ -12,6 +12,7 @@
     "deploy": "docker build -t ghcr.io/flo2410/noten-schnitt:testing . && docker push  ghcr.io/flo2410/noten-schnitt:testing"
   },
   "dependencies": {
+    "@cyber2024/pdf-parse-fixed": "^1.2.5",
     "@headlessui/react": "1.7.15",
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^1.2.1",
