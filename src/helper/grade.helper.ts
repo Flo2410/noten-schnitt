@@ -3,9 +3,11 @@ import "server-only";
 import { closest } from "fastest-levenshtein";
 import moment from "moment";
 import { User } from "next-auth";
-import { CISGradeInfo, Grade, MoodleGradeInfo } from "types/grade.types";
+import { CISGradeInfo, Grade, GradeInfo, MoodleGradeInfo } from "types/grade.types";
+import { MoodleUser } from "types/user.types";
 import { get_cis_grade_infos_for_user } from "./fhwn_cis/grades";
-import { get_moodle_course_list } from "./moodle/courses";
+import { get_course_info_pdf_url, get_moodle_course_list } from "./moodle/courses";
+import { get_ects_for_course, get_raw_course_info_from_pdf } from "./moodle/pdf_parser";
 
 export const make_grades = async (
   cis_infos: CISGradeInfo[],
@@ -13,7 +15,6 @@ export const make_grades = async (
 ): Promise<Grade[]> => {
   // CIS Infos are the primary source
   const grades: Grade[] = cis_infos.map((cis_info) => {
-    // Find the corresponding moodle info
     let moodle_info: MoodleGradeInfo | undefined = {
       displayname: "",
       fullname: "",
@@ -21,6 +22,7 @@ export const make_grades = async (
       shortname: "",
     };
 
+    // Find the corresponding moodle info
     const moodle_info_matches = moodle_infos?.filter((info) =>
       info.fullname.includes(cis_info.name)
     );
@@ -83,10 +85,44 @@ export const get_grades = async (user: User): Promise<Grade[] | null> => {
   return make_grades(cis_infos, moodle_infos);
 };
 
+export const get_grades_with_infos = async (
+  user: User
+): Promise<Required<Grade>[] | null> => {
+  const grades = await get_grades(user);
+  if (!grades) return null;
+  const promises = grades.map(
+    async (grade): Promise<Required<Grade>> => ({
+      ...grade,
+      grade_info: await get_grade_info(user.moodle_user, grade.moodle_info.id),
+    })
+  );
+
+  return await Promise.all(promises);
+};
+
 export const get_grade_by_id = async (
   user: User,
   grade_id: number
-): Promise<Grade | undefined> => {
+): Promise<Required<Grade> | undefined> => {
   const grades = await get_grades(user);
-  return grades?.find((grade) => grade.moodle_info.id === grade_id);
+  const grade = grades?.find((grade) => grade.moodle_info.id === grade_id);
+  if (!grade) return;
+  grade.grade_info = await get_grade_info(user.moodle_user, grade.moodle_info.id);
+  return grade as Required<Grade>;
+};
+
+export const get_grade_info = async (
+  moodle_user: MoodleUser,
+  course_id: number
+): Promise<GradeInfo> => {
+  const pdf_url = await get_course_info_pdf_url(moodle_user, course_id);
+  if (!pdf_url) return {};
+
+  const raw_info = await get_raw_course_info_from_pdf(pdf_url);
+
+  const grade_info: GradeInfo = {
+    ects: get_ects_for_course(raw_info),
+  };
+
+  return grade_info;
 };

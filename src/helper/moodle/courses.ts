@@ -28,16 +28,18 @@ export const get_moodle_course_list = async (
 
 export const get_course_info_pdf_url = async (
   moodle_user: MoodleUser,
-  courseid: number
+  course_id: number
 ): Promise<string | null> => {
   const moodle = MoodleApi({
     baseUrl: process.env.NEXT_PUBLIC_MOODLE_URL ?? "",
     token: moodle_user.token,
   });
 
-  const modules = (await moodle.core.course.getContents({ courseid: courseid }))
+  const modules = (await moodle.core.course.getContents({ courseid: course_id }))
     .map((section) => section.modules)
     .flat();
+
+  if (modules.length === 0) return null;
 
   const closest_module_name = closest(
     "LV Beschreibung",
@@ -60,5 +62,5 @@ export const get_course_info_pdf_url = async (
   const url = full_url.fileurl?.split("?").shift();
   if (!url) return null;
 
-  return url;
+  return `${url}?token=${moodle_user.token}`;
 };

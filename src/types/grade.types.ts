@@ -18,13 +18,17 @@ export interface MoodleGradeInfo {
   fullname: string;
   displayname: string;
   id: number;
-  ects?: string;
+}
+
+export interface GradeInfo {
+  ects?: number;
 }
 
 export interface Grade {
   options: GradeOptions;
   cis_info: CISGradeInfo;
   moodle_info: MoodleGradeInfo;
+  grade_info?: GradeInfo;
 }
 
 export interface GradeStore {
