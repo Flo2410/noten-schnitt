@@ -6,19 +6,6 @@
   body {
     @apply font-fhwn;
   }
-
-  .table :where(:first-child) :where(:first-child) :where(th, td):first-child {
-    border-top-left-radius: 0rem !important /* 8px */;
-  }
-  .table :where(:first-child) :where(:first-child) :where(th, td):last-child {
-    border-top-right-radius: 0rem !important /* 8px */;
-  }
-  .table :where(:last-child) :where(:last-child) :where(th, td):first-child {
-    border-bottom-left-radius: 0rem !important /* 8px */;
-  }
-  .table :where(:last-child) :where(:last-child) :where(th, td):last-child {
-    border-bottom-right-radius: 0rem !important /* 8px */;
-  }
 }
 
 @layer utilities {
