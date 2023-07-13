@@ -8,21 +8,17 @@ export const PDFView: FC<{ course_id: number }> = async ({ course_id }) => {
   const session = await getServerSession(auth_options);
   if (!session) return;
 
-  const pdf = await get_course_info_pdf_url(session.user.moodle_user, course_id);
-  if (!pdf) return;
+  const pdf_url = await get_course_info_pdf_url(session.user.moodle_user, course_id);
+  if (!pdf_url) return;
 
   return (
-    <object
-      type="application/pdf"
-      data={`${pdf}?token=${session.user.moodle_user.token}`}
-      className="grow"
-    >
+    <object type="application/pdf" data={pdf_url} className="grow">
       <div className="flex flex-col items-center justify-center space-y-2">
         <p className="text-center">
           Your web browser doesn&apos;t have a PDF plugin. Instead you can download the
           PDF file.
         </p>
-        <a href={`${pdf}?token=${session.user.moodle_user.token}`} download={true}>
+        <a href={`${pdf_url}?token=${session.user.moodle_user.token}`} download={true}>
           <Button>Download</Button>
         </a>
       </div>
