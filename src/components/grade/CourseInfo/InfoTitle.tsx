@@ -13,7 +13,7 @@ export const InfoTitle: FC<{ grade: Grade }> = ({ grade }) => {
       </div>
 
       <a
-        href={`${process.env.NEXT_PUBLIC_MOODLE_URL}course/view.phpid=${grade.moodle_info.id}`}
+        href={`${process.env.NEXT_PUBLIC_MOODLE_URL}course/view.php?id=${grade.moodle_info.id}`}
         target="_blank"
         rel="noopener noreferrer"
       >
