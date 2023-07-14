@@ -10,10 +10,10 @@ export const get_user_info = async (
 
   try {
     const user = await request_user_info(user_cookies);
-    log("info", undefined, undefined, 200, start_time, Date.now());
+    log("info", undefined, "get_user_info", 200, start_time, Date.now());
     return user;
   } catch (err: any) {
-    log("info", undefined, undefined, 401, start_time, Date.now(), {
+    log("info", undefined, "get_user_info", 401, start_time, Date.now(), {
       error: `Error getting user info - ${err}`,
     });
   }

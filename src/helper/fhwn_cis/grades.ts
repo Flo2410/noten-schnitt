@@ -30,11 +30,11 @@ export const get_cis_grade_infos_for_user = async (
       (a, b) => moment(b.date, "DD.MM.YYYY").unix() - moment(a.date, "DD.MM.YYYY").unix()
     );
 
-    log("info", undefined, undefined, 200, start_time, Date.now());
+    log("info", undefined, "get_cis_grade_infos_for_user", 200, start_time, Date.now());
 
     return grade_infos;
   } catch (err: any) {
-    log("info", undefined, undefined, 401, start_time, Date.now(), {
+    log("info", undefined, "get_cis_grade_infos_for_user", 401, start_time, Date.now(), {
       error: `Error getting cis grade infos - ${err}`,
     });
   }

@@ -9,10 +9,10 @@ export const login = async (
 
   try {
     const user_cookies = await send_login_request(username, password);
-    log("info", undefined, undefined, 200, start_time, Date.now());
+    log("info", undefined, "login", 200, start_time, Date.now());
     if (user_cookies) return user_cookies;
   } catch (error: any) {
-    log("info", undefined, undefined, 401, start_time, Date.now(), {
+    log("info", undefined, "login", 401, start_time, Date.now(), {
       error: `Login failed - ${error}`,
     });
   }
