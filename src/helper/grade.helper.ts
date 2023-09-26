@@ -67,10 +67,18 @@ export const make_grades = async (
     return grade;
   });
 
+  // grades.sort(
+  //   (a, b) =>
+  //     moment(b.cis_info.date, "DD.MM.YYYY").unix() -
+  //     moment(a.cis_info.date, "DD.MM.YYYY").unix()
+  // );
+
+  // Sort by semester
   grades.sort(
     (a, b) =>
+      +b.cis_info.semester - +a.cis_info.semester ||
       moment(b.cis_info.date, "DD.MM.YYYY").unix() -
-      moment(a.cis_info.date, "DD.MM.YYYY").unix()
+        moment(a.cis_info.date, "DD.MM.YYYY").unix()
   );
 
   return grades;

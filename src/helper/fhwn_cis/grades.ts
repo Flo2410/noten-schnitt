@@ -3,7 +3,6 @@ import "server-only";
 import * as cheerio from "cheerio";
 import { log } from "helper/logger";
 import { getCookiesAsString } from "helper/utils";
-import moment from "moment";
 import { User } from "next-auth";
 import { CISGradeInfo } from "types/grade.types";
 import { UserCookies } from "types/user.types";
@@ -26,9 +25,9 @@ export const get_cis_grade_infos_for_user = async (
 
     const grade_infos = await (await Promise.all(promises)).flat();
 
-    grade_infos.sort(
-      (a, b) => moment(b.date, "DD.MM.YYYY").unix() - moment(a.date, "DD.MM.YYYY").unix()
-    );
+    // grade_infos.sort(
+    //   (a, b) => moment(b.date, "DD.MM.YYYY").unix() - moment(a.date, "DD.MM.YYYY").unix()
+    // );
 
     log("info", undefined, "get_cis_grade_infos_for_user", 200, start_time, Date.now());
 
@@ -117,13 +116,14 @@ const get_cis_grade_infos_for_semester = async (
 
     const art = arr[0].match(/(?<=\()(.*?)(?=\))/g)?.[0] ?? "";
     const lv = arr[0].replace(`(${art})`, "").trim();
-    const grade = arr[1].match(/\d/g)?.[0] ?? "";
+    const date = arr[1];
+    const grade = arr[2].match(/\d/g)?.[0] ?? "";
 
     const grade_info: CISGradeInfo = {
       name: lv,
       type: art,
       semester: semester,
-      date: semester_date,
+      date: date,
       grade: grade,
     };
 
