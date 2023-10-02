@@ -14,7 +14,7 @@ interface UserFormData {
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [form_data, setFormData] = useState<UserFormData>({ password: "", username: "" });
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const router = useRouter();
 
@@ -37,14 +37,20 @@ const LoginPage = () => {
       password: form_data.password,
     });
 
-    if (signin_res?.ok && !signin_res.error) {
-      router.push("/grades");
-      setError(false);
-    } else {
-      setError(true);
+    setIsLoading(false);
+
+    if (!signin_res?.ok || signin_res.error) {
+      setError("Username or password wrong!");
+      return;
     }
 
-    setIsLoading(false);
+    if (signin_res.status !== 200) {
+      setError("Something went wrong!");
+      return;
+    }
+
+    setError("");
+    router.push("/grades");
   };
 
   return (
@@ -52,7 +58,7 @@ const LoginPage = () => {
       <Card className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/4">
         <form className="flex w-full flex-col gap-4 p-4" onSubmit={submit}>
           <h3 className="text-center text-2xl font-bold uppercase">Login</h3>
-          {error && <span className="text-red-400">Username or password wrong!</span>}
+          {error && <span className="text-red-400">{error}</span>}
           <input
             type="text"
             className="w-full rounded border-2 border-primary px-2 py-1 dark:border-white dark:bg-primary"
