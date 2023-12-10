@@ -1,6 +1,6 @@
 {
   "name": "noten-schnitt",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "private": true,
   "license": "GNU GPLv3",
   "type": "module",
