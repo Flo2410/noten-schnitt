@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 
 import AuthContext from "components/AuthContext";
 import Footer from "components/Footer";
@@ -20,10 +20,13 @@ export const metadata: Metadata = {
     { rel: "shortcut icon", url: "/favicon/favicon.ico" },
   ],
   manifest: "/manifest.json",
-  themeColor: "#163072",
   applicationName: "Notenschnitt",
   robots: { index: false, follow: false },
 };
+
+export const viewport: Viewport  = {
+  themeColor: "#163072"
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
