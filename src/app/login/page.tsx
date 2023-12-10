@@ -56,7 +56,10 @@ const LoginPage = () => {
   return (
     <div className="flex flex-1 items-center justify-center px-2">
       <Card className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/4">
-        <form className="flex w-full flex-col gap-4 p-4" onSubmit={submit}>
+        <form
+          className="flex w-full flex-col gap-4 overflow-hidden p-4"
+          onSubmit={submit}
+        >
           <h3 className="text-center text-2xl font-bold uppercase">Login</h3>
           {error && <span className="text-red-400">{error}</span>}
           <input
