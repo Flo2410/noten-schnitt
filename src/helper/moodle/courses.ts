@@ -1,7 +1,7 @@
 import "server-only";
 
 import { closest } from "fastest-levenshtein";
-import MoodleApi, { IMoodleCourse } from "moodle-webservice";
+import MoodleApi, { IMoodleCourse, IMoodleCourseSectionModule } from "moodle-webservice";
 import { MoodleGradeInfo } from "types/grade.types";
 import { MoodleUser } from "types/user.types";
 
@@ -41,12 +41,12 @@ export const get_course_info_pdf_url = async (
 
   if (modules.length === 0) return null;
 
-  const closest_module_name = closest(
-    "LV Beschreibung",
-    modules.map((module) => module.name)
-  );
+  const closest_module_name_ger = get_closetst_module_german(modules);
+  const closest_module_name_eng = get_closetst_module_english(modules);
 
-  if (!closest_module_name.includes("Beschreibung")) return null;
+  if (!closest_module_name_ger && !closest_module_name_eng) return null;
+
+  const closest_module_name = closest_module_name_ger ?? closest_module_name_eng;
 
   const closest_module = modules.find((module) => module.name === closest_module_name);
   if (!closest_module) return null;
@@ -63,4 +63,24 @@ export const get_course_info_pdf_url = async (
   if (!url) return null;
 
   return `${url}?token=${moodle_user.token}`;
+};
+
+const get_closetst_module_german = (modules: IMoodleCourseSectionModule[]) => {
+  const closest_module_name = closest(
+    "LV Beschreibung",
+    modules.map((module) => module.name)
+  );
+
+  if (!closest_module_name.includes("Beschreibung")) return null;
+  return closest_module_name;
+};
+
+const get_closetst_module_english = (modules: IMoodleCourseSectionModule[]) => {
+  const closest_module_name = closest(
+    "Course description",
+    modules.map((module) => module.name)
+  );
+
+  if (!closest_module_name.includes("Course")) return null;
+  return closest_module_name;
 };

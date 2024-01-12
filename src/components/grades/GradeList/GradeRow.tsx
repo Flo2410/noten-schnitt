@@ -49,7 +49,7 @@ const GradeRow: FC<{ grade: Grade; onClick?: () => void }> = ({ grade, onClick }
       <td onClick={onClick}>{grade.cis_info.grade}</td>
       <td onClick={onClick}>{grade.cis_info.type}</td>
       <td onClick={onClick}>{grade.cis_info.name}</td>
-      <td onClick={onClick}>{grade.grade_info?.ects}</td>
+      <td onClick={onClick}>{grade.grade_info?.ects?.toString()}</td>
       <td onClick={onClick}>{grade.cis_info.date}</td>
       <td onClick={onClick} className="group-last:rounded-br">
         {grade.cis_info.semester}
