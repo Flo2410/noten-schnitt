@@ -77,7 +77,9 @@ const get_user_courses_and_pkz = async (user_cookies: UserCookies): Promise<Cour
     throw new Error("Cookie is not valid!");
   }
 
-  let html = (await data.json()).Result as string;
+  let html = await data.text();
+  // let html = (await data.json()).Result as string;
+
   const $ = cheerio.load(html, null, false);
 
   const options = $("select#selStudentPKZ option");
