@@ -30,7 +30,7 @@ export const AverageGrade = () => {
     <Card>
       <div className="flex w-full flex-col items-center justify-around text-3xl sm:flex-row sm:items-start pwa:w-full">
         <span>Avg: {avg.toFixed(2)}</span>
-        <span>ETCS: {ects}</span>
+        <span>ECTS: {ects}</span>
       </div>
     </Card>
   );
